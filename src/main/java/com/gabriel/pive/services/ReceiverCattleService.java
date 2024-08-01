@@ -32,4 +32,19 @@ public class ReceiverCattleService {
         }
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattle.get());
     }
+
+    public void delete(Long id){
+        receiverCattleRepository.deleteById(id);
+    }
+
+    public ReceiverCattleDto edit(Long id, ReceiverCattleDto dto){
+        Optional<ReceiverCattle> optionalReceiverCattle= receiverCattleRepository.findById(id);
+        ReceiverCattle receiverCattle = optionalReceiverCattle.get();
+
+        receiverCattle.setName(dto.name());
+        receiverCattle.setBirth(dto.birth());
+        receiverCattle.setBreed(dto.breed());
+
+        return ReceiverCattleDto.toReceiverCattleDto(receiverCattleRepository.save(receiverCattle));
+    }
 }

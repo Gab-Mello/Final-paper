@@ -36,6 +36,23 @@ public class ReceiverCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findById(id));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ReceiverCattleDto> deleteReceiverCattle(@PathVariable Long id){
+        if (receiverCattleService.findById(id)==null){
+            return ResponseEntity.notFound().build();
+        }
+        receiverCattleService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReceiverCattleDto> editReceiverCattle(@PathVariable Long id, @RequestBody ReceiverCattleDto dto){
+        if (receiverCattleService.findById(id)==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.edit(id,dto));
+    }
+
 
 
 }
