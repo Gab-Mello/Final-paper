@@ -2,13 +2,14 @@ package com.gabriel.pive.controllers;
 
 import com.gabriel.pive.dtos.ReceiverCattleDto;
 import com.gabriel.pive.services.ReceiverCattleService;
+import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("receiver")
@@ -18,10 +19,23 @@ public class ReceiverCattleController {
     private ReceiverCattleService receiverCattleService;
 
     @PostMapping
-    public ResponseEntity<ReceiverCattleDto> create(@RequestBody ReceiverCattleDto dto){
-        ReceiverCattleDto receiverCattleDto = receiverCattleService.create(dto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleDto);
+    public ResponseEntity<ReceiverCattleDto> create(@Valid @RequestBody ReceiverCattleDto dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleService.create(dto));
     }
+
+    @GetMapping
+    public ResponseEntity<List<ReceiverCattleDto>> listReceivers(){
+        return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ReceiverCattleDto> getReceiverCattleById(@PathVariable Long id){
+        if (receiverCattleService.findById(id)==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findById(id));
+    }
+
+
 
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -26,9 +27,9 @@ public class ReceiverCattle {
 
     private String breed;
 
-    private LocalDateTime birth;
+    private LocalDate birth;
 
-    public ReceiverCattle(String name, String breed, LocalDateTime birth){
+    public ReceiverCattle(String name, String breed, LocalDate birth){
         this.name = name;
         this.breed = breed;
         this.birth = birth;
