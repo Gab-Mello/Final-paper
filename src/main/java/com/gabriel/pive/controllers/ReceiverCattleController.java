@@ -2,6 +2,7 @@ package com.gabriel.pive.controllers;
 
 import com.gabriel.pive.dtos.ReceiverCattleDto;
 import com.gabriel.pive.services.ReceiverCattleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("receiver")
+@Tag(name = "Receiver", description = "receiver cattles management")
 public class ReceiverCattleController {
 
     @Autowired
