@@ -5,7 +5,7 @@ import com.gabriel.pive.entities.ReceiverCattle;
 import java.util.List;
 
 
-public record ReceiverCattleDto(Long id, String name, String breed, Integer registrationNumber) {
+public record ReceiverCattleDto(String name, String breed, Integer registrationNumber) {
 
     public ReceiverCattle toReceiverCattle(){
         return new ReceiverCattle(
@@ -16,7 +16,6 @@ public record ReceiverCattleDto(Long id, String name, String breed, Integer regi
 
     public static ReceiverCattleDto toReceiverCattleDto(ReceiverCattle receiverCattle){
         return new ReceiverCattleDto(
-                receiverCattle.getId(),
                 receiverCattle.getName(),
                 receiverCattle.getBreed(),
                 receiverCattle.getRegistrationNumber()

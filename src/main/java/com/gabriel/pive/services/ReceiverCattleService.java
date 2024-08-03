@@ -43,6 +43,7 @@ public class ReceiverCattleService {
 
         receiverCattle.setName(dto.name());
         receiverCattle.setBreed(dto.breed());
+        receiverCattle.setRegistrationNumber(dto.registrationNumber());
 
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattleRepository.save(receiverCattle));
     }
