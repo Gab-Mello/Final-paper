@@ -23,12 +23,14 @@ public class ReceiverCattle {
     @Id
     private Long id;
 
+    public Integer registrationNumber;
     private String name;
-
     private String breed;
+    private String embryo; //TODO: change to Embryo type
 
-    public ReceiverCattle(String name, String breed){
+    public ReceiverCattle(String name, String breed, Integer registrationNumber){
         this.name = name;
         this.breed = breed;
+        this.registrationNumber = registrationNumber;
     }
 }
