@@ -22,19 +22,19 @@ public class BullController {
     @Autowired
     private BullService bullService;
 
-    @Operation(summary = "Save a new receiver cattle", description = "It saves and returns a json with the new receiver cattle")
+    @Operation(summary = "Save a new bull", description = "It saves and returns a json with the new bull")
     @PostMapping
     public ResponseEntity<BullDto> saveBull(@Valid @RequestBody BullDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(bullService.create(dto));
     }
 
-    @Operation(summary = "List all receiver cattles", description = "It returns a list of json with all receiver cattles")
+    @Operation(summary = "List all bulls", description = "It returns a json list with all bulls")
     @GetMapping
     public ResponseEntity<List<BullDto>> listBulls(){
         return ResponseEntity.status(HttpStatus.OK).body(bullService.findAll());
     }
 
-    @Operation(summary = "Find a receiver cattle by Id", description = "It returns a json with the receiver cattle finded by Id ")
+    @Operation(summary = "Find a bull by Id", description = "It returns a json with the bull found by Id ")
     @GetMapping("/{id}")
     public ResponseEntity<BullDto> getBullById(@PathVariable Long id){
         if (bullService.findById(id)==null){
@@ -43,7 +43,7 @@ public class BullController {
         return ResponseEntity.status(HttpStatus.OK).body(bullService.findById(id));
     }
 
-    @Operation(summary = "Delete a receiver cattle by Id", description = "It deletes the receiver cattle")
+    @Operation(summary = "Delete a bull by Id", description = "It deletes the bull")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBull(@PathVariable Long id){
         if (bullService.findById(id)==null){
@@ -53,7 +53,7 @@ public class BullController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @Operation(summary = "Edit a receiver cattle by Id", description = "It edit the receiver cattle")
+    @Operation(summary = "Edit a bull by Id", description = "It edits the bull's data")
     @PutMapping("/{id}")
     public ResponseEntity<BullDto> editBull(@PathVariable Long id, @RequestBody BullDto dto){
         if (bullService.findById(id)==null){

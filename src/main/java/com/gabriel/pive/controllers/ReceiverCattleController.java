@@ -26,13 +26,13 @@ public class ReceiverCattleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleService.create(dto));
     }
 
-    @Operation(summary = "List all receiver cattles", description = "It returns a list of json with all receiver cattles")
+    @Operation(summary = "List all receiver cattles", description = "It returns a json list with all receiver cattles")
     @GetMapping
     public ResponseEntity<List<ReceiverCattleDto>> listReceivers(){
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findAll());
     }
 
-    @Operation(summary = "Find a receiver cattle by Id", description = "It returns a json with the receiver cattle finded by Id ")
+    @Operation(summary = "Find a receiver cattle by Id", description = "It returns a json with the receiver cattle found by Id ")
     @GetMapping("/{id}")
     public ResponseEntity<ReceiverCattleDto> getReceiverCattleById(@PathVariable Long id){
         if (receiverCattleService.findById(id)==null){
@@ -51,7 +51,7 @@ public class ReceiverCattleController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @Operation(summary = "Edit a receiver cattle by Id", description = "It edit the receiver cattle")
+    @Operation(summary = "Edit a receiver cattle by Id", description = "It edits the receiver cattle's data")
     @PutMapping("/{id}")
     public ResponseEntity<ReceiverCattleDto> editReceiverCattle(@PathVariable Long id, @RequestBody ReceiverCattleDto dto){
         if (receiverCattleService.findById(id)==null){
