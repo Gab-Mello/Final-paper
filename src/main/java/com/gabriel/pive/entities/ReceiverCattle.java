@@ -27,11 +27,8 @@ public class ReceiverCattle {
 
     private String breed;
 
-    private LocalDate birth;
-
-    public ReceiverCattle(String name, String breed, LocalDate birth){
+    public ReceiverCattle(String name, String breed){
         this.name = name;
         this.breed = breed;
-        this.birth = birth;
     }
 }

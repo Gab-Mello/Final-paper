@@ -6,21 +6,20 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-public record ReceiverCattleDto(Long id, String name, String breed, LocalDate birth) {
+public record ReceiverCattleDto(Long id, String name, String breed) {
 
     public ReceiverCattle toReceiverCattle(){
         return new ReceiverCattle(
                 name,
-                breed,
-                birth);
+                breed
+                );
     }
 
     public static ReceiverCattleDto toReceiverCattleDto(ReceiverCattle receiverCattle){
         return new ReceiverCattleDto(
                 receiverCattle.getId(),
                 receiverCattle.getName(),
-                receiverCattle.getBreed(),
-                receiverCattle.getBirth()
+                receiverCattle.getBreed()
         );
     }
     public static List<ReceiverCattleDto> toReceiverCattleDtoList(List<ReceiverCattle> list){

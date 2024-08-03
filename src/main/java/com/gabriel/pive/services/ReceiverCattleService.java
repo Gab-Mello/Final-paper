@@ -42,7 +42,6 @@ public class ReceiverCattleService {
         ReceiverCattle receiverCattle = optionalReceiverCattle.get();
 
         receiverCattle.setName(dto.name());
-        receiverCattle.setBirth(dto.birth());
         receiverCattle.setBreed(dto.breed());
 
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattleRepository.save(receiverCattle));
