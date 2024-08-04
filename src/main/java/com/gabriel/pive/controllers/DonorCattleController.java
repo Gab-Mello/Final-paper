@@ -4,6 +4,7 @@ import com.gabriel.pive.dtos.BullDto;
 import com.gabriel.pive.dtos.DonorCattleDto;
 import com.gabriel.pive.services.DonorCattleService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("donor")
+@Tag(name = "Donor", description = "donors management")
 public class DonorCattleController {
 
     @Autowired
