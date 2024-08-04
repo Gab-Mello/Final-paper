@@ -22,7 +22,10 @@ public record ReceiverCattleDto(String name, String breed, Integer registrationN
         );
     }
     public static List<ReceiverCattleDto> toReceiverCattleDtoList(List<ReceiverCattle> list){
-        List<ReceiverCattleDto> listDto = list.stream().map(cattle->toReceiverCattleDto(cattle)).toList();
+        List<ReceiverCattleDto> listDto = list.stream().
+                map(cattle->toReceiverCattleDto(cattle)).
+                toList();
+
         return listDto;
     }
 }
