@@ -18,8 +18,9 @@ public class Bull {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    String name;
-    Integer registrationNumber;
+    private String name;
+
+    private Integer registrationNumber;
 
     public Bull(String name, Integer registrationNumber){
         this.name = name;

@@ -6,29 +6,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_receivers")
+@Table(name = "tb_donors")
 @Entity
-public class ReceiverCattle {
+public class DonorCattle {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private Integer registrationNumber;
 
     private String name;
 
     private String breed;
 
-    private String embryo; //TODO: change to Embryo type
+    private LocalDate birth;
 
-    public ReceiverCattle(String name, String breed, Integer registrationNumber){
+    private Integer registrationNumber;
+
+
+    public DonorCattle(String name, String breed, Integer registrationNumber, LocalDate birth){
         this.name = name;
         this.breed = breed;
         this.registrationNumber = registrationNumber;
+        this.birth = birth;
     }
 }
