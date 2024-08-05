@@ -1,7 +1,7 @@
-package com.gabriel.pive.calendar.entities;
+package com.gabriel.pive.calendar.schedule.entities;
 
-import com.gabriel.pive.calendar.enums.ProcedureStatus;
-import com.gabriel.pive.calendar.enums.ProcedureType;
+import com.gabriel.pive.calendar.schedule.enums.ProcedureStatus;
+import com.gabriel.pive.calendar.schedule.enums.ProcedureType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.gabriel.pive.calendar.enums;
+package com.gabriel.pive.calendar.schedule.enums;
 
 public enum ProcedureStatus {
 

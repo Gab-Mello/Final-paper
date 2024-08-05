@@ -1,4 +1,4 @@
-package com.gabriel.pive.calendar.enums;
+package com.gabriel.pive.calendar.schedule.enums;
 
 public enum ProcedureType {
     OOCYTE_COLLECTION("Coleta de Oócitos"),

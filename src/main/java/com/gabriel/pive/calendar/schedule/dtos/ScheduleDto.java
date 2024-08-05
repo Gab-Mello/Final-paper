@@ -1,8 +1,8 @@
-package com.gabriel.pive.calendar.dtos;
+package com.gabriel.pive.calendar.schedule.dtos;
 
-import com.gabriel.pive.calendar.entities.Schedule;
-import com.gabriel.pive.calendar.enums.ProcedureStatus;
-import com.gabriel.pive.calendar.enums.ProcedureType;
+import com.gabriel.pive.calendar.schedule.entities.Schedule;
+import com.gabriel.pive.calendar.schedule.enums.ProcedureStatus;
+import com.gabriel.pive.calendar.schedule.enums.ProcedureType;
 
 import java.time.LocalDate;
 

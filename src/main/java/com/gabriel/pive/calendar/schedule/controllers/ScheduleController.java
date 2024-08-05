@@ -1,7 +1,7 @@
-package com.gabriel.pive.calendar.controllers;
+package com.gabriel.pive.calendar.schedule.controllers;
 
-import com.gabriel.pive.calendar.dtos.ScheduleDto;
-import com.gabriel.pive.calendar.services.ScheduleService;
+import com.gabriel.pive.calendar.schedule.dtos.ScheduleDto;
+import com.gabriel.pive.calendar.schedule.services.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

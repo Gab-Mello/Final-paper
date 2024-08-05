@@ -1,9 +1,9 @@
-package com.gabriel.pive.calendar.services;
+package com.gabriel.pive.calendar.schedule.services;
 
-import com.gabriel.pive.calendar.dtos.ScheduleDto;
-import com.gabriel.pive.calendar.entities.Schedule;
-import com.gabriel.pive.calendar.enums.ProcedureStatus;
-import com.gabriel.pive.calendar.repositories.ScheduleRepository;
+import com.gabriel.pive.calendar.schedule.dtos.ScheduleDto;
+import com.gabriel.pive.calendar.schedule.entities.Schedule;
+import com.gabriel.pive.calendar.schedule.enums.ProcedureStatus;
+import com.gabriel.pive.calendar.schedule.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

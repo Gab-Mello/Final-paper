@@ -1,6 +1,6 @@
-package com.gabriel.pive.calendar.repositories;
+package com.gabriel.pive.calendar.schedule.repositories;
 
-import com.gabriel.pive.calendar.entities.Schedule;
+import com.gabriel.pive.calendar.schedule.entities.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
