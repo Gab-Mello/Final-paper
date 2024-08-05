@@ -26,4 +26,12 @@ public class ScheduleController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.editSchedule(id, dto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ScheduleDto> cancelSchedule(@PathVariable Long id){
+        if (scheduleService.cancelSchedule(id) == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.cancelSchedule(id));
+    }
 }
