@@ -1,7 +1,7 @@
-package com.gabriel.pive.controllers;
+package com.gabriel.pive.animals.controllers;
 
-import com.gabriel.pive.dtos.ReceiverCattleDto;
-import com.gabriel.pive.services.ReceiverCattleService;
+import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
+import com.gabriel.pive.animals.services.ReceiverCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

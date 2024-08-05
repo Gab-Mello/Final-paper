@@ -1,15 +1,13 @@
-package com.gabriel.pive.controllers;
+package com.gabriel.pive.animals.controllers;
 
-import com.gabriel.pive.dtos.BullDto;
-import com.gabriel.pive.dtos.DonorCattleDto;
-import com.gabriel.pive.services.DonorCattleService;
+import com.gabriel.pive.animals.dtos.DonorCattleDto;
+import com.gabriel.pive.animals.services.DonorCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

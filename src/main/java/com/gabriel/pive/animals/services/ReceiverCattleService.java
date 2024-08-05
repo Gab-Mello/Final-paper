@@ -1,8 +1,8 @@
-package com.gabriel.pive.services;
+package com.gabriel.pive.animals.services;
 
-import com.gabriel.pive.dtos.ReceiverCattleDto;
-import com.gabriel.pive.entities.ReceiverCattle;
-import com.gabriel.pive.repositories.ReceiverCattleRepository;
+import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
+import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
+import com.gabriel.pive.animals.entities.ReceiverCattle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

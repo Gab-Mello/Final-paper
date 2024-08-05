@@ -1,6 +1,6 @@
-package com.gabriel.pive.dtos;
+package com.gabriel.pive.animals.dtos;
 
-import com.gabriel.pive.entities.Bull;
+import com.gabriel.pive.animals.entities.Bull;
 
 import java.util.List;
 

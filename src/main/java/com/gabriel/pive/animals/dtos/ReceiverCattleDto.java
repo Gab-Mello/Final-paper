@@ -1,6 +1,6 @@
-package com.gabriel.pive.dtos;
+package com.gabriel.pive.animals.dtos;
 
-import com.gabriel.pive.entities.ReceiverCattle;
+import com.gabriel.pive.animals.entities.ReceiverCattle;
 
 import java.util.List;
 

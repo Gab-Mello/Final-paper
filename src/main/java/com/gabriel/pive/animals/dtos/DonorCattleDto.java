@@ -1,6 +1,6 @@
-package com.gabriel.pive.dtos;
+package com.gabriel.pive.animals.dtos;
 
-import com.gabriel.pive.entities.DonorCattle;
+import com.gabriel.pive.animals.entities.DonorCattle;
 
 import java.time.LocalDate;
 import java.util.List;

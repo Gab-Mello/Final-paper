@@ -1,8 +1,8 @@
-package com.gabriel.pive.services;
+package com.gabriel.pive.animals.services;
 
-import com.gabriel.pive.dtos.BullDto;
-import com.gabriel.pive.entities.Bull;
-import com.gabriel.pive.repositories.BullRepository;
+import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.entities.Bull;
+import com.gabriel.pive.animals.repositories.BullRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

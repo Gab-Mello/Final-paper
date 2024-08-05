@@ -1,4 +1,4 @@
-package com.gabriel.pive.entities;
+package com.gabriel.pive.animals.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

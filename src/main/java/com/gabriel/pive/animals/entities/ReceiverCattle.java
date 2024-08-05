@@ -1,4 +1,4 @@
-package com.gabriel.pive.entities;
+package com.gabriel.pive.animals.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,33 +6,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_donors")
+@Table(name = "tb_receivers")
 @Entity
-public class DonorCattle {
+public class ReceiverCattle {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private Long id;
+
+    private Integer registrationNumber;
 
     private String name;
 
     private String breed;
 
-    private LocalDate birth;
+    private String embryo; //TODO: change to Embryo type
 
-    private Integer registrationNumber;
-
-
-    public DonorCattle(String name, String breed, LocalDate birth, Integer registrationNumber){
+    public ReceiverCattle(String name, String breed, Integer registrationNumber){
         this.name = name;
         this.breed = breed;
-        this.birth = birth;
         this.registrationNumber = registrationNumber;
     }
 }
