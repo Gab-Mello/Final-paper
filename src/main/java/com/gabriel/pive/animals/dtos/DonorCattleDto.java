@@ -5,7 +5,7 @@ import com.gabriel.pive.animals.entities.DonorCattle;
 import java.time.LocalDate;
 import java.util.List;
 
-public record DonorCattleDto(String name, String breed, LocalDate birth, Integer registrationNumber) {
+public record DonorCattleDto(String name, String breed, LocalDate birth, String registrationNumber) {
 
     public DonorCattle toDonorCattle(){
         return new DonorCattle(

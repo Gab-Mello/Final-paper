@@ -20,9 +20,9 @@ public class Bull {
 
     private String name;
 
-    private Integer registrationNumber;
+    private String registrationNumber;
 
-    public Bull(String name, Integer registrationNumber){
+    public Bull(String name, String registrationNumber){
         this.name = name;
         this.registrationNumber = registrationNumber;
     }

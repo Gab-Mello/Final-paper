@@ -26,10 +26,10 @@ public class DonorCattle {
 
     private LocalDate birth;
 
-    private Integer registrationNumber;
+    private String registrationNumber;
 
 
-    public DonorCattle(String name, String breed, LocalDate birth, Integer registrationNumber){
+    public DonorCattle(String name, String breed, LocalDate birth, String registrationNumber){
         this.name = name;
         this.breed = breed;
         this.birth = birth;

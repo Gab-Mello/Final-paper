@@ -18,7 +18,7 @@ public class ReceiverCattle {
     @Id
     private Long id;
 
-    private Integer registrationNumber;
+    private String registrationNumber;
 
     private String name;
 
@@ -26,7 +26,7 @@ public class ReceiverCattle {
 
     private String embryo; //TODO: change to Embryo type
 
-    public ReceiverCattle(String name, String breed, Integer registrationNumber){
+    public ReceiverCattle(String name, String breed, String registrationNumber){
         this.name = name;
         this.breed = breed;
         this.registrationNumber = registrationNumber;
