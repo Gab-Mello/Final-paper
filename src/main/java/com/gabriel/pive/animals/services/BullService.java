@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class BullService {
             return null;
         }
         return BullDto.toBullDto(bull.get());
+    }
+
+    public List<BullDto> findByRegistrationNumber(String registrationNumber){
+        return BullDto.toBullDtoList(bullRepository.
+                findByRegistrationNumber(registrationNumber));
     }
 
     public void delete(Long id){

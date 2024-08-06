@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.controllers;
 
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
+import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
 import com.gabriel.pive.animals.services.DonorCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,6 +31,12 @@ public class DonorCattleController {
     @GetMapping
     public ResponseEntity<List<DonorCattleDto>> listDonors(){
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findAll());
+    }
+
+    @Operation(summary = "Find donor by registration number", description = "It returns a json list of donor cattle that match the registration number")
+    @GetMapping("/search")
+    public ResponseEntity<List<DonorCattleDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
+        return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findByRegistrationNumber(registrationNumber));
     }
 
     @Operation(summary = "Find a donor by Id", description = "It returns a json with the donor found by Id ")

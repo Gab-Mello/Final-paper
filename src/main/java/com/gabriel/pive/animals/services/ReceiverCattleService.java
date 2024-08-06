@@ -24,6 +24,7 @@ public class ReceiverCattleService {
         List<ReceiverCattle> list = receiverCattleRepository.findAll();
         return ReceiverCattleDto.toReceiverCattleDtoList(list);
     }
+
     public List<ReceiverCattleDto> findByRegistrationNumber(String registrationNumber){
         return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.
                 findByRegistrationNumber(registrationNumber));
