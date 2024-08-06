@@ -32,6 +32,12 @@ public class ReceiverCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findAll());
     }
 
+    @Operation(summary = "Find receiver by registration number", description = "It returns a json list of receiver cattles that match the registration number")
+    @GetMapping("/search")
+    public ResponseEntity<List<ReceiverCattleDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
+        return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findByRegistrationNumber(registrationNumber));
+    }
+
     @Operation(summary = "Find a receiver cattle by Id", description = "It returns a json with the receiver cattle found by Id ")
     @GetMapping("/{id}")
     public ResponseEntity<ReceiverCattleDto> getReceiverCattleById(@PathVariable Long id){

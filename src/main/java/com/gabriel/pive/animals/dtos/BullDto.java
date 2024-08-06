@@ -4,7 +4,7 @@ import com.gabriel.pive.animals.entities.Bull;
 
 import java.util.List;
 
-public record BullDto(String name, String registrationNumber) {
+public record BullDto(Long id, String name, String registrationNumber) {
 
     public Bull toBull(){
         return new Bull(
@@ -14,6 +14,7 @@ public record BullDto(String name, String registrationNumber) {
 
     public static BullDto toBullDto(Bull bull){
         return new BullDto(
+                bull.getId(),
                 bull.getName(),
                 bull.getRegistrationNumber()
         );
