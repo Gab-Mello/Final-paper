@@ -36,4 +36,10 @@ public class Schedule {
         this.procedureStatus = procedureStatus;
     }
 
+    @Override
+    public String toString() {
+        return "Schedule" +
+                "id=" + id
+                ;
+    }
 }
