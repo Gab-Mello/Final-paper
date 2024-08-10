@@ -29,7 +29,7 @@ public class SseService {
         emitter.onTimeout(() -> emitters.remove(emitter));
     }
 
-    @Scheduled(fixedDelay = 3, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedDelay = 24, timeUnit = TimeUnit.HOURS)
     public void sendNotification(){
 
         List<Schedule> pendingNotifications = scheduleRepository.findByDateAndProcedureStatus(LocalDate.now(), ProcedureStatus.PENDING);
