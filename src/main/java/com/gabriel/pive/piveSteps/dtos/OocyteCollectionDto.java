@@ -19,4 +19,11 @@ public record OocyteCollectionDto(Long donorCattleId,
                 date);
     }
 
+    public static OocyteCollectionDto toOocyteCollectionDto(OocyteCollection oocyteCollection){
+        return new OocyteCollectionDto(oocyteCollection.getDonorCattle().getId(),
+                oocyteCollection.getBull().getId(),
+                oocyteCollection.getTotalOocytes(),
+                oocyteCollection.getDate());
+    }
+
 }
