@@ -1,10 +1,14 @@
 package com.gabriel.pive.animals.entities;
 
+import com.gabriel.pive.piveSteps.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,6 +25,9 @@ public class Bull {
     private String name;
 
     private String registrationNumber;
+
+    @OneToMany(mappedBy = "bull")
+    private List<OocyteCollection> oocyteCollections = new ArrayList<>();
 
     public Bull(String name, String registrationNumber){
         this.name = name;

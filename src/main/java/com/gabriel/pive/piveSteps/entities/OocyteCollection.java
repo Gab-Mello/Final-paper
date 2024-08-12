@@ -2,11 +2,7 @@ package com.gabriel.pive.piveSteps.entities;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
-import com.gabriel.pive.animals.entities.ReceiverCattle;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "tb_oocyte_collections")
 public class OocyteCollection {
 
     @Id
@@ -27,8 +24,20 @@ public class OocyteCollection {
 
     private LocalDate date;
 
+    @ManyToOne
+    @JoinColumn(name = "donor_id")
     private DonorCattle donorCattle;
 
+    @ManyToOne
+    @JoinColumn(name = "bull_id")
     private Bull bull;
+
+    private Integer totalOocytes;
+
+    private Integer viableOocytes;
+
+    private Integer nonViableOocytes;
+
+
 
 }

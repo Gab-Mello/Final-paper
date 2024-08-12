@@ -1,5 +1,6 @@
 package com.gabriel.pive.animals.entities;
 
+import com.gabriel.pive.piveSteps.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,6 +31,8 @@ public class DonorCattle {
 
     private String registrationNumber;
 
+    @OneToMany(mappedBy = "donorCattle")
+    private List<OocyteCollection> oocyteCollections = new ArrayList<>();
 
     public DonorCattle(String name, String breed, LocalDate birth, String registrationNumber){
         this.name = name;
