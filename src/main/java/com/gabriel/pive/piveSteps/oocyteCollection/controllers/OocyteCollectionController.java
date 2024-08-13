@@ -52,4 +52,16 @@ public class OocyteCollectionController {
         }
 
     }
+
+    @Operation(summary = "Find oocyte collections by bull", description = "It returns a json list with the oocyte collections found by the specific bull")
+    @GetMapping("/bull")
+    public ResponseEntity<List<OocyteCollectionDto>> filterByBull(@RequestParam String registrationNumber){
+        return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.filterByBull(registrationNumber));
+    }
+
+    @Operation(summary = "Find oocyte collections by donor", description = "It returns a json list with the oocyte collections found by the specific donor")
+    @GetMapping("/donor")
+    public ResponseEntity<List<OocyteCollectionDto>> filterByDonor(@RequestParam String registrationNumber){
+        return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.filterByDonor(registrationNumber));
+    }
 }

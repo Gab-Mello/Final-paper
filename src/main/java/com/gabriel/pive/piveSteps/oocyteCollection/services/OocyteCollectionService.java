@@ -56,4 +56,14 @@ public class OocyteCollectionService {
         return OocyteCollectionDto.toOocyteCollectionDto(oocyteCollection);
     }
 
+    public List<OocyteCollectionDto> filterByBull(String registrationNumber){
+        List<OocyteCollection> list = collectionRepository.findByBullRegistrationNumber(registrationNumber);
+        return OocyteCollectionDto.toOocyteCollectionDtoList(list);
+    }
+
+    public List<OocyteCollectionDto> filterByDonor(String registrationNumber){
+        List<OocyteCollection> list = collectionRepository.findByDonorCattleRegistrationNumber(registrationNumber);
+        return OocyteCollectionDto.toOocyteCollectionDtoList(list);
+    }
+
 }

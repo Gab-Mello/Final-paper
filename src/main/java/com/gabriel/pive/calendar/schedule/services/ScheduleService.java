@@ -1,5 +1,7 @@
 package com.gabriel.pive.calendar.schedule.services;
 
+import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.services.BullService;
 import com.gabriel.pive.calendar.schedule.dtos.ScheduleRequestDto;
 import com.gabriel.pive.calendar.schedule.dtos.ScheduleResponseDto;
 import com.gabriel.pive.calendar.schedule.entities.Schedule;
@@ -11,12 +13,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.LongStream;
 
 @Service
 public class ScheduleService {
 
     @Autowired
     private ScheduleRepository scheduleRepository;
+
 
     public ScheduleResponseDto createSchedule(ScheduleRequestDto dto){
         return ScheduleResponseDto.toScheduleResponseDto(scheduleRepository.save(dto.toSchedule()));
@@ -56,5 +60,6 @@ public class ScheduleService {
         List<Schedule> list = scheduleRepository.findByDateAndProcedureStatus(date, ProcedureStatus.PENDING);
         return ScheduleResponseDto.toScheduleReponseDtoList(list);
     }
+
 
 }
