@@ -4,6 +4,7 @@ import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionDto;
 import com.gabriel.pive.piveSteps.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.piveSteps.oocyteCollection.services.OocyteCollectionService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,15 +54,17 @@ public class OocyteCollectionController {
 
     }
 
-    @Operation(summary = "Find oocyte collections by bull", description = "It returns a json list with the oocyte collections found by the specific bull")
+    @Operation(summary = "Filter oocyte collections by bull", description = "It returns a json list with the oocyte collections found by the specific bull")
     @GetMapping("/bull")
-    public ResponseEntity<List<OocyteCollectionDto>> filterByBull(@RequestParam String registrationNumber){
+    public ResponseEntity<List<OocyteCollectionDto>> filterByBull(@Parameter(description = "Example: http://localhost:8080/oocyte-collection/bull?registrationNumber=123")
+                                                                      @RequestParam String registrationNumber){
         return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.filterByBull(registrationNumber));
     }
 
-    @Operation(summary = "Find oocyte collections by donor", description = "It returns a json list with the oocyte collections found by the specific donor")
+    @Operation(summary = "Filter oocyte collections by donor", description = "It returns a json list with the oocyte collections found by the specific donor")
     @GetMapping("/donor")
-    public ResponseEntity<List<OocyteCollectionDto>> filterByDonor(@RequestParam String registrationNumber){
+    public ResponseEntity<List<OocyteCollectionDto>> filterByDonor(@Parameter(description = "Example: http://localhost:8080/oocyte-collection/donor?registrationNumber=1234")
+                                                                       @RequestParam String registrationNumber){
         return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.filterByDonor(registrationNumber));
     }
 }
