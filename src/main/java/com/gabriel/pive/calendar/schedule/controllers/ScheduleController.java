@@ -1,6 +1,7 @@
 package com.gabriel.pive.calendar.schedule.controllers;
 
-import com.gabriel.pive.calendar.schedule.dtos.ScheduleDto;
+import com.gabriel.pive.calendar.schedule.dtos.ScheduleRequestDto;
+import com.gabriel.pive.calendar.schedule.dtos.ScheduleResponseDto;
 import com.gabriel.pive.calendar.schedule.services.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,13 +20,13 @@ public class ScheduleController {
 
     @Operation(summary = "Save a new schedule", description = "It saves and returns a json with the new schedule")
     @PostMapping
-    public ResponseEntity<ScheduleDto> createSchedule(@RequestBody ScheduleDto dto){
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(scheduleService.createSchedule(dto));
     }
 
     @Operation(summary = "Edit a schedule by id", description = "It edits the schedule's data")
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleDto> editSchedule(@PathVariable Long id, @RequestBody ScheduleDto dto){
+    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto dto){
         if (scheduleService.editSchedule(id, dto) == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -34,7 +35,7 @@ public class ScheduleController {
 
     @Operation(summary = "Cancel a schedule by Id", description = "It cancels the schedule ")
     @DeleteMapping("/{id}")
-    public ResponseEntity<ScheduleDto> cancelSchedule(@PathVariable Long id){
+    public ResponseEntity<ScheduleResponseDto> cancelSchedule(@PathVariable Long id){
         if (scheduleService.cancelSchedule(id) == null){
             return ResponseEntity.notFound().build();
         }

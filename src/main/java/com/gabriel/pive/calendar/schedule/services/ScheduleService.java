@@ -1,6 +1,7 @@
 package com.gabriel.pive.calendar.schedule.services;
 
-import com.gabriel.pive.calendar.schedule.dtos.ScheduleDto;
+import com.gabriel.pive.calendar.schedule.dtos.ScheduleRequestDto;
+import com.gabriel.pive.calendar.schedule.dtos.ScheduleResponseDto;
 import com.gabriel.pive.calendar.schedule.entities.Schedule;
 import com.gabriel.pive.calendar.schedule.enums.ProcedureStatus;
 import com.gabriel.pive.calendar.schedule.repositories.ScheduleRepository;
@@ -15,8 +16,8 @@ public class ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
 
-    public ScheduleDto createSchedule(ScheduleDto dto){
-        return ScheduleDto.toScheduleDto(scheduleRepository.save(dto.toSchedule()));
+    public ScheduleResponseDto createSchedule(ScheduleRequestDto dto){
+        return ScheduleResponseDto.toScheduleResponseDto(scheduleRepository.save(dto.toSchedule()));
     }
 
     public Schedule getScheduleById(Long id){
@@ -27,7 +28,7 @@ public class ScheduleService {
         return optionalSchedule.get();
     }
 
-    public ScheduleDto editSchedule(Long id, ScheduleDto dto){
+    public ScheduleResponseDto editSchedule(Long id, ScheduleRequestDto dto){
         Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
         if (optionalSchedule.isEmpty()){
             return null;
@@ -36,17 +37,17 @@ public class ScheduleService {
         schedule.setProcedureType(dto.procedureType());
         schedule.setDate(dto.date());
 
-        return ScheduleDto.toScheduleDto(schedule);
+        return ScheduleResponseDto.toScheduleResponseDto(schedule);
     }
 
-    public ScheduleDto cancelSchedule(Long id){
+    public ScheduleResponseDto cancelSchedule(Long id){
         if (getScheduleById(id) == null){
             return null;
         }
         Schedule schedule = getScheduleById(id);
         schedule.setProcedureStatus(ProcedureStatus.CANCELED);
 
-        return ScheduleDto.toScheduleDto(scheduleRepository.save(schedule));
+        return ScheduleResponseDto.toScheduleResponseDto(scheduleRepository.save(schedule));
     }
 
 }
