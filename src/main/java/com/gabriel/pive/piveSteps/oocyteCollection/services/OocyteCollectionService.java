@@ -1,16 +1,21 @@
-package com.gabriel.pive.piveSteps.services;
+package com.gabriel.pive.piveSteps.oocyteCollection.services;
 
+import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
-import com.gabriel.pive.piveSteps.dtos.OocyteCollectionDto;
-import com.gabriel.pive.piveSteps.entities.OocyteCollection;
-import com.gabriel.pive.piveSteps.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.animals.services.BullService;
+import com.gabriel.pive.animals.services.DonorCattleService;
+import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionDto;
+import com.gabriel.pive.piveSteps.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.piveSteps.oocyteCollection.repositories.OocyteCollectionRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class OocyteCollectionService {
@@ -30,11 +35,12 @@ public class OocyteCollectionService {
         System.out.println(donorCattle.getName());
 
         Bull bull = bullRepository.findById(dto.bullId())
-                .orElseThrow(() -> new EntityNotFoundException("Bull not found")));
+                .orElseThrow(() -> new EntityNotFoundException("Bull not found"));
 
         OocyteCollection oocyteCollection = dto.toOocyteCollection(donorCattle, bull);
 
-        collectionRepository.save(oocyteCollection);
+        return OocyteCollectionDto.toOocyteCollectionDto(collectionRepository.save(oocyteCollection));
 
     }
+
 }

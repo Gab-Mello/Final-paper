@@ -1,6 +1,6 @@
 package com.gabriel.pive.animals.entities;
 
-import com.gabriel.pive.piveSteps.entities.OocyteCollection;
+import com.gabriel.pive.piveSteps.oocyteCollection.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

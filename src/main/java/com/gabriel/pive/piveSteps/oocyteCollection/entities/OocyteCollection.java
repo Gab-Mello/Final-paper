@@ -1,4 +1,4 @@
-package com.gabriel.pive.piveSteps.entities;
+package com.gabriel.pive.piveSteps.oocyteCollection.entities;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
