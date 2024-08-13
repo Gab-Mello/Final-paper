@@ -61,5 +61,9 @@ public class ScheduleService {
         return ScheduleResponseDto.toScheduleReponseDtoList(list);
     }
 
+    public List<ScheduleResponseDto> listAllSchedules(){
+        List<Schedule> list = scheduleRepository.findByProcedureStatus(ProcedureStatus.PENDING);
+        return ScheduleResponseDto.toScheduleReponseDtoList(list);
+    }
 
 }

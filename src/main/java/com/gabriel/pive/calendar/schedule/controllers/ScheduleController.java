@@ -46,10 +46,17 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.cancelSchedule(id));
     }
 
-    @Operation(summary = "Search the schedules by date", description = "It returns a list of all schedules with the specific date")
+    @Operation(summary = "Filter the schedules by date", description = "It returns a list of all schedules with the specific date")
     @GetMapping("/search")
     public ResponseEntity<List<ScheduleResponseDto>> getSchedulesByDate(@Parameter(description = "Example: http://localhost:8080/schedule/search?date=2024-08-01")
                                                                             @RequestParam LocalDate date){
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.getSchedulesByDate(date));
     }
+
+    @Operation(summary = "Get all the schedules", description = "It returns a list with all pending schedules")
+    @GetMapping
+    public ResponseEntity<List<ScheduleResponseDto>> listAllSchedules(){
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.listAllSchedules());
+    }
+
 }
