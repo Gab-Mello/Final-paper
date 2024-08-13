@@ -1,7 +1,9 @@
 package com.gabriel.pive.piveSteps.oocyteCollection.controllers;
 
 import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionDto;
+import com.gabriel.pive.piveSteps.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.piveSteps.oocyteCollection.services.OocyteCollectionService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,13 @@ public class OocyteCollectionController {
 
     @PostMapping
     public ResponseEntity<OocyteCollectionDto> newOocyteCollection(@RequestBody OocyteCollectionDto dto){
-        if (oocyteCollectionService.newOocyteCollection(dto) == null){
-            return ResponseEntity.notFound().build();
+        try{
+            OocyteCollectionDto oocyteCollection = oocyteCollectionService.newOocyteCollection(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(oocyteCollectionService.newOocyteCollection(dto));
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(oocyteCollectionService.newOocyteCollection(dto));
+        catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
     }
 }

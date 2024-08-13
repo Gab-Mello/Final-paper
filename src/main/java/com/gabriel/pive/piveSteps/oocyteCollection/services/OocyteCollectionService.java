@@ -32,7 +32,6 @@ public class OocyteCollectionService {
     public OocyteCollectionDto newOocyteCollection(OocyteCollectionDto dto){
         DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
                 .orElseThrow(() -> new EntityNotFoundException("Donor not found"));
-        System.out.println(donorCattle.getName());
 
         Bull bull = bullRepository.findById(dto.bullId())
                 .orElseThrow(() -> new EntityNotFoundException("Bull not found"));
