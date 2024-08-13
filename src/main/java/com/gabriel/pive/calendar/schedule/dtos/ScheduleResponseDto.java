@@ -7,12 +7,13 @@ import com.gabriel.pive.calendar.schedule.enums.ProcedureType;
 import java.time.LocalDate;
 import java.util.List;
 
-public record ScheduleResponseDto(ProcedureType procedureType,
+public record ScheduleResponseDto(Long id,
+                                  ProcedureType procedureType,
                                   LocalDate date,
                                   ProcedureStatus procedureStatus) {
 
     public static ScheduleResponseDto toScheduleResponseDto(Schedule schedule){
-        return new ScheduleResponseDto(schedule.getProcedureType(), schedule.getDate(), schedule.getProcedureStatus());
+        return new ScheduleResponseDto(schedule.getId(), schedule.getProcedureType(), schedule.getDate(), schedule.getProcedureStatus());
     }
 
     public static List<ScheduleResponseDto> toScheduleReponseDtoList(List<Schedule> list){
