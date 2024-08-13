@@ -4,11 +4,15 @@ import com.gabriel.pive.calendar.schedule.dtos.ScheduleRequestDto;
 import com.gabriel.pive.calendar.schedule.dtos.ScheduleResponseDto;
 import com.gabriel.pive.calendar.schedule.services.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("schedule")
@@ -40,5 +44,12 @@ public class ScheduleController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.cancelSchedule(id));
+    }
+
+    @Operation(summary = "Search the schedules by date", description = "It returns a list of all schedules with the specific date")
+    @GetMapping("/search")
+    public ResponseEntity<List<ScheduleResponseDto>> getSchedulesByDate(@Parameter(description = "Example: http://localhost:8080/schedule/search?date=2024-08-01")
+                                                                            @RequestParam LocalDate date){
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.getSchedulesByDate(date));
     }
 }

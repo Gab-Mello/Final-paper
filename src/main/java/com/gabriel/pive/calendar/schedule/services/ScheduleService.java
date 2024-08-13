@@ -8,6 +8,8 @@ import com.gabriel.pive.calendar.schedule.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,6 +50,11 @@ public class ScheduleService {
         schedule.setProcedureStatus(ProcedureStatus.CANCELED);
 
         return ScheduleResponseDto.toScheduleResponseDto(scheduleRepository.save(schedule));
+    }
+
+    public List<ScheduleResponseDto> getSchedulesByDate(LocalDate date){
+        List<Schedule> list = scheduleRepository.findByDateAndProcedureStatus(date, ProcedureStatus.PENDING);
+        return ScheduleResponseDto.toScheduleReponseDtoList(list);
     }
 
 }
