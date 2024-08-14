@@ -1,14 +1,11 @@
 package com.gabriel.pive.piveSteps.oocyteCollection.services;
 
-import com.gabriel.pive.animals.dtos.BullDto;
-import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
-import com.gabriel.pive.animals.services.BullService;
-import com.gabriel.pive.animals.services.DonorCattleService;
-import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionDto;
+import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionRequestDto;
+import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.piveSteps.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.piveSteps.oocyteCollection.repositories.OocyteCollectionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OocyteCollectionService {
@@ -30,7 +26,7 @@ public class OocyteCollectionService {
     @Autowired
     private BullRepository bullRepository;
 
-    public OocyteCollectionDto newOocyteCollection(OocyteCollectionDto dto){
+    public OocyteCollectionResponseDto newOocyteCollection(OocyteCollectionRequestDto dto){
         DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
                 .orElseThrow(() -> new EntityNotFoundException("Donor not found"));
 
@@ -39,31 +35,31 @@ public class OocyteCollectionService {
 
         OocyteCollection oocyteCollection = dto.toOocyteCollection(donorCattle, bull);
 
-        return OocyteCollectionDto.toOocyteCollectionDto(collectionRepository.save(oocyteCollection));
+        return OocyteCollectionResponseDto.toOocyteCollectionDto(collectionRepository.save(oocyteCollection));
 
     }
 
-    public List<OocyteCollectionDto> getAll(){
+    public List<OocyteCollectionResponseDto> getAll(){
         List<OocyteCollection> list = collectionRepository.findAll();
-        return OocyteCollectionDto.toOocyteCollectionDtoList(list);
+        return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
 
-    public OocyteCollectionDto getCollectionById(Long id){
+    public OocyteCollectionResponseDto getCollectionById(Long id){
 
         OocyteCollection oocyteCollection = collectionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Oocyte Collection not found"));
 
-        return OocyteCollectionDto.toOocyteCollectionDto(oocyteCollection);
+        return OocyteCollectionResponseDto.toOocyteCollectionDto(oocyteCollection);
     }
 
-    public List<OocyteCollectionDto> filterByBull(String registrationNumber){
+    public List<OocyteCollectionResponseDto> filterByBull(String registrationNumber){
         List<OocyteCollection> list = collectionRepository.findByBullRegistrationNumber(registrationNumber);
-        return OocyteCollectionDto.toOocyteCollectionDtoList(list);
+        return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
 
-    public List<OocyteCollectionDto> filterByDonor(String registrationNumber){
+    public List<OocyteCollectionResponseDto> filterByDonor(String registrationNumber){
         List<OocyteCollection> list = collectionRepository.findByDonorCattleRegistrationNumber(registrationNumber);
-        return OocyteCollectionDto.toOocyteCollectionDtoList(list);
+        return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
 
 }

@@ -38,9 +38,15 @@ public class OocyteCollection {
 
     private Integer nonViableOocytes;
 
-    public OocyteCollection(DonorCattle donorCattle, Bull bull, Integer totalOocytes, LocalDate date){
+    private String technical;
+
+    public OocyteCollection(DonorCattle donorCattle, Bull bull, String technical,
+                            Integer viableOocytes, Integer nonViableOocytes, Integer totalOocytes, LocalDate date){
         this.donorCattle = donorCattle;
         this.bull = bull;
+        this.technical = technical;
+        this.viableOocytes = viableOocytes;
+        this.nonViableOocytes = nonViableOocytes;
         this.totalOocytes = totalOocytes;
         this.date = date;
     }
