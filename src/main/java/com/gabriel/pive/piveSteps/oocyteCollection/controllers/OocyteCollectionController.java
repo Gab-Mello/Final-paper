@@ -35,7 +35,7 @@ public class OocyteCollectionController {
 
     }
 
-    @Operation(summary = "List all oocyte collections", description = "It returns a json list with all  oocyte collections")
+    @Operation(summary = "List all oocyte collections", description = "It returns a json list with all oocyte collections")
     @GetMapping
     public ResponseEntity<List<OocyteCollectionDto>> getAllOocyteCollections(){
         return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.getAll());
