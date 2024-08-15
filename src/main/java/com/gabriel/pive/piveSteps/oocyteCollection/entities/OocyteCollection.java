@@ -24,6 +24,16 @@ public class OocyteCollection {
 
     private LocalDate date;
 
+    private String farm;
+
+    private String laboratory;
+
+    private String client;
+
+    private String veterinarian;
+
+    private String technical;
+
     @ManyToOne
     @JoinColumn(name = "donor_id")
     private DonorCattle donorCattle;
@@ -38,17 +48,22 @@ public class OocyteCollection {
 
     private Integer nonViableOocytes;
 
-    private String technical;
 
-    public OocyteCollection(DonorCattle donorCattle, Bull bull, String technical,
-                            Integer viableOocytes, Integer nonViableOocytes, Integer totalOocytes, LocalDate date){
+    public OocyteCollection(DonorCattle donorCattle, Bull bull, String farm, String laboratory, String client,
+                            String veterinarian, String technical,Integer totalOocytes, Integer viableOocytes,
+                            Integer nonViableOocytes, LocalDate date){
+
+        this.date = date;
+        this.farm = farm;
+        this.laboratory = laboratory;
+        this.client = client;
+        this.veterinarian = veterinarian;
+        this.technical = technical;
         this.donorCattle = donorCattle;
         this.bull = bull;
-        this.technical = technical;
+        this.totalOocytes = totalOocytes;
         this.viableOocytes = viableOocytes;
         this.nonViableOocytes = nonViableOocytes;
-        this.totalOocytes = totalOocytes;
-        this.date = date;
     }
 
 

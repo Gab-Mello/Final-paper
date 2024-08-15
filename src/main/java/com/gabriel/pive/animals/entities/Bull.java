@@ -1,5 +1,6 @@
 package com.gabriel.pive.animals.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.piveSteps.oocyteCollection.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class Bull {
 
     private String registrationNumber;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bull")
     private List<OocyteCollection> oocyteCollections = new ArrayList<>();
 
