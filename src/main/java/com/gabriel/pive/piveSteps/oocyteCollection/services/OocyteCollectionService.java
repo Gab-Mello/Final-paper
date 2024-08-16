@@ -44,6 +44,21 @@ public class OocyteCollectionService {
         return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
 
+    public OocyteCollectionResponseDto editCollection(Long id, OocyteCollectionRequestDto dto){
+        OocyteCollection oocyteCollection = collectionRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Oocyte Collection not found"));
+
+        DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
+                .orElseThrow(() -> new EntityNotFoundException("Donor not found"));
+
+        Bull bull = bullRepository.findById(dto.bullId())
+                .orElseThrow(() -> new EntityNotFoundException("Bull not found"));
+
+        return OocyteCollectionResponseDto.toOocyteCollectionDto(collectionRepository.save(OocyteCollectionResponseDto.
+                editMapper(oocyteCollection, dto, donorCattle, bull)));
+
+    }
+
     public OocyteCollectionResponseDto getCollectionById(Long id){
 
         OocyteCollection oocyteCollection = collectionRepository.findById(id)
@@ -61,5 +76,7 @@ public class OocyteCollectionService {
         List<OocyteCollection> list = collectionRepository.findByDonorCattleRegistrationNumber(registrationNumber);
         return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
+
+
 
 }

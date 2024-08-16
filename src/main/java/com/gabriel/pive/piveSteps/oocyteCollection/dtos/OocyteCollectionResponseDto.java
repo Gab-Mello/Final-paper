@@ -42,5 +42,23 @@ public record OocyteCollectionResponseDto( LocalDate date,
         return listDto;
     }
 
+    public static OocyteCollection editMapper(OocyteCollection oocyteCollection, OocyteCollectionRequestDto dto,
+                                                         DonorCattle donorCattle,
+                                                         Bull bull){
+        oocyteCollection.setDate(dto.date());
+        oocyteCollection.setFarm(dto.farm());
+        oocyteCollection.setLaboratory(dto.laboratory());
+        oocyteCollection.setClient(dto.client());
+        oocyteCollection.setVeterinarian(dto.veterinarian());
+        oocyteCollection.setTechnical(dto.technical());
+        oocyteCollection.setDonorCattle(donorCattle);
+        oocyteCollection.setBull(bull);
+        oocyteCollection.setTotalOocytes(dto.totalOocytes());
+        oocyteCollection.setViableOocytes(dto.viableOocytes());
+        oocyteCollection.setNonViableOocytes(dto.totalOocytes() - dto.viableOocytes());
+
+        return oocyteCollection;
+    }
+
 
 }

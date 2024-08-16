@@ -42,6 +42,17 @@ public class OocyteCollectionController {
 
     }
 
+    @Operation(summary = "Edit a oocyte collection", description = "It returns a json with the oocyte collection edited")
+    @PutMapping("/{id}")
+    public ResponseEntity<OocyteCollectionResponseDto> editOocyteCollection(@PathVariable Long id, @RequestBody OocyteCollectionRequestDto dto){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.editCollection(id, dto));
+        }
+        catch (EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @Operation(summary = "Find a oocyte collection by Id", description = "It returns a json with the oocyte collection found by Id ")
     @GetMapping("/{id}")
     public ResponseEntity<OocyteCollectionResponseDto> getOocyteCollectionById(@PathVariable Long id){
