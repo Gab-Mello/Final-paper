@@ -1,8 +1,8 @@
-package com.gabriel.pive.piveSteps.oocyteCollection.controllers;
+package com.gabriel.pive.fiv.oocyteCollection.controllers;
 
-import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionRequestDto;
-import com.gabriel.pive.piveSteps.oocyteCollection.dtos.OocyteCollectionResponseDto;
-import com.gabriel.pive.piveSteps.oocyteCollection.services.OocyteCollectionService;
+import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
+import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
+import com.gabriel.pive.fiv.oocyteCollection.services.OocyteCollectionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

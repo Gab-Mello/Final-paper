@@ -1,10 +1,10 @@
-package com.gabriel.pive.piveSteps.oocyteCollection.dtos;
+package com.gabriel.pive.fiv.oocyteCollection.dtos;
 
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
-import com.gabriel.pive.piveSteps.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 
 import java.time.LocalDate;
 import java.util.List;

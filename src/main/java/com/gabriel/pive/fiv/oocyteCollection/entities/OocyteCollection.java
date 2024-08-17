@@ -1,7 +1,8 @@
-package com.gabriel.pive.piveSteps.oocyteCollection.entities;
+package com.gabriel.pive.fiv.oocyteCollection.entities;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
+import com.gabriel.pive.fiv.entities.Fiv;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,9 @@ public class OocyteCollection {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @OneToOne(mappedBy = "oocyteCollection")
+    private Fiv fiv;
 
     private LocalDate date;
 
