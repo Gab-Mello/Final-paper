@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gabriel.pive.fiv.cultivation.entities.Embryo;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,9 @@ public class DonorCattle {
     @JsonIgnore
     @OneToMany(mappedBy = "donorCattle")
     private List<OocyteCollection> oocyteCollections = new ArrayList<>();
+
+    @OneToMany(mappedBy = "embryoDonorCattle")
+    private List<Embryo> embryosGenerated = new ArrayList<>();
 
     public DonorCattle(String name, String breed, LocalDate birth, String registrationNumber){
         this.name = name;

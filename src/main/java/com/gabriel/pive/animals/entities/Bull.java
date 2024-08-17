@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gabriel.pive.fiv.cultivation.entities.Embryo;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,9 @@ public class Bull {
     @JsonIgnore
     @OneToMany(mappedBy = "bull")
     private List<OocyteCollection> oocyteCollections = new ArrayList<>();
+
+    @OneToMany(mappedBy = "embryoBull")
+    private List<Embryo> embryosGenerated = new ArrayList<>();
 
     public Bull(String name, String registrationNumber){
         this.name = name;

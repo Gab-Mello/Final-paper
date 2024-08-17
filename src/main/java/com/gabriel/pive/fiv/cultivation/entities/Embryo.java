@@ -21,9 +21,13 @@ public class Embryo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Bull bull;
+    @ManyToOne
+    @JoinColumn(name = "bull_id")
+    private Bull embryoBull;
 
-    private DonorCattle donorCattle;
+    @ManyToOne
+    @JoinColumn(name = "donor_id")
+    private DonorCattle embryoDonorCattle;
 
     private boolean frozen = false;
 
