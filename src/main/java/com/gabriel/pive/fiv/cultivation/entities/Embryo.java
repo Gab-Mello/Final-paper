@@ -22,6 +22,10 @@ public class Embryo {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "cultivation_id")
+    private Cultivation cultivation;
+
+    @ManyToOne
     @JoinColumn(name = "bull_id")
     private Bull embryoBull;
 
@@ -35,9 +39,6 @@ public class Embryo {
     @JoinColumn(name = "receiver_id")
     private ReceiverCattle embryoReceiverCattle;
 
-    @ManyToOne
-    @JoinColumn(name = "cultivation_id")
-    private Cultivation cultivation;
 
 
 
