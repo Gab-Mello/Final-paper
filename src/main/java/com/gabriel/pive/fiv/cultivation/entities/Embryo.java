@@ -31,7 +31,9 @@ public class Embryo {
 
     private boolean frozen = false;
 
-    private ReceiverCattle receiverCattle;
+    @OneToOne
+    @JoinColumn(name = "receiver_id")
+    private ReceiverCattle embryoReceiverCattle;
 
     @ManyToOne
     @JoinColumn(name = "cultivation_id")
