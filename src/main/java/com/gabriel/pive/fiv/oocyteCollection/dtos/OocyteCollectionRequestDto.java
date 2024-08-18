@@ -20,9 +20,8 @@ public record OocyteCollectionRequestDto( Long fivId,
                                           Integer viableOocytes
                                          ) {
 
-    public OocyteCollection toOocyteCollection(DonorCattle donorCattle, Bull bull, Fiv fiv){
+    public OocyteCollection toOocyteCollection(DonorCattle donorCattle, Bull bull){
         return new OocyteCollection(
-                fiv,
                 donorCattle,
                 bull,
                 farm,

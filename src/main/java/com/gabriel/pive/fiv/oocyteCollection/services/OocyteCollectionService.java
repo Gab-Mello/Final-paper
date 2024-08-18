@@ -41,12 +41,17 @@ public class OocyteCollectionService {
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(() -> new EntityNotFoundException("Fiv not found"));
 
-        OocyteCollection oocyteCollection = dto.toOocyteCollection(donorCattle, bull, fiv);
+        OocyteCollection oocyteCollection = dto.toOocyteCollection(donorCattle, bull);
+
         OocyteCollection savedOocyteCollection = collectionRepository.save(oocyteCollection);
+
         fiv.setOocyteCollection(savedOocyteCollection);
         fivRepository.save(fiv);
 
-        return OocyteCollectionResponseDto.toOocyteCollectionDto(savedOocyteCollection);
+        OocyteCollection responseOocyteCollection = collectionRepository.findById(savedOocyteCollection.getId())
+                .orElseThrow(() -> new EntityNotFoundException("OocyteCollection not found"));
+
+        return OocyteCollectionResponseDto.toOocyteCollectionDto(responseOocyteCollection);
 
     }
 

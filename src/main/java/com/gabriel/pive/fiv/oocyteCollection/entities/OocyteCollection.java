@@ -21,7 +21,7 @@ public class OocyteCollection {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne(mappedBy = "oocyteCollection")
+    @OneToOne(mappedBy = "oocyteCollection", fetch = FetchType.EAGER)
     private Fiv fiv;
 
     private LocalDate date;
@@ -51,10 +51,9 @@ public class OocyteCollection {
     private Integer nonViableOocytes;
 
 
-    public OocyteCollection(Fiv fiv, DonorCattle donorCattle, Bull bull, String farm, String laboratory, String client,
+    public OocyteCollection(DonorCattle donorCattle, Bull bull, String farm, String laboratory, String client,
                             String veterinarian, String technical,Integer totalOocytes, Integer viableOocytes,
                             Integer nonViableOocytes, LocalDate date){
-        this.fiv = fiv;
         this.date = date;
         this.farm = farm;
         this.laboratory = laboratory;

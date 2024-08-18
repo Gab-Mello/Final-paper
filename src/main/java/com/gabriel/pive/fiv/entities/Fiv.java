@@ -22,7 +22,7 @@ public class Fiv {
     private Long id;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "oocyteCollection_id")
     private OocyteCollection oocyteCollection;
 
