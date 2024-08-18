@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 public class ReceiverCattle {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

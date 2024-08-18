@@ -1,9 +1,9 @@
 services:
   mysql:
-    container_name: 'mysql-pive'
+    container_name: 'mysql-pivedatabase'
     image: 'mysql:latest'
     environment:
-      - 'MYSQL_DATABASE=pivedb'
+      - 'MYSQL_DATABASE=pivedatabase'
       - 'MYSQL_PASSWORD=123'
       - 'MYSQL_ROOT_PASSWORD=123'
       - 'MYSQL_USER=admin'
