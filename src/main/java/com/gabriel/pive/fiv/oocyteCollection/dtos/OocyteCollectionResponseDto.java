@@ -4,12 +4,14 @@ import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
+import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record OocyteCollectionResponseDto( LocalDate date,
+public record OocyteCollectionResponseDto( Fiv fiv,
+                                           LocalDate date,
                                            String farm,
                                            String laboratory,
                                            String client,
@@ -24,6 +26,7 @@ public record OocyteCollectionResponseDto( LocalDate date,
 
     public static OocyteCollectionResponseDto toOocyteCollectionDto(OocyteCollection oocyteCollection){
         return new OocyteCollectionResponseDto(
+                oocyteCollection.getFiv(),
                 oocyteCollection.getDate(),
                 oocyteCollection.getFarm(),
                 oocyteCollection.getLaboratory(),

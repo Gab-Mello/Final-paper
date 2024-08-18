@@ -4,10 +4,7 @@ import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.fiv.entities.Fiv;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -17,6 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "tb_oocyte_collections")
+@ToString
 public class OocyteCollection {
 
     @Id
@@ -53,10 +51,10 @@ public class OocyteCollection {
     private Integer nonViableOocytes;
 
 
-    public OocyteCollection(DonorCattle donorCattle, Bull bull, String farm, String laboratory, String client,
+    public OocyteCollection(Fiv fiv, DonorCattle donorCattle, Bull bull, String farm, String laboratory, String client,
                             String veterinarian, String technical,Integer totalOocytes, Integer viableOocytes,
                             Integer nonViableOocytes, LocalDate date){
-
+        this.fiv = fiv;
         this.date = date;
         this.farm = farm;
         this.laboratory = laboratory;
