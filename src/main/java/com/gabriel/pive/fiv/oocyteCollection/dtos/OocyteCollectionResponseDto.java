@@ -27,6 +27,11 @@ public record OocyteCollectionResponseDto( Long fivId,
 ) {
 
     public static OocyteCollectionResponseDto toOocyteCollectionDto(OocyteCollection oocyteCollection){
+
+        if (oocyteCollection == null){
+            return null;
+        }
+
         return new OocyteCollectionResponseDto(
                 oocyteCollection.getFiv().getId(),
                 oocyteCollection.getDate(),

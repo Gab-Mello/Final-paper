@@ -5,13 +5,18 @@ import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public record FivResponseDto(Long id, OocyteCollectionResponseDto oocyteCollection, Cultivation cultivation) {
 
+
     public static FivResponseDto toFivResponseDto(Fiv fiv){
-        return new FivResponseDto(fiv.getId(),
+        return new FivResponseDto(
+                fiv.getId(),
                 OocyteCollectionResponseDto.toOocyteCollectionDto(fiv.getOocyteCollection()),
                 fiv.getCultivation());
     }

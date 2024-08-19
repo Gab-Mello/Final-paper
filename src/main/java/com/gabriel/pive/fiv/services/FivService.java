@@ -15,10 +15,12 @@ public class FivService {
     private FivRepository fivRepository;
 
     public FivResponseDto createFiv(){
+
         return FivResponseDto.toFivResponseDto(fivRepository.save(new Fiv()));
     }
 
     public List<FivResponseDto> getAllFivs(){
+
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAll());
     }
 
