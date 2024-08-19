@@ -33,6 +33,11 @@ public class Cultivation {
 
     private Integer viableEmbryos;
 
+    public Cultivation(Fiv fiv, List<Embryo> embryos, Integer totalEmbryos, Integer viableEmbryos){
+        this.fiv = fiv;
+        this.embryos = embryos;
+        this.totalEmbryos = totalEmbryos;
+        this.viableEmbryos = viableEmbryos;
 
-
+    }
 }
