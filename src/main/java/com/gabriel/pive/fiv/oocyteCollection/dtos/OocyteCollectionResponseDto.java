@@ -1,7 +1,9 @@
 package com.gabriel.pive.fiv.oocyteCollection.dtos;
 
 import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.dtos.BullSummaryDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
+import com.gabriel.pive.animals.dtos.DonorCattleSummaryDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.fiv.entities.Fiv;
@@ -10,7 +12,7 @@ import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import java.time.LocalDate;
 import java.util.List;
 
-public record OocyteCollectionResponseDto( Fiv fiv,
+public record OocyteCollectionResponseDto( Long fivId,
                                            LocalDate date,
                                            String farm,
                                            String laboratory,
@@ -26,15 +28,15 @@ public record OocyteCollectionResponseDto( Fiv fiv,
 
     public static OocyteCollectionResponseDto toOocyteCollectionDto(OocyteCollection oocyteCollection){
         return new OocyteCollectionResponseDto(
-                oocyteCollection.getFiv(),
+                oocyteCollection.getFiv().getId(),
                 oocyteCollection.getDate(),
                 oocyteCollection.getFarm(),
                 oocyteCollection.getLaboratory(),
                 oocyteCollection.getClient(),
                 oocyteCollection.getVeterinarian(),
                 oocyteCollection.getTechnical(),
-                DonorCattleDto.toDonorCattleDto(oocyteCollection.getDonorCattle()),
-                BullDto.toBullDto(oocyteCollection.getBull()),
+                DonorCattleSummaryDto.toDonorCattleSummaryDto(oocyteCollection.getDonorCattle()),
+                BullSummaryDto.toBullSummaryDto(oocyteCollection.getBull()),
                 oocyteCollection.getTotalOocytes(),
                 oocyteCollection.getViableOocytes(),
                 oocyteCollection.getNonViableOocytes());
