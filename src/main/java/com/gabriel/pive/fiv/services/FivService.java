@@ -6,6 +6,8 @@ import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FivService {
 
@@ -15,4 +17,9 @@ public class FivService {
     public FivResponseDto createFiv(){
         return FivResponseDto.toFivResponseDto(fivRepository.save(new Fiv()));
     }
+
+    public List<FivResponseDto> getAllFivs(){
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findAll());
+    }
+
 }

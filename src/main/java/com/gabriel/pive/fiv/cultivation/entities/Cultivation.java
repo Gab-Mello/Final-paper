@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.cultivation.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.fiv.entities.Fiv;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,10 +22,11 @@ public class Cultivation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "cultivation")
     private Fiv fiv;
 
-    @OneToMany
+    @OneToMany(mappedBy = "embryoCultivation" )
     private List<Embryo> embryos;
 
     private Integer totalEmbryos;

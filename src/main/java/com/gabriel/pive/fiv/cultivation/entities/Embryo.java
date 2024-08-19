@@ -23,7 +23,7 @@ public class Embryo {
 
     @ManyToOne
     @JoinColumn(name = "cultivation_id")
-    private Cultivation cultivation;
+    private Cultivation embryoCultivation;
 
     @ManyToOne
     @JoinColumn(name = "bull_id")

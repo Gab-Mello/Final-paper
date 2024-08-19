@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.oocyteCollection.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.fiv.entities.Fiv;
@@ -21,6 +22,7 @@ public class OocyteCollection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "oocyteCollection", fetch = FetchType.EAGER)
     private Fiv fiv;
 
