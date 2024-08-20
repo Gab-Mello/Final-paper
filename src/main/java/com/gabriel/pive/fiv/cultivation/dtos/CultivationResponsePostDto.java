@@ -12,7 +12,6 @@ public record CultivationResponsePostDto(Long id, Long fivId,
     public static CultivationResponseDto toCultivationResponsePostDto(Cultivation cultivation, Long fivId){
         return new CultivationResponseDto(
                 cultivation.getId(),
-                fivId,
                 cultivation.getEmbryos(),
                 cultivation.getTotalEmbryos(),
                 cultivation.getViableEmbryos());

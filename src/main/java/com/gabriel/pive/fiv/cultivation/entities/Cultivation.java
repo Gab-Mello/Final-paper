@@ -34,9 +34,8 @@ public class Cultivation {
 
     private Integer viableEmbryos;
 
-    public Cultivation(Fiv fiv, List<EmbryoRequestDto> embryos, Integer totalEmbryos, Integer viableEmbryos){
+    public Cultivation(Fiv fiv, Integer totalEmbryos, Integer viableEmbryos){
         this.fiv = fiv;
-//        this.embryos = EmbryoRequestDto.toListEmbryo(embryos);
         this.totalEmbryos = totalEmbryos;
         this.viableEmbryos = viableEmbryos;
 

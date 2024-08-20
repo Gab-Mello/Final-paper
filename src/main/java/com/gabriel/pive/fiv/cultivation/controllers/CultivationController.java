@@ -3,6 +3,7 @@ package com.gabriel.pive.fiv.cultivation.controllers;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.services.CultivationService;
+import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,13 +27,13 @@ public class CultivationController {
 
     @Operation(summary = "Save a new cultivation", description = "It saves and returns a json with the new cultivation")
     @PostMapping
-    public ResponseEntity<CultivationResponseDto> newCultivation(@RequestBody CultivationRequestDto dto){
+    public ResponseEntity<?> newCultivation(@RequestBody CultivationRequestDto dto){
         try{
             CultivationResponseDto cultivation = cultivationService.newCultivation(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
         }
-        catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        catch (FivNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }

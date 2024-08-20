@@ -5,6 +5,7 @@ import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
 import com.gabriel.pive.fiv.cultivation.repositories.CultivationRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CultivationService {
     public CultivationResponseDto newCultivation(CultivationRequestDto dto){
 
         Fiv fiv = fivRepository.findById(dto.fivId())
-                .orElseThrow(() -> new EntityNotFoundException("Fiv not found"));
+                .orElseThrow(() -> new FivNotFoundException("Fiv not found"));
 
         Cultivation cultivation = dto.toCultivation(fiv);
 
@@ -31,10 +32,8 @@ public class CultivationService {
         fiv.setCultivation(savedCultivation);
         fivRepository.save(fiv);
 
-        Cultivation responseCultivation = cultivationRepository.findById(savedCultivation.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Cultivation not found"));
 
-        return CultivationResponseDto.toCultivationResponseDto(responseCultivation);
+        return CultivationResponseDto.toCultivationResponseDto(savedCultivation);
 
     }
 }

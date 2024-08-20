@@ -8,14 +8,13 @@ import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 
 import java.util.List;
 
-public record CultivationResponseDto(Long id, Long fivId,
+public record CultivationResponseDto(Long id,
                                      List<Embryo> embryos, Integer totalEmbryos,
                                      Integer viableEmbryos) {
 
     public static CultivationResponseDto toCultivationResponseDto(Cultivation cultivation){
         return new CultivationResponseDto(
                 cultivation.getId(),
-                cultivation.getFiv().getId(),
                 cultivation.getEmbryos(),
                 cultivation.getTotalEmbryos(),
                 cultivation.getViableEmbryos());

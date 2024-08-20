@@ -39,7 +39,8 @@ public class Embryo {
     @JoinColumn(name = "receiver_id")
     private ReceiverCattle embryoReceiverCattle;
 
-    public Embryo(boolean frozen, ReceiverCattle receiverCattle){
+    public Embryo(Cultivation cultivation, boolean frozen, ReceiverCattle receiverCattle){
+        this.embryoCultivation = cultivation;
         this.frozen = frozen;
         this.embryoReceiverCattle = receiverCattle;
     }
