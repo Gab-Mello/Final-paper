@@ -5,6 +5,7 @@ import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
@@ -31,7 +32,7 @@ public class OocyteCollectionService {
     @Autowired
     private FivRepository fivRepository;
 
-    public OocyteCollectionResponseDto newOocyteCollection(OocyteCollectionRequestDto dto){
+    public OocyteCollectionPostDto newOocyteCollection(OocyteCollectionRequestDto dto){
         DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
                 .orElseThrow(() -> new EntityNotFoundException("Donor not found"));
 
@@ -46,9 +47,9 @@ public class OocyteCollectionService {
         OocyteCollection savedOocyteCollection = collectionRepository.save(oocyteCollection);
 
         fiv.setOocyteCollection(savedOocyteCollection);
-        Fiv fivSaved = fivRepository.save(fiv);
+        fivRepository.save(fiv);
 
-        return OocyteCollectionResponseDto.toOocyteCollectionDto(fivSaved.getOocyteCollection()); //TODO: it's getting a error (the relationship is slow)
+        return OocyteCollectionPostDto.toOocyteCollectionPostDto(savedOocyteCollection, fiv.getId());
 
     }
 
