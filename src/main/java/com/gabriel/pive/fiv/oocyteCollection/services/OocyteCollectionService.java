@@ -46,12 +46,9 @@ public class OocyteCollectionService {
         OocyteCollection savedOocyteCollection = collectionRepository.save(oocyteCollection);
 
         fiv.setOocyteCollection(savedOocyteCollection);
-        fivRepository.save(fiv);
+        Fiv fivSaved = fivRepository.save(fiv);
 
-        OocyteCollection responseOocyteCollection = collectionRepository.findById(savedOocyteCollection.getId())
-                .orElseThrow(() -> new EntityNotFoundException("OocyteCollection not found"));
-
-        return OocyteCollectionResponseDto.toOocyteCollectionDto(responseOocyteCollection);
+        return OocyteCollectionResponseDto.toOocyteCollectionDto(fivSaved.getOocyteCollection()); //TODO: it's getting a error (the relationship is slow)
 
     }
 
