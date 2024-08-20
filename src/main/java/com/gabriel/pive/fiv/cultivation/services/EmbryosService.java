@@ -5,6 +5,7 @@ import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
 import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.cultivation.exceptions.ReceiverCattleAlreadyHasEmbryoException;
 import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,13 @@ public class EmbryosService {
 
 
     public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
-//TODO: receiver have already has a embryo
+
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
                 .orElseThrow(()-> new EntityNotFoundException("Receiver Cattle not found"));
+
+        if (receiverCattle.getEmbryo() != null){
+            throw new ReceiverCattleAlreadyHasEmbryoException("This Receiver cattle already has a embryo");
+        }
 
         Embryo embryo = dto.toEmbryo(receiverCattle);
 
