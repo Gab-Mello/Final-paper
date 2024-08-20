@@ -28,8 +28,8 @@ public class CultivationController {
     @PostMapping
     public ResponseEntity<CultivationResponseDto> newCultivation(@RequestBody CultivationRequestDto dto){
         try{
-            CultivationResponseDto oocyteCollection = cultivationService.newCultivation(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(oocyteCollection);
+            CultivationResponseDto cultivation = cultivationService.newCultivation(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
         }
         catch (EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

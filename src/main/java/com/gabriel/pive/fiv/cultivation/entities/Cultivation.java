@@ -1,6 +1,7 @@
 package com.gabriel.pive.fiv.cultivation.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.entities.Fiv;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,9 +34,9 @@ public class Cultivation {
 
     private Integer viableEmbryos;
 
-    public Cultivation(Fiv fiv, List<Embryo> embryos, Integer totalEmbryos, Integer viableEmbryos){
+    public Cultivation(Fiv fiv, List<EmbryoRequestDto> embryos, Integer totalEmbryos, Integer viableEmbryos){
         this.fiv = fiv;
-        this.embryos = embryos;
+//        this.embryos = EmbryoRequestDto.toListEmbryo(embryos);
         this.totalEmbryos = totalEmbryos;
         this.viableEmbryos = viableEmbryos;
 

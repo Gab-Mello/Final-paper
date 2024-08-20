@@ -7,7 +7,7 @@ import com.gabriel.pive.fiv.entities.Fiv;
 import java.util.List;
 
 public record CultivationRequestDto(Long fivId,
-                                    List<Embryo> embryos, Integer totalEmbryos,
+                                    List<EmbryoRequestDto> embryos, Integer totalEmbryos,
                                     Integer viableEmbryos) {
 
     public Cultivation toCultivation(Fiv fiv){
