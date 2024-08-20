@@ -28,7 +28,7 @@ public class EmbryosService {
     private CultivationRepository cultivationRepository;
 
     public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
-    //TODO: Developing others embryos fields(donor, bull...)
+
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
                 .orElseThrow(()-> new ReceiverCattleNotFoundException("Receiver Cattle not found"));
 
@@ -36,13 +36,15 @@ public class EmbryosService {
             throw new ReceiverCattleAlreadyHasEmbryoException("This Receiver cattle already has a embryo");
         }
 
-        Cultivation cultivation = cultivationRepository.findById(dto.CultivationId())
+        Cultivation cultivation = cultivationRepository.findById(dto.cultivationId())
                 .orElseThrow(()-> new CultivationNotFoundException("Cultivation not found"));
 
 
         Embryo embryo = dto.toEmbryo(receiverCattle, cultivation);
 
-      //  embryo.setEmbryoBull(embryo);
+        embryo.setEmbryoBull(cultivation.getFiv().getOocyteCollection().getBull());
+        embryo.setEmbryoDonorCattle(cultivation.getFiv().getOocyteCollection().getDonorCattle());
+
 
         return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
     }

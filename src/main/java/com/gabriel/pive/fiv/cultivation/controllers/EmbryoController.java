@@ -5,6 +5,7 @@ import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
+import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.ReceiverCattleAlreadyHasEmbryoException;
 import com.gabriel.pive.fiv.cultivation.services.EmbryosService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +32,8 @@ public class EmbryoController {
              EmbryoResponseDto embryo = embryosService.saveEmbryo(dto);
              return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
          }
-         catch (ReceiverCattleNotFoundException | ReceiverCattleAlreadyHasEmbryoException e){
+         catch (ReceiverCattleNotFoundException | ReceiverCattleAlreadyHasEmbryoException |
+                CultivationNotFoundException e){
              return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
          }
 

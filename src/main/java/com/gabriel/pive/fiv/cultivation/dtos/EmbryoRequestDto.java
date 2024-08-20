@@ -8,7 +8,7 @@ import com.gabriel.pive.fiv.cultivation.entities.Embryo;
 
 import java.util.List;
 
-public record EmbryoRequestDto(Long CultivationId, boolean frozen, Long receiverCattleId) {
+public record EmbryoRequestDto(Long cultivationId, boolean frozen, Long receiverCattleId) {
 
     public Embryo toEmbryo(ReceiverCattle receiverCattle, Cultivation cultivation){
         return new Embryo(
