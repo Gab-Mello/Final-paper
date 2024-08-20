@@ -1,6 +1,7 @@
 package com.gabriel.pive.fiv.cultivation.services;
 
 import com.gabriel.pive.animals.entities.ReceiverCattle;
+import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
 import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
@@ -22,9 +23,9 @@ public class EmbryosService {
 
 
     public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
-
+    //TODO: Developing others embryos fields(donor, bull...)
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
-                .orElseThrow(()-> new EntityNotFoundException("Receiver Cattle not found"));
+                .orElseThrow(()-> new ReceiverCattleNotFoundException("Receiver Cattle not found"));
 
         if (receiverCattle.getEmbryo() != null){
             throw new ReceiverCattleAlreadyHasEmbryoException("This Receiver cattle already has a embryo");

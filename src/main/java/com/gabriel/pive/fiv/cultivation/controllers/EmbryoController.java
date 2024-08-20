@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.cultivation.controllers;
 
+import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
@@ -30,10 +31,7 @@ public class EmbryoController {
              EmbryoResponseDto embryo = embryosService.saveEmbryo(dto);
              return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
          }
-         catch (EntityNotFoundException e){
-             return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-         }
-         catch (ReceiverCattleAlreadyHasEmbryoException e){
+         catch (ReceiverCattleNotFoundException | ReceiverCattleAlreadyHasEmbryoException e){
              return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
          }
 

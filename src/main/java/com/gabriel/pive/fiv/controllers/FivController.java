@@ -3,16 +3,14 @@ package com.gabriel.pive.fiv.controllers;
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.services.FivService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,5 +33,15 @@ public class FivController {
     @GetMapping
     public ResponseEntity<List<FivResponseDto>> listBulls(){
         return ResponseEntity.status(HttpStatus.OK).body(fivService.getAllFivs());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getFivById(@PathVariable Long id){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(fivService.getFivById(id));
+        }
+        catch (FivNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
