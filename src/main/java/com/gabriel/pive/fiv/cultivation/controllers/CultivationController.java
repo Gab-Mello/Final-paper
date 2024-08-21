@@ -2,6 +2,7 @@ package com.gabriel.pive.fiv.cultivation.controllers;
 
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
+import com.gabriel.pive.fiv.cultivation.exceptions.FivAlreadyHasCultivation;
 import com.gabriel.pive.fiv.cultivation.services.CultivationService;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
@@ -32,7 +33,7 @@ public class CultivationController {
             CultivationResponseDto cultivation = cultivationService.newCultivation(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
         }
-        catch (FivNotFoundException e){
+        catch (FivNotFoundException | FivAlreadyHasCultivation e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 

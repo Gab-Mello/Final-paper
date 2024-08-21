@@ -3,6 +3,7 @@ package com.gabriel.pive.fiv.cultivation.services;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
+import com.gabriel.pive.fiv.cultivation.exceptions.FivAlreadyHasCultivation;
 import com.gabriel.pive.fiv.cultivation.repositories.CultivationRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
@@ -24,6 +25,10 @@ public class CultivationService {
 
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(() -> new FivNotFoundException("Fiv not found"));
+
+        if (fiv.getCultivation() != null){
+            throw  new FivAlreadyHasCultivation("This fiv already has a cultivation registered");
+        }
 
         Cultivation cultivation = dto.toCultivation(fiv);
 
