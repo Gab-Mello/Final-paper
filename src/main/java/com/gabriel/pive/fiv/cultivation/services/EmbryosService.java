@@ -15,6 +15,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmbryosService {
 
@@ -60,5 +62,9 @@ public class EmbryosService {
         embryo.setFrozen(dto.frozen());
 
         return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
+    }
+
+    public List<EmbryoResponseDto> getAllEmbryos(){
+        return EmbryoResponseDto.toEmbryoResponseDtoList(embryoRepository.findAll());
     }
 }

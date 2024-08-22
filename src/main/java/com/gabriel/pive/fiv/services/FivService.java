@@ -21,7 +21,6 @@ public class FivService {
     }
 
     public List<FivResponseDto> getAllFivs(){
-
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAll());
     }
 

@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "Embryos", description = "Embryos management")
 @RestController
 @RequestMapping("/embryo")
@@ -48,4 +50,10 @@ public class EmbryoController {
             return  ResponseEntity.status(HttpStatus.CONFLICT).body("Receiver cattle already has an embryo.");
         }
         }
+
+    @Operation(summary = "Get all embryos", description = "It returns a json list with all embryos")
+    @GetMapping
+    public ResponseEntity<List<EmbryoResponseDto>> getAllEmbryos(){
+        return ResponseEntity.status(HttpStatus.OK).body(embryosService.getAllEmbryos());
+    }
     }

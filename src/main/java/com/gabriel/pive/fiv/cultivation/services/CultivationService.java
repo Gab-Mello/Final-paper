@@ -12,6 +12,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CultivationService {
 
@@ -40,5 +42,9 @@ public class CultivationService {
 
         return CultivationResponseDto.toCultivationResponseDto(savedCultivation);
 
+    }
+
+    public List<CultivationResponseDto> getAllCultivations(){
+        return CultivationResponseDto.toCultivationDtoList(cultivationRepository.findAll());
     }
 }

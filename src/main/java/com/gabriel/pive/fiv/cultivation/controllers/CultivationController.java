@@ -13,10 +13,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Cultivation", description = "Cultivation management")
 @RestController
@@ -37,5 +36,11 @@ public class CultivationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
+    }
+
+    @Operation(summary = "Get all cultivations", description = "It returns a json list with all cultivations")
+    @GetMapping
+    public ResponseEntity<List<CultivationResponseDto>> getAllCultivations(){
+        return ResponseEntity.status(HttpStatus.OK).body(cultivationService.getAllCultivations());
     }
 }

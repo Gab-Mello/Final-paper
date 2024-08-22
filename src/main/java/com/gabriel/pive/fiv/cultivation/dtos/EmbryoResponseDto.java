@@ -8,6 +8,8 @@ import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.entities.ReceiverCattle;
 import com.gabriel.pive.fiv.cultivation.entities.Embryo;
 
+import java.util.List;
+
 public record EmbryoResponseDto(Long id, BullDto bull,
                                 DonorCattleDto donorCattle,
                                 ReceiverCattleDto receiverCattle,
@@ -20,5 +22,11 @@ public record EmbryoResponseDto(Long id, BullDto bull,
                 DonorCattleDto.toDonorCattleDto(embryo.getEmbryoDonorCattle()),
                 ReceiverCattleDto.toReceiverCattleDto(embryo.getEmbryoReceiverCattle()),
                 embryo.isFrozen());
+    }
+
+    public static List<EmbryoResponseDto> toEmbryoResponseDtoList(List<Embryo> list){
+        List<EmbryoResponseDto> listDto = list.stream().map(embryo->EmbryoResponseDto.
+                toEmbryoResponseDto(embryo)).toList();
+        return listDto;
     }
 }
