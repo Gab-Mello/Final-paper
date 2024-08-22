@@ -6,6 +6,7 @@ import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
 import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
+import com.gabriel.pive.fiv.cultivation.exceptions.EmbryoNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.ReceiverCattleAlreadyHasEmbryoException;
 import com.gabriel.pive.fiv.cultivation.services.EmbryosService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,4 +59,16 @@ public class EmbryoController {
     public ResponseEntity<List<EmbryoResponseDto>> getAllEmbryos(){
         return ResponseEntity.status(HttpStatus.OK).body(embryosService.getAllEmbryos());
     }
+
+    @Operation(summary = "Get a embryo by Id", description = "It returns a json with the embryo")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEmbryoById(@PathVariable Long id){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(embryosService.getEmbryoById(id));
+        }
+        catch (EmbryoNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
     }

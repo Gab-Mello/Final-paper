@@ -8,6 +8,7 @@ import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
 import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
 import com.gabriel.pive.fiv.cultivation.entities.Embryo;
 import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
+import com.gabriel.pive.fiv.cultivation.exceptions.EmbryoNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.ReceiverCattleAlreadyHasEmbryoException;
 import com.gabriel.pive.fiv.cultivation.repositories.CultivationRepository;
 import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
@@ -66,5 +67,12 @@ public class EmbryosService {
 
     public List<EmbryoResponseDto> getAllEmbryos(){
         return EmbryoResponseDto.toEmbryoResponseDtoList(embryoRepository.findAll());
+    }
+
+    public EmbryoResponseDto getEmbryoById(Long id){
+        Embryo embryo = embryoRepository.findById(id)
+                .orElseThrow(() -> new EmbryoNotFoundException("Embryo not found"));
+
+        return EmbryoResponseDto.toEmbryoResponseDto(embryo);
     }
 }
