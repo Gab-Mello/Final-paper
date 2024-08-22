@@ -25,6 +25,9 @@ public record EmbryoResponseDto(Long id, BullDto bull,
     }
 
     public static List<EmbryoResponseDto> toEmbryoResponseDtoList(List<Embryo> list){
+        if (list == null){
+            return null;
+        }
         List<EmbryoResponseDto> listDto = list.stream().map(embryo->EmbryoResponseDto.
                 toEmbryoResponseDto(embryo)).toList();
         return listDto;

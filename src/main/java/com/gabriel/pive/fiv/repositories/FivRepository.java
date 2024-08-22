@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FivRepository extends JpaRepository<Fiv,Long> {
+
+    Fiv findByCultivationId(Long cultivationId);
 }

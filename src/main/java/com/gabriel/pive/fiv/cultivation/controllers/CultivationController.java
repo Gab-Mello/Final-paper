@@ -2,6 +2,8 @@ package com.gabriel.pive.fiv.cultivation.controllers;
 
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
+import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
+import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
 import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.FivAlreadyHasCultivation;
 import com.gabriel.pive.fiv.cultivation.services.CultivationService;
@@ -53,6 +55,18 @@ public class CultivationController {
         }
         catch (CultivationNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "edit a cultivation by Id", description = "It returns a json with the cultivation edited")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editCultivation(@PathVariable Long id, @RequestBody CultivationRequestDto dto){
+        try{
+            CultivationResponseDto cultivation = cultivationService.editCultivation(id,dto);
+            return ResponseEntity.status(HttpStatus.OK).body(cultivation);
+        }
+        catch (CultivationNotFoundException | FivNotFoundException | FivAlreadyHasCultivation e){
+            return  ResponseEntity.status(HttpStatus.CONFLICT).body("Receiver cattle already has an embryo.");
         }
     }
 }

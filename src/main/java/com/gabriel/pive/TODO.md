@@ -1,5 +1,5 @@
 ## Backend
 - [x] Implement the animals's registration numbers validation.
-- [ ] Develop more endpoints for cultivation.
+- [x] Develop more endpoints for cultivation.
 - [ ] Develop more endpoints for embryos.
 - [ ] Develop validations for cultivation, embryos and fiv.

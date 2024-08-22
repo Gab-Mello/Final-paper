@@ -39,7 +39,6 @@ public class CultivationService {
         fiv.setCultivation(savedCultivation);
         fivRepository.save(fiv);
 
-
         return CultivationResponseDto.toCultivationResponseDto(savedCultivation);
 
     }
@@ -53,5 +52,33 @@ public class CultivationService {
                 .orElseThrow(() -> new CultivationNotFoundException("Cultivation not found"));
 
         return CultivationResponseDto.toCultivationResponseDto(cultivation);
+    }
+
+    public CultivationResponseDto editCultivation(Long id, CultivationRequestDto dto){
+        Cultivation cultivation = cultivationRepository.findById(id)
+                .orElseThrow(() -> new CultivationNotFoundException("Cultivation not found"));
+
+        Fiv newFiv = fivRepository.findById(dto.fivId())
+                .orElseThrow(() -> new FivNotFoundException("Fiv not found"));
+
+        Fiv oldFiv = fivRepository.findByCultivationId(id);
+        oldFiv.setCultivation(null);
+        fivRepository.save(oldFiv);
+
+        if (newFiv.getCultivation() != null){
+            throw  new FivAlreadyHasCultivation("This fiv already has a cultivation registered");
+        }
+
+        cultivation.setFiv(newFiv);
+        cultivation.setTotalEmbryos(dto.totalEmbryos());
+        cultivation.setViableEmbryos(dto.viableEmbryos());
+
+        Cultivation cultivationSaved = cultivationRepository.save(cultivation);
+
+        newFiv.setCultivation(cultivationSaved);
+        fivRepository.save(newFiv);
+
+        return CultivationResponseDto.toCultivationResponseDto(cultivationSaved);
+
     }
 }

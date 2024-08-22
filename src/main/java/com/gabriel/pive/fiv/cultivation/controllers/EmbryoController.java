@@ -40,6 +40,8 @@ public class EmbryoController {
          }
 
     }
+
+    @Operation(summary = "edit a embryo by Id", description = "It returns a json with the new embryo")
     @PutMapping("/{id}")
     public ResponseEntity<?> editEmbryo(@PathVariable Long id, @RequestBody EmbryoRequestDto dto){
         try{
