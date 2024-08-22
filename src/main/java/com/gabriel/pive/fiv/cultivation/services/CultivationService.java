@@ -5,6 +5,7 @@ import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
 import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.FivAlreadyHasCultivation;
+import com.gabriel.pive.fiv.cultivation.exceptions.FivDoesNotHaveOocyteCollectionException;
 import com.gabriel.pive.fiv.cultivation.repositories.CultivationRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
@@ -27,6 +28,10 @@ public class CultivationService {
 
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(() -> new FivNotFoundException("Fiv not found"));
+
+        if (fiv.getOocyteCollection() == null){
+            throw new FivDoesNotHaveOocyteCollectionException("The Fiv does not have a oocyte collection yet");
+        }
 
         if (fiv.getCultivation() != null){
             throw  new FivAlreadyHasCultivation("This fiv already has a cultivation registered");

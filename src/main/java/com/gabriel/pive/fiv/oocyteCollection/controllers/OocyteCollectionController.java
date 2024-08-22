@@ -3,6 +3,7 @@ package com.gabriel.pive.fiv.oocyteCollection.controllers;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
 import com.gabriel.pive.fiv.oocyteCollection.services.OocyteCollectionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,13 +26,13 @@ public class OocyteCollectionController {
 
     @Operation(summary = "Save a new oocyte collection", description = "It saves and returns a json with the new collection")
     @PostMapping
-    public ResponseEntity<OocyteCollectionPostDto> newOocyteCollection(@RequestBody OocyteCollectionRequestDto dto){
+    public ResponseEntity<?> newOocyteCollection(@RequestBody OocyteCollectionRequestDto dto){
         try{
             OocyteCollectionPostDto oocyteCollection = oocyteCollectionService.newOocyteCollection(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(oocyteCollection);
         }
-        catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        catch (EntityNotFoundException | FivAlreadyHasOocyteCollectionException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }

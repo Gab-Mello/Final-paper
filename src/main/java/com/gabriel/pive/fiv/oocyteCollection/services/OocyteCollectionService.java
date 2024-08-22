@@ -9,6 +9,7 @@ import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -41,6 +42,10 @@ public class OocyteCollectionService {
 
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(() -> new EntityNotFoundException("Fiv not found"));
+
+        if (fiv.getOocyteCollection() != null){
+            throw new FivAlreadyHasOocyteCollectionException("The Fiv already has a oocyte collection registered");
+        }
 
         OocyteCollection oocyteCollection = dto.toOocyteCollection(donorCattle, bull);
 
