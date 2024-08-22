@@ -3,6 +3,7 @@ package com.gabriel.pive.animals.services;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
 import com.gabriel.pive.animals.entities.DonorCattle;
+import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class DonorCattleService {
     DonorCattleRepository donorCattleRepository;
 
     public DonorCattleDto create(DonorCattleDto dto){
+        if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+            throw new RegistrationNumberAlreadyExistsException("A donor cattle with this registration number already exists");
+        }
         DonorCattle donorCattle = donorCattleRepository.save(dto.toDonorCattle());
         return DonorCattleDto.toDonorCattleDto(donorCattle);
     }
@@ -34,8 +38,8 @@ public class DonorCattleService {
         return DonorCattleDto.toDonorCattleDto(donorCattle.get());
     }
 
-    public List<DonorCattleDto> findByRegistrationNumber(String registrationNumber){
-        return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.
+    public DonorCattleDto findByRegistrationNumber(String registrationNumber){
+        return DonorCattleDto.toDonorCattleDto(donorCattleRepository.
                 findByRegistrationNumber(registrationNumber));
     }
 

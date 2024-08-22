@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface BullRepository extends JpaRepository<Bull,Long> {
-    List<Bull> findByRegistrationNumber(String registrationNumber);
+    Bull findByRegistrationNumber(String registrationNumber);
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ReceiverCattleRepository extends JpaRepository<ReceiverCattle,Long> {
-    List<ReceiverCattle> findByRegistrationNumber(String registrationNumber);
+    ReceiverCattle findByRegistrationNumber(String registrationNumber);
 }

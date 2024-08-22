@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.controllers;
 
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
+import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.services.ReceiverCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,8 +23,13 @@ public class ReceiverCattleController {
 
     @Operation(summary = "Save a new receiver cattle", description = "It saves and returns a json with the new receiver cattle")
     @PostMapping
-    public ResponseEntity<ReceiverCattleDto> saveReceiver(@Valid @RequestBody ReceiverCattleDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleService.create(dto));
+    public ResponseEntity<?> saveReceiver(@Valid @RequestBody ReceiverCattleDto dto){
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleService.create(dto));
+        }
+        catch (RegistrationNumberAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "List all receiver cattles", description = "It returns a json list with all receiver cattles")
@@ -32,9 +38,9 @@ public class ReceiverCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findAll());
     }
 
-    @Operation(summary = "Find receiver by registration number", description = "It returns a json list of receiver cattles that match the registration number")
+    @Operation(summary = "Find receiver by registration number", description = "It returns a json with the receiver cattle with the specific registration number")
     @GetMapping("/search")
-    public ResponseEntity<List<ReceiverCattleDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
+    public ResponseEntity<ReceiverCattleDto> findByRegistrationNumber(@RequestParam String registrationNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findByRegistrationNumber(registrationNumber));
     }
 

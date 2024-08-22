@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
+import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.animals.entities.ReceiverCattle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class ReceiverCattleService {
     private ReceiverCattleRepository receiverCattleRepository;
 
     public ReceiverCattleDto create(ReceiverCattleDto dto){
+        if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+            throw new RegistrationNumberAlreadyExistsException("A receiver cattle with this registration number already exists");
+        }
         ReceiverCattle receiverCattle = receiverCattleRepository.save(dto.toReceiverCattle());
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattle);
     }
@@ -25,8 +29,8 @@ public class ReceiverCattleService {
         return ReceiverCattleDto.toReceiverCattleDtoList(list);
     }
 
-    public List<ReceiverCattleDto> findByRegistrationNumber(String registrationNumber){
-        return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.
+    public ReceiverCattleDto findByRegistrationNumber(String registrationNumber){
+        return ReceiverCattleDto.toReceiverCattleDto(receiverCattleRepository.
                 findByRegistrationNumber(registrationNumber));
     }
 

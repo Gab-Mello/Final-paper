@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.controllers;
 
 import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.services.BullService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,8 +24,13 @@ public class BullController {
 
     @Operation(summary = "Save a new bull", description = "It saves and returns a json with the new bull")
     @PostMapping
-    public ResponseEntity<BullDto> saveBull(@Valid @RequestBody BullDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(bullService.create(dto));
+    public ResponseEntity<?> saveBull(@RequestBody BullDto dto){
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).body(bullService.create(dto));
+        }
+        catch (RegistrationNumberAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "List all bulls", description = "It returns a json list with all bulls")
@@ -35,7 +41,7 @@ public class BullController {
 
     @Operation(summary = "Find bull by registration number", description = "It returns a json list of bull that match the registration number")
     @GetMapping("/search")
-    public ResponseEntity<List<BullDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
+    public ResponseEntity<BullDto> findByRegistrationNumber(@RequestParam String registrationNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(bullService.findByRegistrationNumber(registrationNumber));
     }
 

@@ -1,8 +1,8 @@
 package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.BullDto;
-import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;
+import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,11 @@ public class BullService {
     private BullRepository bullRepository;
 
     public BullDto create(BullDto dto){
+        System.out.println(dto.registrationNumber());
+        if (bullRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+            System.out.println("bull" + bullRepository.findByRegistrationNumber(dto.registrationNumber()));
+            throw new RegistrationNumberAlreadyExistsException("A bull with this registration number already exists");
+        }
         Bull bull = bullRepository.save(dto.toBull());
         return BullDto.toBullDto(bull);
     }
@@ -34,8 +39,8 @@ public class BullService {
         return BullDto.toBullDto(bull.get());
     }
 
-    public List<BullDto> findByRegistrationNumber(String registrationNumber){
-        return BullDto.toBullDtoList(bullRepository.
+    public BullDto findByRegistrationNumber(String registrationNumber){
+        return BullDto.toBullDto(bullRepository.
                 findByRegistrationNumber(registrationNumber));
     }
 

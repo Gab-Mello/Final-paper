@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface DonorCattleRepository extends JpaRepository<DonorCattle,Long> {
-    List<DonorCattle> findByRegistrationNumber(String registrationNumber);
+    DonorCattle findByRegistrationNumber(String registrationNumber);
 }

@@ -2,6 +2,7 @@ package com.gabriel.pive.animals.controllers;
 
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
+import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.services.DonorCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,8 +24,13 @@ public class DonorCattleController {
 
     @Operation(summary = "Save a new donor", description = "It saves and returns a json with the new donor")
     @PostMapping
-    public ResponseEntity<DonorCattleDto> saveDonor(@Valid @RequestBody DonorCattleDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(donorCattleService.create(dto));
+    public ResponseEntity<?> saveDonor(@Valid @RequestBody DonorCattleDto dto){
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).body(donorCattleService.create(dto));
+        }
+        catch (RegistrationNumberAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "List all donors", description = "It returns a json list with all donors")
@@ -35,7 +41,7 @@ public class DonorCattleController {
 
     @Operation(summary = "Find donor by registration number", description = "It returns a json list of donor cattle that match the registration number")
     @GetMapping("/search")
-    public ResponseEntity<List<DonorCattleDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
+    public ResponseEntity<DonorCattleDto> findByRegistrationNumber(@RequestParam String registrationNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findByRegistrationNumber(registrationNumber));
     }
 
