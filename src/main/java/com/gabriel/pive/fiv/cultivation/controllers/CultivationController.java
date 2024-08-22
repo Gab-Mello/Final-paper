@@ -2,6 +2,7 @@ package com.gabriel.pive.fiv.cultivation.controllers;
 
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
+import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.FivAlreadyHasCultivation;
 import com.gabriel.pive.fiv.cultivation.services.CultivationService;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
@@ -42,5 +43,16 @@ public class CultivationController {
     @GetMapping
     public ResponseEntity<List<CultivationResponseDto>> getAllCultivations(){
         return ResponseEntity.status(HttpStatus.OK).body(cultivationService.getAllCultivations());
+    }
+
+    @Operation(summary = "Get a cultivation by Id", description = "It returns a json with the cultivation")
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCultivationById(@PathVariable Long id){
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(cultivationService.getCultivationById(id));
+        }
+        catch (CultivationNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
