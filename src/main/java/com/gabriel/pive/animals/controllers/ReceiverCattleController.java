@@ -72,6 +72,12 @@ public class ReceiverCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.edit(id,dto));
     }
 
+    @Operation(summary = "get all available receiver cattle", description = "It returns a list with all receiver cattle that doesn't have an embryo")
+    @GetMapping("/available")
+    public ResponseEntity<List<ReceiverCattleDto>> getAvailableReceivers(){
+        return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.getAvailableReceivers());
+    }
+
 
 
 }

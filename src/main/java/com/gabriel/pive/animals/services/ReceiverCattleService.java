@@ -56,4 +56,8 @@ public class ReceiverCattleService {
 
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattleRepository.save(receiverCattle));
     }
+
+    public List<ReceiverCattleDto> getAvailableReceivers(){
+        return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.findByEmbryoIsNull());
+    }
 }
