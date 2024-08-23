@@ -66,13 +66,19 @@ public class CultivationService {
         Fiv newFiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(() -> new FivNotFoundException("Fiv not found"));
 
+        if (newFiv.getCultivation() != null){
+            throw  new FivAlreadyHasCultivation("This fiv already has a cultivation registered");
+        }
+
+        if (newFiv.getOocyteCollection() == null){
+            throw new FivDoesNotHaveOocyteCollectionException("The Fiv does not have a oocyte collection yet");
+        }
+
         Fiv oldFiv = fivRepository.findByCultivationId(id);
         oldFiv.setCultivation(null);
         fivRepository.save(oldFiv);
 
-        if (newFiv.getCultivation() != null){
-            throw  new FivAlreadyHasCultivation("This fiv already has a cultivation registered");
-        }
+
 
         cultivation.setFiv(newFiv);
         cultivation.setTotalEmbryos(dto.totalEmbryos());

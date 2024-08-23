@@ -66,8 +66,8 @@ public class CultivationController {
             CultivationResponseDto cultivation = cultivationService.editCultivation(id,dto);
             return ResponseEntity.status(HttpStatus.OK).body(cultivation);
         }
-        catch (CultivationNotFoundException | FivNotFoundException | FivAlreadyHasCultivation e){
-            return  ResponseEntity.status(HttpStatus.CONFLICT).body("Receiver cattle already has an embryo.");
+        catch (CultivationNotFoundException | FivNotFoundException | FivAlreadyHasCultivation | FivDoesNotHaveOocyteCollectionException e){
+            return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
 }
