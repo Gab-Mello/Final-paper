@@ -12,6 +12,7 @@ import java.util.List;
 public record CultivationResponseDto(Long id, Long fivId,
                                      Integer totalEmbryos,
                                      Integer viableEmbryos,
+                                     Integer embryosRegistered,
                                      List<EmbryoResponseDto> embryos) {
 
     public static CultivationResponseDto toCultivationResponseDto(Cultivation cultivation){
@@ -20,6 +21,7 @@ public record CultivationResponseDto(Long id, Long fivId,
                 cultivation.getFiv().getId(),
                 cultivation.getTotalEmbryos(),
                 cultivation.getViableEmbryos(),
+                cultivation.getEmbryos().size(),
                 EmbryoResponseDto.toEmbryoResponseDtoList(cultivation.getEmbryos())
                 );
     }
