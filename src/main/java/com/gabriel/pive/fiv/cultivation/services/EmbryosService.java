@@ -7,6 +7,7 @@ import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
 import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
 import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.cultivation.exceptions.AllEmbryosAlreadyRegisteredException;
 import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.EmbryoNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.ReceiverCattleAlreadyHasEmbryoException;
@@ -32,15 +33,19 @@ public class EmbryosService {
 
     public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
 
+        Cultivation cultivation = cultivationRepository.findById(dto.cultivationId())
+                .orElseThrow(()-> new CultivationNotFoundException("Cultivation not found"));
+
+        if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos()){
+            throw new AllEmbryosAlreadyRegisteredException("All embryos of this cultivation are already registered");
+        }
+
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
                 .orElseThrow(()-> new ReceiverCattleNotFoundException("Receiver Cattle not found"));
 
         if (receiverCattle.getEmbryo() != null){
             throw new ReceiverCattleAlreadyHasEmbryoException("This Receiver cattle already has a embryo");
         }
-
-        Cultivation cultivation = cultivationRepository.findById(dto.cultivationId())
-                .orElseThrow(()-> new CultivationNotFoundException("Cultivation not found"));
 
 
         Embryo embryo = dto.toEmbryo(receiverCattle, cultivation);

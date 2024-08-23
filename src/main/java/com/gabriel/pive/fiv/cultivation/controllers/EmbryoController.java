@@ -5,6 +5,7 @@ import com.gabriel.pive.fiv.cultivation.dtos.CultivationRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationResponseDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.cultivation.dtos.EmbryoResponseDto;
+import com.gabriel.pive.fiv.cultivation.exceptions.AllEmbryosAlreadyRegisteredException;
 import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.EmbryoNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.ReceiverCattleAlreadyHasEmbryoException;
@@ -36,7 +37,7 @@ public class EmbryoController {
              return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
          }
          catch (ReceiverCattleNotFoundException | ReceiverCattleAlreadyHasEmbryoException |
-                CultivationNotFoundException e){
+                CultivationNotFoundException | AllEmbryosAlreadyRegisteredException e){
              return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
          }
 
