@@ -13,6 +13,9 @@ import com.gabriel.pive.fiv.cultivation.exceptions.EmbryoNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.ReceiverCattleAlreadyHasEmbryoException;
 import com.gabriel.pive.fiv.cultivation.repositories.CultivationRepository;
 import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
+import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.enums.FivStatusEnum;
+import com.gabriel.pive.fiv.repositories.FivRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class EmbryosService {
     @Autowired
     private CultivationRepository cultivationRepository;
 
+    @Autowired
+    private FivRepository fivRepository;
+
     public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
 
         Cultivation cultivation = cultivationRepository.findById(dto.cultivationId())
@@ -47,7 +53,11 @@ public class EmbryosService {
             throw new ReceiverCattleAlreadyHasEmbryoException("This Receiver cattle already has a embryo");
         }
 
-
+        if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos() - 1){
+            Fiv fiv = cultivation.getFiv();
+            fiv.setStatus(FivStatusEnum.COMPLETED);
+            fivRepository.save(fiv);
+        }
         Embryo embryo = dto.toEmbryo(receiverCattle, cultivation);
 
         embryo.setEmbryoBull(cultivation.getFiv().getOocyteCollection().getBull());

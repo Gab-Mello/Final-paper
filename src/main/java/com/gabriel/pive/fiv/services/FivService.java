@@ -2,6 +2,7 @@ package com.gabriel.pive.fiv.services;
 
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,9 @@ public class FivService {
     private FivRepository fivRepository;
 
     public FivResponseDto createFiv(){
-
-        return FivResponseDto.toFivResponseDto(fivRepository.save(new Fiv()));
+        Fiv fiv = new Fiv();
+        fiv.setStatus(FivStatusEnum.IN_PROCESS);
+        return FivResponseDto.toFivResponseDto(fivRepository.save(fiv));
     }
 
     public List<FivResponseDto> getAllFivs(){

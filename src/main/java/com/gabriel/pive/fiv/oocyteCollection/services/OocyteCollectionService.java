@@ -5,6 +5,7 @@ import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
@@ -52,6 +53,7 @@ public class OocyteCollectionService {
         OocyteCollection savedOocyteCollection = collectionRepository.save(oocyteCollection);
 
         fiv.setOocyteCollection(savedOocyteCollection);
+        fiv.setStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED);
         fivRepository.save(fiv);
 
         return OocyteCollectionPostDto.toOocyteCollectionPostDto(savedOocyteCollection, fiv.getId());

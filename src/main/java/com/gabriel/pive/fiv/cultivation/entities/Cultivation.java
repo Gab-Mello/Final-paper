@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -28,7 +29,7 @@ public class Cultivation {
     private Fiv fiv;
 
     @OneToMany(mappedBy = "embryoCultivation" )
-    private List<Embryo> embryos;
+    private List<Embryo> embryos = new ArrayList<>();
 
     private Integer totalEmbryos;
 

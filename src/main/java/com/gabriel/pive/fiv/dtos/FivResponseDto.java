@@ -4,6 +4,7 @@ import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.fiv.cultivation.dtos.CultivationSummaryResponseDto;
 import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
@@ -12,13 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public record FivResponseDto(Long id, OocyteCollectionResponseDto oocyteCollection,
+public record FivResponseDto(Long id, FivStatusEnum status, OocyteCollectionResponseDto oocyteCollection,
                              CultivationSummaryResponseDto cultivation) {
 
 
     public static FivResponseDto toFivResponseDto(Fiv fiv){
         return new FivResponseDto(
                 fiv.getId(),
+                fiv.getStatus(),
                 OocyteCollectionResponseDto.toOocyteCollectionDto(fiv.getOocyteCollection()),
                 CultivationSummaryResponseDto.toCultivationSummaryDto(fiv.getCultivation()));
     }
