@@ -22,7 +22,7 @@ public class FivService {
         return FivResponseDto.toFivResponseDto(fivRepository.save(fiv));
     }
 
-    public List<FivResponseDto> getAllFivs(){
+    public List<FivResponseDto> getAllFives(){
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAll());
     }
 
@@ -32,5 +32,21 @@ public class FivService {
 
         return FivResponseDto.toFivResponseDto(fiv);
     }
+
+    public List<FivResponseDto> getInProcessFives(){
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatus(FivStatusEnum.IN_PROCESS));
+    }
+
+    public List<FivResponseDto> getOocyteCollectionCompletedFives(){
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED));
+    }
+
+    public List<FivResponseDto> getCompletedFives(){
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatus(FivStatusEnum.COMPLETED));
+    }
+
+
+
+
 
 }
