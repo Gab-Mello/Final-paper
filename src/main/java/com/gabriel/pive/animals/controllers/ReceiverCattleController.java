@@ -24,12 +24,7 @@ public class ReceiverCattleController {
     @Operation(summary = "Save a new receiver cattle", description = "It saves and returns a json with the new receiver cattle")
     @PostMapping
     public ResponseEntity<?> saveReceiver(@Valid @RequestBody ReceiverCattleDto dto){
-        try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleService.create(dto));
-        }
-        catch (RegistrationNumberAlreadyExistsException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleService.create(dto));
     }
 
     @Operation(summary = "List all receiver cattles", description = "It returns a json list with all receiver cattles")
@@ -47,9 +42,6 @@ public class ReceiverCattleController {
     @Operation(summary = "Find a receiver cattle by Id", description = "It returns a json with the receiver cattle found by Id ")
     @GetMapping("/{id}")
     public ResponseEntity<ReceiverCattleDto> getReceiverCattleById(@PathVariable Long id){
-        if (receiverCattleService.findById(id)==null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findById(id));
     }
 

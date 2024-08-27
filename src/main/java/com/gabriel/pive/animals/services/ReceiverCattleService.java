@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
+import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.animals.entities.ReceiverCattle;
@@ -18,7 +19,7 @@ public class ReceiverCattleService {
 
     public ReceiverCattleDto create(ReceiverCattleDto dto){
         if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
-            throw new RegistrationNumberAlreadyExistsException("A receiver cattle with this registration number already exists");
+            throw new RegistrationNumberAlreadyExistsException("Uma receptora com este número de registro já existe.");
         }
         ReceiverCattle receiverCattle = receiverCattleRepository.save(dto.toReceiverCattle());
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattle);
@@ -35,11 +36,9 @@ public class ReceiverCattleService {
     }
 
     public ReceiverCattleDto findById(Long id){
-        Optional<ReceiverCattle> receiverCattle = receiverCattleRepository.findById(id);
-        if (receiverCattle.isEmpty()){
-            return null;
-        }
-        return ReceiverCattleDto.toReceiverCattleDto(receiverCattle.get());
+        ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
+                .orElseThrow(() -> new ReceiverCattleNotFoundException());
+        return ReceiverCattleDto.toReceiverCattleDto(receiverCattle);
     }
 
     public void delete(Long id){
@@ -47,8 +46,12 @@ public class ReceiverCattleService {
     }
 
     public ReceiverCattleDto edit(Long id, ReceiverCattleDto dto){
-        Optional<ReceiverCattle> optionalReceiverCattle= receiverCattleRepository.findById(id);
-        ReceiverCattle receiverCattle = optionalReceiverCattle.get();
+        ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
+                .orElseThrow(() -> new ReceiverCattleNotFoundException());
+
+        if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+            throw new RegistrationNumberAlreadyExistsException("Uma receptora com este número de registro já existe.");
+        }
 
         receiverCattle.setName(dto.name());
         receiverCattle.setBreed(dto.breed());

@@ -25,12 +25,7 @@ public class DonorCattleController {
     @Operation(summary = "Save a new donor", description = "It saves and returns a json with the new donor")
     @PostMapping
     public ResponseEntity<?> saveDonor(@Valid @RequestBody DonorCattleDto dto){
-        try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(donorCattleService.create(dto));
-        }
-        catch (RegistrationNumberAlreadyExistsException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(donorCattleService.create(dto));
     }
 
     @Operation(summary = "List all donors", description = "It returns a json list with all donors")
@@ -48,9 +43,6 @@ public class DonorCattleController {
     @Operation(summary = "Find a donor by Id", description = "It returns a json with the donor found by Id ")
     @GetMapping("/{id}")
     public ResponseEntity<DonorCattleDto> getDonorById(@PathVariable Long id){
-        if (donorCattleService.findById(id) == null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findById(id));
     }
 

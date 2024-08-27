@@ -3,6 +3,7 @@ package com.gabriel.pive.animals.services;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
 import com.gabriel.pive.animals.entities.DonorCattle;
+import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class DonorCattleService {
 
     public DonorCattleDto create(DonorCattleDto dto){
         if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
-            throw new RegistrationNumberAlreadyExistsException("A donor cattle with this registration number already exists");
+            throw new RegistrationNumberAlreadyExistsException("Uma doadora com este número de registro já existe.");
         }
         DonorCattle donorCattle = donorCattleRepository.save(dto.toDonorCattle());
         return DonorCattleDto.toDonorCattleDto(donorCattle);
@@ -31,11 +32,9 @@ public class DonorCattleService {
     }
 
     public DonorCattleDto findById(Long id){
-        Optional<DonorCattle> donorCattle = donorCattleRepository.findById(id);
-        if (donorCattle.isEmpty()){
-            return null;
-        }
-        return DonorCattleDto.toDonorCattleDto(donorCattle.get());
+        DonorCattle donorCattle = donorCattleRepository.findById(id)
+                .orElseThrow(() -> new DonorCattleNotFoundException());
+        return DonorCattleDto.toDonorCattleDto(donorCattle);
     }
 
     public DonorCattleDto findByRegistrationNumber(String registrationNumber){
@@ -48,8 +47,12 @@ public class DonorCattleService {
     }
 
     public DonorCattleDto edit(Long id, DonorCattleDto dto){
-        Optional<DonorCattle> optionalDonorCattle= donorCattleRepository.findById(id);
-        DonorCattle donorCattle = optionalDonorCattle.get();
+        DonorCattle donorCattle = donorCattleRepository.findById(id)
+                .orElseThrow(() -> new DonorCattleNotFoundException());
+
+        if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+            throw new RegistrationNumberAlreadyExistsException("Uma doadora com este número de registro já existe.");
+        }
 
         donorCattle.setName(dto.name());
         donorCattle.setBreed(dto.breed());

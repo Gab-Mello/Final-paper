@@ -25,12 +25,7 @@ public class BullController {
     @Operation(summary = "Save a new bull", description = "It saves and returns a json with the new bull")
     @PostMapping
     public ResponseEntity<?> saveBull(@RequestBody BullDto dto){
-        try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(bullService.create(dto));
-        }
-        catch (RegistrationNumberAlreadyExistsException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(bullService.create(dto));
     }
 
     @Operation(summary = "List all bulls", description = "It returns a json list with all bulls")
@@ -48,9 +43,6 @@ public class BullController {
     @Operation(summary = "Find a bull by Id", description = "It returns a json with the bull found by Id ")
     @GetMapping("/{id}")
     public ResponseEntity<BullDto> getBullById(@PathVariable Long id){
-        if (bullService.findById(id)==null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.status(HttpStatus.OK).body(bullService.findById(id));
     }
 

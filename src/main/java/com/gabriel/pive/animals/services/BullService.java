@@ -2,6 +2,7 @@ package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.entities.Bull;
+import com.gabriel.pive.animals.exceptions.BullNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,9 @@ public class BullService {
     private BullRepository bullRepository;
 
     public BullDto create(BullDto dto){
-        System.out.println(dto.registrationNumber());
+
         if (bullRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
-            System.out.println("bull" + bullRepository.findByRegistrationNumber(dto.registrationNumber()));
-            throw new RegistrationNumberAlreadyExistsException("A bull with this registration number already exists");
+            throw new RegistrationNumberAlreadyExistsException("Um touro com este número de registro já existe.");
         }
         Bull bull = bullRepository.save(dto.toBull());
         return BullDto.toBullDto(bull);
@@ -32,11 +32,9 @@ public class BullService {
     }
 
     public BullDto findById(Long id){
-        Optional<Bull> bull = bullRepository.findById(id);
-        if (bull.isEmpty()){
-            return null;
-        }
-        return BullDto.toBullDto(bull.get());
+        Bull bull = bullRepository.findById(id)
+                .orElseThrow(() -> new BullNotFoundException());
+        return BullDto.toBullDto(bull);
     }
 
     public BullDto findByRegistrationNumber(String registrationNumber){
@@ -49,8 +47,12 @@ public class BullService {
     }
 
     public BullDto edit(Long id, BullDto dto){
-        Optional<Bull> optionalBull= bullRepository.findById(id);
-        Bull bull = optionalBull.get();
+        Bull bull = bullRepository.findById(id)
+                .orElseThrow(() -> new BullNotFoundException());
+
+        if (bullRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+            throw new RegistrationNumberAlreadyExistsException("Um touro com este número de registro já existe.");
+        }
 
         bull.setName(dto.name());
         bull.setRegistrationNumber(dto.registrationNumber());
