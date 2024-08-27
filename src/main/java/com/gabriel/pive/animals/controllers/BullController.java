@@ -34,9 +34,9 @@ public class BullController {
         return ResponseEntity.status(HttpStatus.OK).body(bullService.findAll());
     }
 
-    @Operation(summary = "Find bull by registration number", description = "It returns a json list of bull that match the registration number")
+    @Operation(summary = "Find bulls with registration number", description = "It returns a json list of bulls that match the registration number")
     @GetMapping("/search")
-    public ResponseEntity<BullDto> findByRegistrationNumber(@RequestParam String registrationNumber) {
+    public ResponseEntity<List<BullDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(bullService.findByRegistrationNumber(registrationNumber));
     }
 

@@ -47,9 +47,9 @@ public class BullService {
         return BullDto.toBullDto(bull);
     }
 
-    public BullDto findByRegistrationNumber(String registrationNumber){
-        return BullDto.toBullDto(bullRepository.
-                findByRegistrationNumber(registrationNumber));
+    public List<BullDto> findByRegistrationNumber(String registrationNumber){
+        return BullDto.toBullDtoList(bullRepository.
+                findByRegistrationNumberStartingWith(registrationNumber));
     }
 
     public void delete(Long id){

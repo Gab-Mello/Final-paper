@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface BullRepository extends JpaRepository<Bull,Long> {
     Bull findByRegistrationNumber(String registrationNumber);
+
+    List<Bull> findByRegistrationNumberStartingWith(String registrationNumber);
 }

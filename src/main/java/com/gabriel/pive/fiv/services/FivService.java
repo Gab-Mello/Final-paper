@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.services;
 
+import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
@@ -45,7 +46,9 @@ public class FivService {
         return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatus(FivStatusEnum.COMPLETED));
     }
 
-
+    public List<FivResponseDto> filterFivesByBull(Long bullId){
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_Bull_Id(bullId));
+    }
 
 
 

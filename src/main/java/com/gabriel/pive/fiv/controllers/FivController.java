@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.controllers;
 
+import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.services.FivService;
@@ -56,6 +57,11 @@ public class FivController {
     @GetMapping("/completed")
     public ResponseEntity<List<FivResponseDto>> listCompletedFives(){
         return ResponseEntity.status(HttpStatus.OK).body(fivService.getCompletedFives());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FivResponseDto>> filterFivesByBull(@RequestParam Long bullId){
+        return ResponseEntity.status(HttpStatus.OK).body(fivService.filterFivesByBull(bullId));
     }
 
 }
