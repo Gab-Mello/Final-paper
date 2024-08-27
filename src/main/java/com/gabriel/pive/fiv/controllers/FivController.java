@@ -59,9 +59,14 @@ public class FivController {
         return ResponseEntity.status(HttpStatus.OK).body(fivService.getCompletedFives());
     }
 
-    @GetMapping("/search")
+    @GetMapping("/bull")
     public ResponseEntity<List<FivResponseDto>> filterFivesByBull(@RequestParam Long bullId){
         return ResponseEntity.status(HttpStatus.OK).body(fivService.filterFivesByBull(bullId));
+    }
+
+    @GetMapping("/donor")
+    public ResponseEntity<List<FivResponseDto>> filterFivesByDonor(@RequestParam Long donorId){
+        return ResponseEntity.status(HttpStatus.OK).body(fivService.filterFivesByDonor(donorId));
     }
 
 }

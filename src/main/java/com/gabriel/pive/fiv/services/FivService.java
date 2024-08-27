@@ -50,6 +50,10 @@ public class FivService {
         return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_Bull_Id(bullId));
     }
 
+    public List<FivResponseDto> filterFivesByDonor(Long donorId){
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_DonorCattle_Id(donorId));
+    }
+
 
 
 }

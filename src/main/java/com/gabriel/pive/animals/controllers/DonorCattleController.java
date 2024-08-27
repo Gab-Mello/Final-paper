@@ -34,9 +34,9 @@ public class DonorCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findAll());
     }
 
-    @Operation(summary = "Find donor by registration number", description = "It returns a json list of donor cattle that match the registration number")
+    @Operation(summary = "Find donors with registration number", description = "It returns a json list with donor cattles that match the registration number")
     @GetMapping("/search")
-    public ResponseEntity<DonorCattleDto> findByRegistrationNumber(@RequestParam String registrationNumber) {
+    public ResponseEntity<List<DonorCattleDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findByRegistrationNumber(registrationNumber));
     }
 

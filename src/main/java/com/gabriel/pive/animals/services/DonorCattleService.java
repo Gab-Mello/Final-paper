@@ -47,9 +47,9 @@ public class DonorCattleService {
         return DonorCattleDto.toDonorCattleDto(donorCattle);
     }
 
-    public DonorCattleDto findByRegistrationNumber(String registrationNumber){
-        return DonorCattleDto.toDonorCattleDto(donorCattleRepository.
-                findByRegistrationNumber(registrationNumber));
+    public List<DonorCattleDto> findByRegistrationNumber(String registrationNumber){
+        return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.
+                findByRegistrationNumberStartingWith(registrationNumber));
     }
 
     public void delete(Long id){

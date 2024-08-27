@@ -11,8 +11,7 @@ import java.util.List;
 public interface FivRepository extends JpaRepository<Fiv,Long> {
 
     Fiv findByCultivationId(Long cultivationId);
-
     List<Fiv> findByStatus(FivStatusEnum status);
-
     List<Fiv> findByOocyteCollection_Bull_Id(Long bullId);
+    List<Fiv> findByOocyteCollection_DonorCattle_Id(Long bullId);
 }
