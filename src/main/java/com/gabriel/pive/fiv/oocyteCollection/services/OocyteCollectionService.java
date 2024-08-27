@@ -8,11 +8,13 @@ import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
+import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -44,10 +46,10 @@ public class OocyteCollectionService {
                 .orElseThrow(BullNotFoundException::new);
 
         Fiv fiv = fivRepository.findById(dto.fivId())
-                .orElseThrow(() -> new EntityNotFoundException("Fiv not found"));
+                .orElseThrow(FivNotFoundException::new);
 
         if (fiv.getOocyteCollection() != null){
-            throw new FivAlreadyHasOocyteCollectionException("The Fiv already has a oocyte collection registered");
+            throw new FivAlreadyHasOocyteCollectionException();
         }
 
         OocyteCollection oocyteCollection = dto.toOocyteCollection(donorCattle, bull);
@@ -69,13 +71,13 @@ public class OocyteCollectionService {
 
     public OocyteCollectionResponseDto editCollection(Long id, OocyteCollectionRequestDto dto){
         OocyteCollection oocyteCollection = collectionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Oocyte Collection not found"));
+                .orElseThrow(OocyteCollectionNotFoundException::new);
 
         DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
-                .orElseThrow(() -> new EntityNotFoundException("Donor not found"));
+                .orElseThrow(DonorCattleNotFoundException::new);
 
         Bull bull = bullRepository.findById(dto.bullId())
-                .orElseThrow(() -> new EntityNotFoundException("Bull not found"));
+                .orElseThrow(BullNotFoundException::new);
 
         return OocyteCollectionResponseDto.toOocyteCollectionDto(collectionRepository.save(OocyteCollectionResponseDto.
                 editMapper(oocyteCollection, dto, donorCattle, bull)));
@@ -85,7 +87,7 @@ public class OocyteCollectionService {
     public OocyteCollectionResponseDto getCollectionById(Long id){
 
         OocyteCollection oocyteCollection = collectionRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Oocyte Collection not found"));
+                .orElseThrow(OocyteCollectionNotFoundException::new);
 
         return OocyteCollectionResponseDto.toOocyteCollectionDto(oocyteCollection);
     }

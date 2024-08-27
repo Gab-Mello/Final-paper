@@ -40,17 +40,17 @@ public class EmbryosService {
     public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
 
         Cultivation cultivation = cultivationRepository.findById(dto.cultivationId())
-                .orElseThrow(()-> new CultivationNotFoundException("Cultivation not found"));
+                .orElseThrow(CultivationNotFoundException::new);
 
         if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos()){
-            throw new AllEmbryosAlreadyRegisteredException("All embryos of this cultivation are already registered");
+            throw new AllEmbryosAlreadyRegisteredException();
         }
 
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
-                .orElseThrow(()-> new ReceiverCattleNotFoundException("Receiver Cattle not found"));
+                .orElseThrow(ReceiverCattleNotFoundException::new);
 
         if (receiverCattle.getEmbryo() != null){
-            throw new ReceiverCattleAlreadyHasEmbryoException("This Receiver cattle already has a embryo");
+            throw new ReceiverCattleAlreadyHasEmbryoException();
         }
 
         if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos() - 1){
@@ -69,10 +69,10 @@ public class EmbryosService {
 
     public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){
         Embryo embryo = embryoRepository.findById(id).
-                orElseThrow(()-> new EntityNotFoundException("Embryo not found"));
+                orElseThrow(EmbryoNotFoundException::new);
 
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
-                .orElseThrow(()-> new EntityNotFoundException("Receiver Cattle not found"));
+                .orElseThrow(ReceiverCattleNotFoundException::new);
 
         embryo.setEmbryoReceiverCattle(receiverCattle);
         embryo.setFrozen(dto.frozen());
@@ -86,7 +86,7 @@ public class EmbryosService {
 
     public EmbryoResponseDto getEmbryoById(Long id){
         Embryo embryo = embryoRepository.findById(id)
-                .orElseThrow(() -> new EmbryoNotFoundException("Embryo not found"));
+                .orElseThrow(EmbryoNotFoundException::new);
 
         return EmbryoResponseDto.toEmbryoResponseDto(embryo);
     }

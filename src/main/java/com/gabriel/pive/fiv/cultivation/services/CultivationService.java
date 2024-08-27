@@ -27,14 +27,14 @@ public class CultivationService {
     public CultivationResponseDto newCultivation(CultivationRequestDto dto){
 
         Fiv fiv = fivRepository.findById(dto.fivId())
-                .orElseThrow(() -> new FivNotFoundException("Fiv not found"));
+                .orElseThrow(FivNotFoundException::new);
 
         if (fiv.getOocyteCollection() == null){
-            throw new FivDoesNotHaveOocyteCollectionException("The Fiv does not have a oocyte collection yet");
+            throw new FivDoesNotHaveOocyteCollectionException();
         }
 
         if (fiv.getCultivation() != null){
-            throw  new FivAlreadyHasCultivation("This fiv already has a cultivation registered");
+            throw  new FivAlreadyHasCultivation();
         }
 
         Cultivation cultivation = dto.toCultivation(fiv);
@@ -54,30 +54,29 @@ public class CultivationService {
 
     public CultivationResponseDto getCultivationById(Long id){
         Cultivation cultivation = cultivationRepository.findById(id)
-                .orElseThrow(() -> new CultivationNotFoundException("Cultivation not found"));
+                .orElseThrow(CultivationNotFoundException::new);
 
         return CultivationResponseDto.toCultivationResponseDto(cultivation);
     }
 
     public CultivationResponseDto editCultivation(Long id, CultivationRequestDto dto){
         Cultivation cultivation = cultivationRepository.findById(id)
-                .orElseThrow(() -> new CultivationNotFoundException("Cultivation not found"));
+                .orElseThrow(CultivationNotFoundException::new);
 
         Fiv newFiv = fivRepository.findById(dto.fivId())
-                .orElseThrow(() -> new FivNotFoundException("Fiv not found"));
+                .orElseThrow(FivNotFoundException::new);
 
         if (newFiv.getCultivation() != null){
-            throw  new FivAlreadyHasCultivation("This fiv already has a cultivation registered");
+            throw  new FivAlreadyHasCultivation();
         }
 
         if (newFiv.getOocyteCollection() == null){
-            throw new FivDoesNotHaveOocyteCollectionException("The Fiv does not have a oocyte collection yet");
+            throw new FivDoesNotHaveOocyteCollectionException();
         }
 
         Fiv oldFiv = fivRepository.findByCultivationId(id);
         oldFiv.setCultivation(null);
         fivRepository.save(oldFiv);
-
 
 
         cultivation.setFiv(newFiv);

@@ -43,7 +43,7 @@ public class BullService {
 
     public BullDto findById(Long id){
         Bull bull = bullRepository.findById(id)
-                .orElseThrow(() -> new BullNotFoundException());
+                .orElseThrow(BullNotFoundException::new);
         return BullDto.toBullDto(bull);
     }
 

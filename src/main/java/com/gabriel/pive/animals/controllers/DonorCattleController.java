@@ -48,10 +48,7 @@ public class DonorCattleController {
 
     @Operation(summary = "Delete a donor by Id", description = "It deletes the donor")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteDonor(@PathVariable Long id){
-        if (donorCattleService.findById(id) == null){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<?> deleteDonor(@PathVariable Long id){
         donorCattleService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -59,9 +56,7 @@ public class DonorCattleController {
     @Operation(summary = "Edit a donor by Id", description = "It edits the donor's data")
     @PutMapping("/{id}")
     public ResponseEntity<DonorCattleDto> editDonor(@PathVariable Long id, @RequestBody DonorCattleDto dto){
-        if (donorCattleService.findById(id) == null){
-            return ResponseEntity.notFound().build();
-        }
+
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.edit(id,dto));
     }
 }

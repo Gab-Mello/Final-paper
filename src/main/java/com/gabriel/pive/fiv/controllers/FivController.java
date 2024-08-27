@@ -23,8 +23,7 @@ public class FivController {
     @Operation(summary = "Create a new fiv", description = "It saves and returns a json with the new fiv")
     @PostMapping
     public ResponseEntity<FivResponseDto> createFiv(){
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(fivService.createFiv());
+        return ResponseEntity.status(HttpStatus.CREATED).body(fivService.createFiv());
     }
 
     @Operation(summary = "List all fivs", description = "It returns a json list with all fivs")
@@ -36,12 +35,7 @@ public class FivController {
     @Operation(summary = "Get a fiv by Id", description = "It returns a json with the fiv")
     @GetMapping("/{id}")
     public ResponseEntity<?> getFivById(@PathVariable Long id){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(fivService.getFivById(id));
-        }
-        catch (FivNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(fivService.getFivById(id));
     }
 
     @Operation(summary = "List all in process fives", description = "It returns a json list with all in process fives")

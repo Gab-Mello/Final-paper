@@ -4,7 +4,7 @@ import com.gabriel.pive.fiv.cultivation.exceptions.FivAlreadyHasCultivation;
 
 public class FivAlreadyHasOocyteCollectionException extends RuntimeException{
 
-    public FivAlreadyHasOocyteCollectionException(String message){
-        super(message);
+    public FivAlreadyHasOocyteCollectionException(){
+        super("Esta fiv já possui uma coleta de oócitos registrada");
     }
 }

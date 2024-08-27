@@ -5,7 +5,5 @@ public class ReceiverCattleNotFoundException extends RuntimeException{
     public ReceiverCattleNotFoundException(){
         super("Receptora não encontrada.");
     }
-    public ReceiverCattleNotFoundException(String message){
-        super(message);
-    }
+  
 }

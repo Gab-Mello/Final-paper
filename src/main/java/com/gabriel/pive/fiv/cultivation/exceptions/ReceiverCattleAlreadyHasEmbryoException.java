@@ -2,7 +2,7 @@ package com.gabriel.pive.fiv.cultivation.exceptions;
 
 public class ReceiverCattleAlreadyHasEmbryoException extends RuntimeException{
 
-    public ReceiverCattleAlreadyHasEmbryoException(String message){
-        super(message);
+    public ReceiverCattleAlreadyHasEmbryoException(){
+        super("Esta receptora já possui um embrião.");
     }
 }

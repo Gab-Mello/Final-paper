@@ -32,14 +32,8 @@ public class CultivationController {
     @Operation(summary = "Save a new cultivation", description = "It saves and returns a json with the new cultivation")
     @PostMapping
     public ResponseEntity<?> newCultivation(@RequestBody CultivationRequestDto dto){
-        try{
             CultivationResponseDto cultivation = cultivationService.newCultivation(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
-        }
-        catch (FivNotFoundException | FivAlreadyHasCultivation | FivDoesNotHaveOocyteCollectionException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
     }
 
     @Operation(summary = "Get all cultivations", description = "It returns a json list with all cultivations")
@@ -51,23 +45,13 @@ public class CultivationController {
     @Operation(summary = "Get a cultivation by Id", description = "It returns a json with the cultivation")
     @GetMapping("/{id}")
     public ResponseEntity<?> getCultivationById(@PathVariable Long id){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(cultivationService.getCultivationById(id));
-        }
-        catch (CultivationNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(cultivationService.getCultivationById(id));
     }
 
     @Operation(summary = "edit a cultivation by Id", description = "It returns a json with the cultivation edited")
     @PutMapping("/{id}")
     public ResponseEntity<?> editCultivation(@PathVariable Long id, @RequestBody CultivationRequestDto dto){
-        try{
-            CultivationResponseDto cultivation = cultivationService.editCultivation(id,dto);
-            return ResponseEntity.status(HttpStatus.OK).body(cultivation);
-        }
-        catch (CultivationNotFoundException | FivNotFoundException | FivAlreadyHasCultivation | FivDoesNotHaveOocyteCollectionException e){
-            return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        CultivationResponseDto cultivation = cultivationService.editCultivation(id,dto);
+        return ResponseEntity.status(HttpStatus.OK).body(cultivation);
     }
 }

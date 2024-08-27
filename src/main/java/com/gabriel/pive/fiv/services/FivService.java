@@ -28,7 +28,7 @@ public class FivService {
 
     public FivResponseDto getFivById(Long id){
         Fiv fiv = fivRepository.findById(id).
-            orElseThrow(() -> new FivNotFoundException("Fiv not found."));
+            orElseThrow(FivNotFoundException::new);
 
         return FivResponseDto.toFivResponseDto(fiv);
     }

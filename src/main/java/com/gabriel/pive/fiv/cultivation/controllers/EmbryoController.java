@@ -32,27 +32,15 @@ public class EmbryoController {
     @Operation(summary = "Save a new embryo", description = "It saves and returns a json with the new embryo")
     @PostMapping
     public ResponseEntity<?> saveEmbryo(@RequestBody EmbryoRequestDto dto){
-         try{
-             EmbryoResponseDto embryo = embryosService.saveEmbryo(dto);
-             return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
-         }
-         catch (ReceiverCattleNotFoundException | ReceiverCattleAlreadyHasEmbryoException |
-                CultivationNotFoundException | AllEmbryosAlreadyRegisteredException e){
-             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-         }
-
+        EmbryoResponseDto embryo = embryosService.saveEmbryo(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
     }
 
     @Operation(summary = "edit a embryo by Id", description = "It returns a json with the new embryo")
     @PutMapping("/{id}")
     public ResponseEntity<?> editEmbryo(@PathVariable Long id, @RequestBody EmbryoRequestDto dto){
-        try{
-            EmbryoResponseDto embryo = embryosService.editEmbryo(id,dto);
-            return ResponseEntity.status(HttpStatus.OK).body(embryo);
-        }
-        catch (EntityNotFoundException e){
-            return  ResponseEntity.status(HttpStatus.CONFLICT).body("Receiver cattle already has an embryo.");
-        }
+        EmbryoResponseDto embryo = embryosService.editEmbryo(id,dto);
+        return ResponseEntity.status(HttpStatus.OK).body(embryo);
         }
 
     @Operation(summary = "Get all embryos", description = "It returns a json list with all embryos")
@@ -64,12 +52,7 @@ public class EmbryoController {
     @Operation(summary = "Get a embryo by Id", description = "It returns a json with the embryo")
     @GetMapping("/{id}")
     public ResponseEntity<?> getEmbryoById(@PathVariable Long id){
-        try{
             return ResponseEntity.status(HttpStatus.OK).body(embryosService.getEmbryoById(id));
-        }
-        catch (EmbryoNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
     }
 
     }
