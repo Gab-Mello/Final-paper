@@ -15,13 +15,18 @@ public record DonorCattleDto(Long id, String name, String breed, LocalDate birth
                 registrationNumber);
     }
 
-    public static DonorCattleDto toDonorCattleDto(DonorCattle dto){
+    public static DonorCattleDto toDonorCattleDto(DonorCattle donorCattle){
+
+        if (donorCattle == null){
+            return null;
+        }
+
         return new DonorCattleDto(
-                dto.getId(),
-                dto.getName(),
-                dto.getBreed(),
-                dto.getBirth(),
-                dto.getRegistrationNumber()
+                donorCattle.getId(),
+                donorCattle.getName(),
+                donorCattle.getBreed(),
+                donorCattle.getBirth(),
+                donorCattle.getRegistrationNumber()
         );
     }
     public static List<DonorCattleDto> toDonorCattleDtoList(List<DonorCattle> list){
