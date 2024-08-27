@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ReceiverCattleRepository extends JpaRepository<ReceiverCattle,Long> {
     ReceiverCattle findByRegistrationNumber(String registrationNumber);
-
+    List<ReceiverCattle> findByRegistrationNumberStartingWith(String registrationNumber);
     List<ReceiverCattle> findByEmbryoIsNull();
 }

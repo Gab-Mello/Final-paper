@@ -35,7 +35,7 @@ public class ReceiverCattleController {
 
     @Operation(summary = "Find receiver by registration number", description = "It returns a json with the receiver cattle with the specific registration number")
     @GetMapping("/search")
-    public ResponseEntity<ReceiverCattleDto> findByRegistrationNumber(@RequestParam String registrationNumber) {
+    public ResponseEntity<List<ReceiverCattleDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.findByRegistrationNumber(registrationNumber));
     }
 
