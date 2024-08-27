@@ -5,6 +5,10 @@ import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.exceptions.BullNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.BullRepository;
+import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
+import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,12 @@ public class BullService {
 
     @Autowired
     private BullRepository bullRepository;
+
+    @Autowired
+    private EmbryoRepository embryoRepository;
+
+    @Autowired
+    private OocyteCollectionRepository oocyteCollectionRepository;
 
     public BullDto create(BullDto dto){
 
@@ -43,9 +53,21 @@ public class BullService {
     }
 
     public void delete(Long id){
-        if (bullRepository.findById(id).isEmpty()){
-            throw new BullNotFoundException();
+        Bull bull = bullRepository.findById(id)
+                .orElseThrow(BullNotFoundException::new);
+
+        List<Embryo> embryos = embryoRepository.findAllByEmbryoBull(bull);
+        for (Embryo embryo : embryos) {
+            embryo.setEmbryoBull(null);
+            embryoRepository.save(embryo);
         }
+
+        List<OocyteCollection> oocyteCollections = oocyteCollectionRepository.findAllByBull(bull);
+        for (OocyteCollection collection : oocyteCollections) {
+            collection.setBull(null);
+            oocyteCollectionRepository.save(collection);
+        }
+
         bullRepository.deleteById(id);
     }
 

@@ -13,6 +13,11 @@ public record BullDto(Long id, String name, String registrationNumber) {
     }
 
     public static BullDto toBullDto(Bull bull){
+
+        if (bull == null){
+            return null;
+        }
+
         return new BullDto(
                 bull.getId(),
                 bull.getName(),

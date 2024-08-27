@@ -5,6 +5,9 @@ import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.animals.entities.ReceiverCattle;
+import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
+import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,9 @@ public class ReceiverCattleService {
 
     @Autowired
     private ReceiverCattleRepository receiverCattleRepository;
+
+    @Autowired
+    private EmbryoRepository embryoRepository;
 
     public ReceiverCattleDto create(ReceiverCattleDto dto){
         if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
@@ -37,20 +43,24 @@ public class ReceiverCattleService {
 
     public ReceiverCattleDto findById(Long id){
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
-                .orElseThrow(() -> new ReceiverCattleNotFoundException());
+                .orElseThrow(ReceiverCattleNotFoundException::new);
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattle);
     }
 
     public void delete(Long id){
-        if (receiverCattleRepository.findById(id).isEmpty()){
-            throw new ReceiverCattleNotFoundException();
-        }
+        ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
+                .orElseThrow(ReceiverCattleNotFoundException::new);
+
+        Embryo embryo = embryoRepository.findByEmbryoReceiverCattle(receiverCattle);
+        embryo.setEmbryoReceiverCattle(null);
+        embryoRepository.save(embryo);
+
         receiverCattleRepository.deleteById(id);
     }
 
     public ReceiverCattleDto edit(Long id, ReceiverCattleDto dto){
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
-                .orElseThrow(() -> new ReceiverCattleNotFoundException());
+                .orElseThrow(ReceiverCattleNotFoundException::new);
 
         if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
             throw new RegistrationNumberAlreadyExistsException("Uma receptora com este número de registro já existe.");

@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.oocyteCollection.repositories;
 
+import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,6 @@ public interface OocyteCollectionRepository extends JpaRepository<OocyteCollecti
     List<OocyteCollection> findByBullRegistrationNumber(String registrationNumber);
 
     List<OocyteCollection> findByDonorCattleRegistrationNumber(String registrationNumber);
+
+    List<OocyteCollection> findAllByBull(Bull bull);
 }

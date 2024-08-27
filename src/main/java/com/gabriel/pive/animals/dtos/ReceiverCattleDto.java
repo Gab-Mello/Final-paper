@@ -15,6 +15,9 @@ public record ReceiverCattleDto(Long id, String name, String breed, String regis
     }
 
     public static ReceiverCattleDto toReceiverCattleDto(ReceiverCattle receiverCattle){
+        if (receiverCattle == null){
+            return null;
+        }
         return new ReceiverCattleDto(
                 receiverCattle.getId(),
                 receiverCattle.getName(),
