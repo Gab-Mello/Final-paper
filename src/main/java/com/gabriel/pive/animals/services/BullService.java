@@ -43,6 +43,9 @@ public class BullService {
     }
 
     public void delete(Long id){
+        if (bullRepository.findById(id).isEmpty()){
+            throw new BullNotFoundException();
+        }
         bullRepository.deleteById(id);
     }
 

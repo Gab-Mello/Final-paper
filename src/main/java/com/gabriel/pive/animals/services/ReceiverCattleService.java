@@ -42,6 +42,9 @@ public class ReceiverCattleService {
     }
 
     public void delete(Long id){
+        if (receiverCattleRepository.findById(id).isEmpty()){
+            throw new ReceiverCattleNotFoundException();
+        }
         receiverCattleRepository.deleteById(id);
     }
 

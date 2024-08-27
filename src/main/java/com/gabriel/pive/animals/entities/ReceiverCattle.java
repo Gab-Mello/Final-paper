@@ -28,7 +28,7 @@ public class ReceiverCattle {
 
     private String breed;
 
-    @OneToOne(mappedBy = "embryoReceiverCattle")
+    @OneToOne(mappedBy = "embryoReceiverCattle", cascade = CascadeType.REMOVE)
     private Embryo embryo;
 
     public ReceiverCattle(String name, String breed, String registrationNumber){

@@ -49,9 +49,6 @@ public class BullController {
     @Operation(summary = "Delete a bull by Id", description = "It deletes the bull")
     @DeleteMapping("/{id}")
     public ResponseEntity deleteBull(@PathVariable Long id){
-        if (bullService.findById(id)==null){
-            return ResponseEntity.notFound().build();
-        }
         bullService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

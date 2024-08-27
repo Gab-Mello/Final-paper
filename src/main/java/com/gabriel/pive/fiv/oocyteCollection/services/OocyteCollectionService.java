@@ -2,6 +2,8 @@ package com.gabriel.pive.fiv.oocyteCollection.services;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
+import com.gabriel.pive.animals.exceptions.BullNotFoundException;
+import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
@@ -36,10 +38,10 @@ public class OocyteCollectionService {
 
     public OocyteCollectionPostDto newOocyteCollection(OocyteCollectionRequestDto dto){
         DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
-                .orElseThrow(() -> new EntityNotFoundException("Donor not found"));
+                .orElseThrow(DonorCattleNotFoundException::new);
 
         Bull bull = bullRepository.findById(dto.bullId())
-                .orElseThrow(() -> new EntityNotFoundException("Bull not found"));
+                .orElseThrow(BullNotFoundException::new);
 
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(() -> new EntityNotFoundException("Fiv not found"));

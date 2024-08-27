@@ -4,3 +4,5 @@
 - [x] Develop a Fiv status.
 - [x] The Fiv is finished when the last embryo is registered.
 - [ ] Develop filter or find available receiver by name and registration number.
+- [ ] treat blank fields.
+- [ ] what if I delete a receiver that has an embryo?.

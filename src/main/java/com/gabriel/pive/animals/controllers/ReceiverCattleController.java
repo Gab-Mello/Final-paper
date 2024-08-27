@@ -48,9 +48,6 @@ public class ReceiverCattleController {
     @Operation(summary = "Delete a receiver cattle by Id", description = "It deletes the receiver cattle")
     @DeleteMapping("/{id}")
     public ResponseEntity<ReceiverCattleDto> deleteReceiverCattle(@PathVariable Long id){
-        if (receiverCattleService.findById(id)==null){
-            return ResponseEntity.notFound().build();
-        }
         receiverCattleService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
