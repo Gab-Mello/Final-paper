@@ -6,6 +6,10 @@ import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
+import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
+import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +20,13 @@ import java.util.Optional;
 public class DonorCattleService {
 
     @Autowired
-    DonorCattleRepository donorCattleRepository;
+    private DonorCattleRepository donorCattleRepository;
+
+    @Autowired
+    private EmbryoRepository embryoRepository;
+
+    @Autowired
+    private OocyteCollectionRepository oocyteCollectionRepository;
 
     public DonorCattleDto create(DonorCattleDto dto){
         if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
@@ -33,7 +43,7 @@ public class DonorCattleService {
 
     public DonorCattleDto findById(Long id){
         DonorCattle donorCattle = donorCattleRepository.findById(id)
-                .orElseThrow(() -> new DonorCattleNotFoundException());
+                .orElseThrow(DonorCattleNotFoundException::new);
         return DonorCattleDto.toDonorCattleDto(donorCattle);
     }
 
@@ -43,6 +53,21 @@ public class DonorCattleService {
     }
 
     public void delete(Long id){
+        DonorCattle donorCattle = donorCattleRepository.findById(id)
+                        .orElseThrow(DonorCattleNotFoundException::new);
+
+        List<Embryo> embryos = embryoRepository.findAllByEmbryoDonorCattle(donorCattle);
+        for (Embryo embryo : embryos){
+            embryo.setEmbryoDonorCattle(null);
+            embryoRepository.save(embryo);
+        }
+
+        List<OocyteCollection> oocyteCollections = oocyteCollectionRepository.findAllByDonorCattle(donorCattle);
+        for (OocyteCollection collection : oocyteCollections) {
+            collection.setDonorCattle(null);
+            oocyteCollectionRepository.save(collection);
+        }
+
         donorCattleRepository.deleteById(id);
     }
 
