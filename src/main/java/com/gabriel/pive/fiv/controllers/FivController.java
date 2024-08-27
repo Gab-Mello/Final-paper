@@ -59,11 +59,15 @@ public class FivController {
         return ResponseEntity.status(HttpStatus.OK).body(fivService.getCompletedFives());
     }
 
+    @Operation(summary = "filter fives by bull",
+            description = "exemple: http://localhost:8080/fiv/bull?bullId=3")
     @GetMapping("/bull")
     public ResponseEntity<List<FivResponseDto>> filterFivesByBull(@RequestParam Long bullId){
         return ResponseEntity.status(HttpStatus.OK).body(fivService.filterFivesByBull(bullId));
     }
 
+    @Operation(summary = "filter fives by donor",
+            description = "exemple: http://localhost:8080/fiv/donor?donorId=3")
     @GetMapping("/donor")
     public ResponseEntity<List<FivResponseDto>> filterFivesByDonor(@RequestParam Long donorId){
         return ResponseEntity.status(HttpStatus.OK).body(fivService.filterFivesByDonor(donorId));
