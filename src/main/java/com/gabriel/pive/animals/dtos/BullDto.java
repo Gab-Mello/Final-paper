@@ -1,10 +1,13 @@
 package com.gabriel.pive.animals.dtos;
 
 import com.gabriel.pive.animals.entities.Bull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record BullDto(Long id, String name, String registrationNumber) {
+public record BullDto(Long id, @NotBlank(message = "Nome do touro em branco.") String name,
+                      String registrationNumber) {
 
     public Bull toBull(){
         return new Bull(

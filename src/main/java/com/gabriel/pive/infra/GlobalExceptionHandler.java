@@ -11,12 +11,18 @@ import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteColle
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(RegistrationNumberAlreadyExistsException.class)
     private ResponseEntity<String> registrationNumberAlreadyExists(RegistrationNumberAlreadyExistsException exception){
@@ -82,4 +88,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<String> oocyteCollectionNotFound(OocyteCollectionNotFoundException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException exception) {
+
+        FieldError fieldError = (FieldError) exception.getBindingResult().getAllErrors().get(0);
+        String errorMessage = fieldError.getDefaultMessage();
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+    }
+
 }

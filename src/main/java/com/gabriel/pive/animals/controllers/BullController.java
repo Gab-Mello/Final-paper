@@ -24,7 +24,7 @@ public class BullController {
 
     @Operation(summary = "Save a new bull", description = "It saves and returns a json with the new bull")
     @PostMapping
-    public ResponseEntity<?> saveBull(@RequestBody BullDto dto){
+    public ResponseEntity<?> saveBull(@Valid @RequestBody BullDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(bullService.create(dto));
     }
 
@@ -55,7 +55,7 @@ public class BullController {
 
     @Operation(summary = "Edit a bull by Id", description = "It edits the bull's data")
     @PutMapping("/{id}")
-    public ResponseEntity<BullDto> editBull(@PathVariable Long id, @RequestBody BullDto dto){
+    public ResponseEntity<BullDto> editBull(@PathVariable Long id, @Valid @RequestBody BullDto dto){
         if (bullService.findById(id)==null){
             return ResponseEntity.notFound().build();
         }

@@ -14,6 +14,7 @@ import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class CultivationController {
 
     @Operation(summary = "Save a new cultivation", description = "It saves and returns a json with the new cultivation")
     @PostMapping
-    public ResponseEntity<?> newCultivation(@RequestBody CultivationRequestDto dto){
+    public ResponseEntity<?> newCultivation(@Valid @RequestBody CultivationRequestDto dto){
             CultivationResponseDto cultivation = cultivationService.newCultivation(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
     }

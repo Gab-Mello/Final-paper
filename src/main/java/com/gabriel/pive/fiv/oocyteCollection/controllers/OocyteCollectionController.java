@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class OocyteCollectionController {
 
     @Operation(summary = "Save a new oocyte collection", description = "It saves and returns a json with the new collection")
     @PostMapping
-    public ResponseEntity<?> newOocyteCollection(@RequestBody OocyteCollectionRequestDto dto){
+    public ResponseEntity<?> newOocyteCollection(@Valid @RequestBody OocyteCollectionRequestDto dto){
         OocyteCollectionPostDto oocyteCollection = oocyteCollectionService.newOocyteCollection(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(oocyteCollection);
     }

@@ -1,11 +1,13 @@
 package com.gabriel.pive.animals.dtos;
 
 import com.gabriel.pive.animals.entities.DonorCattle;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record DonorCattleDto(Long id, String name, String breed, LocalDate birth, String registrationNumber) {
+public record DonorCattleDto(Long id, @NotBlank(message = "Nome da doadora em branco.") String name,
+                             String breed, LocalDate birth, String registrationNumber) {
 
     public DonorCattle toDonorCattle(){
         return new DonorCattle(

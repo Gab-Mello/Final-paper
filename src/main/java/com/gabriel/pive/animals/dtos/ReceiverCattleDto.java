@@ -1,11 +1,13 @@
 package com.gabriel.pive.animals.dtos;
 
 import com.gabriel.pive.animals.entities.ReceiverCattle;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
 
-public record ReceiverCattleDto(Long id, String name, String breed, String registrationNumber) {
+public record ReceiverCattleDto(Long id, @NotBlank(message = "Nome da receptora em branco.") String name,
+                                String breed, String registrationNumber) {
 
     public ReceiverCattle toReceiverCattle(){
         return new ReceiverCattle(
