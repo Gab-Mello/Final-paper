@@ -6,8 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 
-public record ReceiverCattleDto(Long id, @NotBlank(message = "Nome da receptora em branco.") String name,
-                                String breed, String registrationNumber) {
+public record ReceiverCattleDto(Long id,
+                                @NotBlank(message = "Nome da receptora em branco.") String name,
+                                @NotBlank(message = "Raça em branco.") String breed,
+                                @NotBlank(message = "Número de identificação em branco.") String registrationNumber) {
 
     public ReceiverCattle toReceiverCattle(){
         return new ReceiverCattle(

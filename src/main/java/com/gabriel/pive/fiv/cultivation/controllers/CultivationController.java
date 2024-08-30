@@ -51,7 +51,7 @@ public class CultivationController {
 
     @Operation(summary = "edit a cultivation by Id", description = "It returns a json with the cultivation edited")
     @PutMapping("/{id}")
-    public ResponseEntity<?> editCultivation(@PathVariable Long id, @RequestBody CultivationRequestDto dto){
+    public ResponseEntity<?> editCultivation(@PathVariable Long id, @Valid @RequestBody CultivationRequestDto dto){
         CultivationResponseDto cultivation = cultivationService.editCultivation(id,dto);
         return ResponseEntity.status(HttpStatus.OK).body(cultivation);
     }

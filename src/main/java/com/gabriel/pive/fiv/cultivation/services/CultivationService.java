@@ -6,6 +6,7 @@ import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
 import com.gabriel.pive.fiv.cultivation.exceptions.CultivationNotFoundException;
 import com.gabriel.pive.fiv.cultivation.exceptions.FivAlreadyHasCultivation;
 import com.gabriel.pive.fiv.cultivation.exceptions.FivDoesNotHaveOocyteCollectionException;
+import com.gabriel.pive.fiv.cultivation.exceptions.MoreViableThanTotalEmbryosException;
 import com.gabriel.pive.fiv.cultivation.repositories.CultivationRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
@@ -35,6 +36,10 @@ public class CultivationService {
 
         if (fiv.getCultivation() != null){
             throw  new FivAlreadyHasCultivation();
+        }
+
+        if (dto.viableEmbryos() > dto.totalEmbryos()){
+            throw new MoreViableThanTotalEmbryosException();
         }
 
         Cultivation cultivation = dto.toCultivation(fiv);

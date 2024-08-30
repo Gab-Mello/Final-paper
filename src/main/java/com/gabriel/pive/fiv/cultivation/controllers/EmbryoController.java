@@ -13,6 +13,7 @@ import com.gabriel.pive.fiv.cultivation.services.EmbryosService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +32,14 @@ public class EmbryoController {
 
     @Operation(summary = "Save a new embryo", description = "It saves and returns a json with the new embryo")
     @PostMapping
-    public ResponseEntity<?> saveEmbryo(@RequestBody EmbryoRequestDto dto){
+    public ResponseEntity<?> saveEmbryo(@Valid @RequestBody EmbryoRequestDto dto){
         EmbryoResponseDto embryo = embryosService.saveEmbryo(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
     }
 
     @Operation(summary = "edit a embryo by Id", description = "It returns a json with the new embryo")
     @PutMapping("/{id}")
-    public ResponseEntity<?> editEmbryo(@PathVariable Long id, @RequestBody EmbryoRequestDto dto){
+    public ResponseEntity<?> editEmbryo(@PathVariable Long id, @Valid @RequestBody EmbryoRequestDto dto){
         EmbryoResponseDto embryo = embryosService.editEmbryo(id,dto);
         return ResponseEntity.status(HttpStatus.OK).body(embryo);
         }

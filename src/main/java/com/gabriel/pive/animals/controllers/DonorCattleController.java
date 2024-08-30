@@ -55,7 +55,7 @@ public class DonorCattleController {
 
     @Operation(summary = "Edit a donor by Id", description = "It edits the donor's data")
     @PutMapping("/{id}")
-    public ResponseEntity<DonorCattleDto> editDonor(@PathVariable Long id, @RequestBody DonorCattleDto dto){
+    public ResponseEntity<DonorCattleDto> editDonor(@PathVariable Long id, @Valid @RequestBody DonorCattleDto dto){
 
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.edit(id,dto));
     }

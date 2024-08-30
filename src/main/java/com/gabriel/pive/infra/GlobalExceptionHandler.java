@@ -98,4 +98,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
     }
 
+    @ExceptionHandler(MoreViableThanTotalEmbryosException.class)
+    private ResponseEntity<String> moreViableThanTotalEmbryos(MoreViableThanTotalEmbryosException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    }
 }
