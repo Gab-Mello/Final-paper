@@ -24,7 +24,7 @@ public class FivService {
     }
 
     public List<FivResponseDto> getAllFives(){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findAll());
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findAllByOrderByIdDesc());
     }
 
     public FivResponseDto getFivById(Long id){
@@ -35,23 +35,23 @@ public class FivService {
     }
 
     public List<FivResponseDto> getInProcessFives(){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatus(FivStatusEnum.IN_PROCESS));
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatusOrderByIdDesc(FivStatusEnum.IN_PROCESS));
     }
 
     public List<FivResponseDto> getOocyteCollectionCompletedFives(){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED));
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatusOrderByIdDesc(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED));
     }
 
     public List<FivResponseDto> getCompletedFives(){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatus(FivStatusEnum.COMPLETED));
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByStatusOrderByIdDesc(FivStatusEnum.COMPLETED));
     }
 
     public List<FivResponseDto> filterFivesByBull(Long bullId){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_Bull_Id(bullId));
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_Bull_IdOrderByIdDesc(bullId));
     }
 
     public List<FivResponseDto> filterFivesByDonor(Long donorId){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_DonorCattle_Id(donorId));
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_DonorCattle_IdOrderByIdDesc(donorId));
     }
 
 
