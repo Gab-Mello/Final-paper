@@ -40,7 +40,7 @@ public class OocyteCollectionController {
 
     @Operation(summary = "Edit a oocyte collection", description = "It returns a json with the oocyte collection edited")
     @PutMapping("/{id}")
-    public ResponseEntity<OocyteCollectionResponseDto> editOocyteCollection(@PathVariable Long id, @RequestBody OocyteCollectionRequestDto dto){
+    public ResponseEntity<OocyteCollectionResponseDto> editOocyteCollection(@PathVariable Long id, @Valid @RequestBody OocyteCollectionRequestDto dto){
         return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.editCollection(id, dto));
     }
 
