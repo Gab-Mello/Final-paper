@@ -10,9 +10,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
-public record EmbryoRequestDto(@NotBlank(message = "Id do cultivo em branco.") Long cultivationId,
+public record EmbryoRequestDto(@NotNull(message = "Id do cultivo em branco.") Long cultivationId,
                                @NotNull(message = "Congelamento em branco.") boolean frozen,
-                               @NotBlank(message = "Id da receptora em branco.") Long receiverCattleId) {
+                               @NotNull(message = "Id da receptora em branco.") Long receiverCattleId) {
 
     public Embryo toEmbryo(ReceiverCattle receiverCattle, Cultivation cultivation){
         return new Embryo(
