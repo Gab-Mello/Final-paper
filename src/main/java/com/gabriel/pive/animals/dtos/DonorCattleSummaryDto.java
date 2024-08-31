@@ -7,6 +7,9 @@ import java.time.LocalDate;
 public record DonorCattleSummaryDto(Long id, String name, String breed, LocalDate birth, String registrationNumber) {
 
     public static DonorCattleDto toDonorCattleSummaryDto(DonorCattle donorCattle){
+        if (donorCattle == null){
+            return null;
+        }
         return new DonorCattleDto(
                 donorCattle.getId(),
                 donorCattle.getName(),
