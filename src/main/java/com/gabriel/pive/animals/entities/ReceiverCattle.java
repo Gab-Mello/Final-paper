@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.entities;
 
 import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,9 @@ public class ReceiverCattle {
 
     @OneToOne(mappedBy = "embryoReceiverCattle")
     private Embryo embryo;
+
+    @OneToOne(mappedBy = "pregReceiverCattle")
+    private Pregnancy pregnancy;
 
     public ReceiverCattle(String name, String breed, String registrationNumber){
         this.name = name;
