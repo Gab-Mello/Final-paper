@@ -1,6 +1,8 @@
 package com.gabriel.pive.fiv.pregnancy.services;
 
+import com.gabriel.pive.animals.entities.ReceiverCattle;
 import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
+import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,4 +30,17 @@ public class PregnancyService {
         }
         return (int) ChronoUnit.DAYS.between(transferDay, LocalDate.now());
     }
-}
+
+    public void confirmPregnancy(ReceiverCattle receiverCattle, boolean is_pregnant){
+        Pregnancy pregnancy = receiverCattle.getPregnancy();
+
+        if (is_pregnant) {
+            pregnancy.setStatus(PregnancyStatus.PREGNANT);
+        } else {
+            pregnancy.setStatus(PregnancyStatus.NOT_PREGNANT);
+        }
+
+        pregnancyRepository.save(pregnancy);
+    }
+    }
+
