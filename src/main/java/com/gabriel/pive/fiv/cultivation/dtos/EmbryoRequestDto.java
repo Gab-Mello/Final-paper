@@ -8,9 +8,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record EmbryoRequestDto(@NotNull(message = "Id do cultivo em branco.") Long cultivationId,
+                               @NotNull(message = "Data em branco.") LocalDate date,
                                @NotNull(message = "Congelamento em branco.") boolean frozen,
                                Long receiverCattleId) {
 

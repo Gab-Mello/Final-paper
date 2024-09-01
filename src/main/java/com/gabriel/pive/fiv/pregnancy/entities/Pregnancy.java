@@ -33,4 +33,11 @@ public class Pregnancy {
 
     private Integer gestationalAge;
 
+    public Pregnancy(LocalDate transferDay, ReceiverCattle pregReceiverCattle, PregnancyStatus status){
+        this.transferDay = transferDay;
+        this.pregReceiverCattle = pregReceiverCattle;
+        this.status = status;
+        this.gestationalAge = 0;
+    }
+
     }

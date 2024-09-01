@@ -15,6 +15,9 @@ import com.gabriel.pive.fiv.cultivation.repositories.CultivationRepository;
 import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
+import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
+import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
+import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,20 +40,23 @@ public class EmbryosService {
     @Autowired
     private FivRepository fivRepository;
 
+    @Autowired
+    private PregnancyRepository pregnancyRepository;
+
     public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
 
         Cultivation cultivation = cultivationRepository.findById(dto.cultivationId())
                 .orElseThrow(CultivationNotFoundException::new);
+
+        if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos()){
+            throw new AllEmbryosAlreadyRegisteredException();
+        }
 
         if (dto.frozen()){
             Embryo embryo = dto.toEmbryo(null, cultivation);
             embryo.setEmbryoBull(cultivation.getFiv().getOocyteCollection().getBull());
             embryo.setEmbryoDonorCattle(cultivation.getFiv().getOocyteCollection().getDonorCattle());
             return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
-        }
-
-        if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos()){
-            throw new AllEmbryosAlreadyRegisteredException();
         }
 
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
@@ -65,11 +71,13 @@ public class EmbryosService {
             fiv.setStatus(FivStatusEnum.COMPLETED);
             fivRepository.save(fiv);
         }
-        Embryo embryo = dto.toEmbryo(receiverCattle, cultivation);
 
+        Embryo embryo = dto.toEmbryo(receiverCattle, cultivation);
         embryo.setEmbryoBull(cultivation.getFiv().getOocyteCollection().getBull());
         embryo.setEmbryoDonorCattle(cultivation.getFiv().getOocyteCollection().getDonorCattle());
 
+        Pregnancy pregnancy = new Pregnancy(dto.date(), receiverCattle, PregnancyStatus.IN_PROGRESS);
+        pregnancyRepository.save(pregnancy);
 
         return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
     }
