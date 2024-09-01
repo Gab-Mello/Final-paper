@@ -15,7 +15,7 @@ public class PregnancyService {
     @Autowired
     private PregnancyRepository pregnancyRepository;
 
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "@daily")
     public void updateGestationalAge(){
         for (Pregnancy pregnancy : pregnancyRepository.findAll()){
             pregnancy.setGestationalAge(calculateGestationalAge(pregnancy.getTransferDay()));
