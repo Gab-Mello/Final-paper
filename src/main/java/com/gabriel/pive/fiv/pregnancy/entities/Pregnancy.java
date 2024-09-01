@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.pregnancy.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.animals.entities.ReceiverCattle;
 import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import jakarta.persistence.*;
@@ -22,6 +23,7 @@ public class Pregnancy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "receiverCattleId")
     private ReceiverCattle pregReceiverCattle;

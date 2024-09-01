@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.dtos;
 
 import com.gabriel.pive.animals.entities.ReceiverCattle;
+import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
 public record ReceiverCattleDto(Long id,
                                 @NotBlank(message = "Nome da receptora em branco.") String name,
                                 @NotBlank(message = "Raça em branco.") String breed,
-                                @NotBlank(message = "Número de identificação em branco.") String registrationNumber) {
+                                @NotBlank(message = "Número de identificação em branco.") String registrationNumber,
+                                Pregnancy pregnancy) {
 
     public ReceiverCattle toReceiverCattle(){
         return new ReceiverCattle(
@@ -26,7 +28,8 @@ public record ReceiverCattleDto(Long id,
                 receiverCattle.getId(),
                 receiverCattle.getName(),
                 receiverCattle.getBreed(),
-                receiverCattle.getRegistrationNumber()
+                receiverCattle.getRegistrationNumber(),
+                receiverCattle.getPregnancy()
         );
     }
     public static List<ReceiverCattleDto> toReceiverCattleDtoList(List<ReceiverCattle> list){

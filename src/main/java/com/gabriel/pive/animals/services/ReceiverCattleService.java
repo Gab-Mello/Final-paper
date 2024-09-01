@@ -8,6 +8,7 @@ import com.gabriel.pive.animals.entities.ReceiverCattle;
 import com.gabriel.pive.fiv.cultivation.entities.Embryo;
 import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +76,9 @@ public class ReceiverCattleService {
 
     public List<ReceiverCattleDto> getAvailableReceivers(){
         return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.findByEmbryoIsNull());
+    }
+
+    public List<ReceiverCattleDto> getAllPregnantReceivers(){
+        return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.findByPregnancyStatus(PregnancyStatus.IN_PROGRESS));
     }
 }
