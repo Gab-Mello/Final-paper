@@ -62,7 +62,7 @@ public class ReceiverCattleService {
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
                 .orElseThrow(ReceiverCattleNotFoundException::new);
 
-        if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+        if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != receiverCattle){
             throw new RegistrationNumberAlreadyExistsException("Uma receptora com este número de registro já existe.");
         }
 

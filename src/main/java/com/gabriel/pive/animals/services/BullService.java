@@ -73,9 +73,9 @@ public class BullService {
 
     public BullDto edit(Long id, BullDto dto){
         Bull bull = bullRepository.findById(id)
-                .orElseThrow(() -> new BullNotFoundException());
+                .orElseThrow(BullNotFoundException::new);
 
-        if (bullRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
+        if (bullRepository.findByRegistrationNumber(dto.registrationNumber()) != bull){
             throw new RegistrationNumberAlreadyExistsException("Um touro com este número de registro já existe.");
         }
 
