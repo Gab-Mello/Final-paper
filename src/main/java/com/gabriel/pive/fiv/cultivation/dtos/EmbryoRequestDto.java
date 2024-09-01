@@ -12,7 +12,7 @@ import java.util.List;
 
 public record EmbryoRequestDto(@NotNull(message = "Id do cultivo em branco.") Long cultivationId,
                                @NotNull(message = "Congelamento em branco.") boolean frozen,
-                               @NotNull(message = "Id da receptora em branco.") Long receiverCattleId) {
+                               Long receiverCattleId) {
 
     public Embryo toEmbryo(ReceiverCattle receiverCattle, Cultivation cultivation){
         return new Embryo(

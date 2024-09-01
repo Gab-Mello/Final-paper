@@ -10,18 +10,19 @@ import com.gabriel.pive.fiv.cultivation.entities.Embryo;
 
 import java.util.List;
 
-public record EmbryoResponseDto(Long id, BullDto bull,
+public record EmbryoResponseDto(Long id,
+                                boolean frozen,
+                                BullDto bull,
                                 DonorCattleDto donorCattle,
-                                ReceiverCattleDto receiverCattle,
-                                boolean frozen) {
+                                ReceiverCattleDto receiverCattle) {
 
     public static EmbryoResponseDto toEmbryoResponseDto(Embryo embryo){
         return new EmbryoResponseDto(
                 embryo.getId(),
+                embryo.isFrozen(),
                 BullDto.toBullDto(embryo.getEmbryoBull()),
                 DonorCattleDto.toDonorCattleDto(embryo.getEmbryoDonorCattle()),
-                ReceiverCattleDto.toReceiverCattleDto(embryo.getEmbryoReceiverCattle()),
-                embryo.isFrozen());
+                ReceiverCattleDto.toReceiverCattleDto(embryo.getEmbryoReceiverCattle()));
     }
 
     public static List<EmbryoResponseDto> toEmbryoResponseDtoList(List<Embryo> list){

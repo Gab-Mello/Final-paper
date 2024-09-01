@@ -42,6 +42,13 @@ public class EmbryosService {
         Cultivation cultivation = cultivationRepository.findById(dto.cultivationId())
                 .orElseThrow(CultivationNotFoundException::new);
 
+        if (dto.frozen()){
+            Embryo embryo = dto.toEmbryo(null, cultivation);
+            embryo.setEmbryoBull(cultivation.getFiv().getOocyteCollection().getBull());
+            embryo.setEmbryoDonorCattle(cultivation.getFiv().getOocyteCollection().getDonorCattle());
+            return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
+        }
+
         if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos()){
             throw new AllEmbryosAlreadyRegisteredException();
         }
