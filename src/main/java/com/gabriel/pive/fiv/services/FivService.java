@@ -1,6 +1,7 @@
 package com.gabriel.pive.fiv.services;
 
 import com.gabriel.pive.animals.entities.Bull;
+import com.gabriel.pive.fiv.dtos.FivRequestDto;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
@@ -17,8 +18,8 @@ public class FivService {
     @Autowired
     private FivRepository fivRepository;
 
-    public FivResponseDto createFiv(){
-        Fiv fiv = new Fiv();
+    public FivResponseDto createFiv(FivRequestDto dto){
+        Fiv fiv = dto.toFiv();
         fiv.setStatus(FivStatusEnum.IN_PROCESS);
         return FivResponseDto.toFivResponseDto(fivRepository.save(fiv));
     }
@@ -47,11 +48,11 @@ public class FivService {
     }
 
     public List<FivResponseDto> filterFivesByBull(Long bullId){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_Bull_IdOrderByIdDesc(bullId));
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollections_Bull_IdOrderByIdDesc(bullId));
     }
 
     public List<FivResponseDto> filterFivesByDonor(Long donorId){
-        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollection_DonorCattle_IdOrderByIdDesc(donorId));
+        return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollections_DonorCattle_IdOrderByIdDesc(donorId));
     }
 
 

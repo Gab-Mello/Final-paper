@@ -22,8 +22,7 @@ public record OocyteCollectionResponseDto( Long fivId,
                                            DonorCattleDto donorCattle,
                                            BullDto bull,
                                            Integer totalOocytes,
-                                           Integer viableOocytes,
-                                           Integer nonViableOocytes
+                                           Integer viableOocytes
 ) {
 
     public static OocyteCollectionResponseDto toOocyteCollectionDto(OocyteCollection oocyteCollection){
@@ -34,41 +33,43 @@ public record OocyteCollectionResponseDto( Long fivId,
 
         return new OocyteCollectionResponseDto(
                 oocyteCollection.getFiv().getId(),
-                oocyteCollection.getDate(),
-                oocyteCollection.getFarm(),
-                oocyteCollection.getLaboratory(),
-                oocyteCollection.getClient(),
-                oocyteCollection.getVeterinarian(),
-                oocyteCollection.getTechnical(),
+                oocyteCollection.getFiv().getDate(),
+                oocyteCollection.getFiv().getFarm(),
+                oocyteCollection.getFiv().getLaboratory(),
+                oocyteCollection.getFiv().getClient(),
+                oocyteCollection.getFiv().getVeterinarian(),
+                oocyteCollection.getFiv().getTechnical(),
                 DonorCattleSummaryDto.toDonorCattleSummaryDto(oocyteCollection.getDonorCattle()),
                 BullSummaryDto.toBullSummaryDto(oocyteCollection.getBull()),
                 oocyteCollection.getTotalOocytes(),
-                oocyteCollection.getViableOocytes(),
-                oocyteCollection.getNonViableOocytes());
+                oocyteCollection.getViableOocytes());
     }
 
     public static List<OocyteCollectionResponseDto> toOocyteCollectionDtoList(List<OocyteCollection> list){
+        if (list == null){
+            return null;
+        }
         List<OocyteCollectionResponseDto> listDto = list.stream().map(collection -> toOocyteCollectionDto(collection)).toList();
         return listDto;
     }
 
-    public static OocyteCollection editMapper(OocyteCollection oocyteCollection, OocyteCollectionRequestDto dto,
-                                                         DonorCattle donorCattle,
-                                                         Bull bull){
-        oocyteCollection.setDate(dto.date());
-        oocyteCollection.setFarm(dto.farm());
-        oocyteCollection.setLaboratory(dto.laboratory());
-        oocyteCollection.setClient(dto.client());
-        oocyteCollection.setVeterinarian(dto.veterinarian());
-        oocyteCollection.setTechnical(dto.technical());
-        oocyteCollection.setDonorCattle(donorCattle);
-        oocyteCollection.setBull(bull);
-        oocyteCollection.setTotalOocytes(dto.totalOocytes());
-        oocyteCollection.setViableOocytes(dto.viableOocytes());
-        oocyteCollection.setNonViableOocytes(dto.totalOocytes() - dto.viableOocytes());
-
-        return oocyteCollection;
-    }
+//    public static OocyteCollection editMapper(OocyteCollection oocyteCollection, OocyteCollectionRequestDto dto,
+//                                                         DonorCattle donorCattle,
+//                                                         Bull bull){
+//        oocyteCollection.getFiv().setDate(dto.date());
+//        oocyteCollection.setFarm(dto.farm());
+//        oocyteCollection.setLaboratory(dto.laboratory());
+//        oocyteCollection.setClient(dto.client());
+//        oocyteCollection.setVeterinarian(dto.veterinarian());
+//        oocyteCollection.setTechnical(dto.technical());
+//        oocyteCollection.setDonorCattle(donorCattle);
+//        oocyteCollection.setBull(bull);
+//        oocyteCollection.setTotalOocytes(dto.totalOocytes());
+//        oocyteCollection.setViableOocytes(dto.viableOocytes());
+//        oocyteCollection.setNonViableOocytes(dto.totalOocytes() - dto.viableOocytes());
+//
+//        return oocyteCollection;
+//    }
 
 
 }

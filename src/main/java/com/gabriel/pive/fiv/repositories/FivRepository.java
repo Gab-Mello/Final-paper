@@ -12,7 +12,7 @@ public interface FivRepository extends JpaRepository<Fiv,Long> {
 
     Fiv findByCultivationId(Long cultivationId);
     List<Fiv> findByStatusOrderByIdDesc(FivStatusEnum status);
-    List<Fiv> findByOocyteCollection_Bull_IdOrderByIdDesc(Long bullId);
-    List<Fiv> findByOocyteCollection_DonorCattle_IdOrderByIdDesc(Long donorId);
+    List<Fiv> findByOocyteCollections_Bull_IdOrderByIdDesc(Long bullId);
+    List<Fiv> findByOocyteCollections_DonorCattle_IdOrderByIdDesc(Long donorId);
     List<Fiv> findAllByOrderByIdDesc();
 }

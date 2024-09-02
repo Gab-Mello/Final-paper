@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -22,10 +25,22 @@ public class Fiv {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "oocyteCollection_id")
-    private OocyteCollection oocyteCollection;
+    private LocalDate date;
+
+    private String farm;
+
+    private String laboratory;
+
+    private String client;
+
+    private String veterinarian;
+
+    private String technical;
+
+    private String TE;
+
+    @OneToMany(mappedBy = "fiv")
+    private List<OocyteCollection> oocyteCollections;
 
     @OneToOne
     @JoinColumn(name = "cultivation_id")
@@ -34,4 +49,14 @@ public class Fiv {
     @Enumerated(EnumType.STRING)
     private FivStatusEnum status;
 
+    public Fiv(LocalDate date, String farm, String laboratory,
+               String client, String veterinarian, String technical, String TE){
+        this.date = date;
+        this.farm = farm;
+        this.laboratory = laboratory;
+        this.client = client;
+        this.veterinarian = veterinarian;
+        this.technical = technical;
+        this.TE = TE;
+    }
 }

@@ -22,21 +22,9 @@ public class OocyteCollection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "oocyteCollection", fetch = FetchType.EAGER)
+    @JoinColumn(name = "oocyteCollection_id")
+    @ManyToOne
     private Fiv fiv;
-
-    private LocalDate date;
-
-    private String farm;
-
-    private String laboratory;
-
-    private String client;
-
-    private String veterinarian;
-
-    private String technical;
 
     @ManyToOne
     @JoinColumn(name = "donor_id")
@@ -50,23 +38,12 @@ public class OocyteCollection {
 
     private Integer viableOocytes;
 
-    private Integer nonViableOocytes;
-
-
-    public OocyteCollection(DonorCattle donorCattle, Bull bull, String farm, String laboratory, String client,
-                            String veterinarian, String technical,Integer totalOocytes, Integer viableOocytes,
-                            Integer nonViableOocytes, LocalDate date){
-        this.date = date;
-        this.farm = farm;
-        this.laboratory = laboratory;
-        this.client = client;
-        this.veterinarian = veterinarian;
-        this.technical = technical;
+    public OocyteCollection(Fiv fiv, DonorCattle donorCattle, Bull bull, Integer totalOocytes, Integer viableOocytes){
+        this.fiv = fiv;
         this.donorCattle = donorCattle;
         this.bull = bull;
         this.totalOocytes = totalOocytes;
         this.viableOocytes = viableOocytes;
-        this.nonViableOocytes = nonViableOocytes;
     }
 
 

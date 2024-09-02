@@ -11,9 +11,14 @@ import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionReposi
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.List;
 
-public record FivResponseDto(Long id, FivStatusEnum status, OocyteCollectionResponseDto oocyteCollection,
+public record FivResponseDto(Long id, FivStatusEnum status,
+                             LocalDate date, String farm,
+                             String laboratory, String client,
+                             String veterinarian, String technical,
+                             String TE, List<OocyteCollectionResponseDto> oocyteCollections,
                              CultivationSummaryResponseDto cultivation) {
 
 
@@ -21,7 +26,14 @@ public record FivResponseDto(Long id, FivStatusEnum status, OocyteCollectionResp
         return new FivResponseDto(
                 fiv.getId(),
                 fiv.getStatus(),
-                OocyteCollectionResponseDto.toOocyteCollectionDto(fiv.getOocyteCollection()),
+                fiv.getDate(),
+                fiv.getFarm(),
+                fiv.getLaboratory(),
+                fiv.getClient(),
+                fiv.getVeterinarian(),
+                fiv.getTechnical(),
+                fiv.getTE(),
+                OocyteCollectionResponseDto.toOocyteCollectionDtoList(fiv.getOocyteCollections()),
                 CultivationSummaryResponseDto.toCultivationSummaryDto(fiv.getCultivation()));
     }
 

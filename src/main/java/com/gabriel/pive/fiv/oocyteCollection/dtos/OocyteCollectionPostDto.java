@@ -21,24 +21,24 @@ public record OocyteCollectionPostDto(Long fivId,
                                       Integer viableOocytes,
                                       Integer nonViableOocytes) {
 
-    public static OocyteCollectionPostDto toOocyteCollectionPostDto(OocyteCollection oocyteCollection, Long fivId){
-
-        if (oocyteCollection == null){
-            return null;
-        }
-
-        return new OocyteCollectionPostDto(
-                fivId,
-                oocyteCollection.getDate(),
-                oocyteCollection.getFarm(),
-                oocyteCollection.getLaboratory(),
-                oocyteCollection.getClient(),
-                oocyteCollection.getVeterinarian(),
-                oocyteCollection.getTechnical(),
-                DonorCattleSummaryDto.toDonorCattleSummaryDto(oocyteCollection.getDonorCattle()),
-                BullSummaryDto.toBullSummaryDto(oocyteCollection.getBull()),
-                oocyteCollection.getTotalOocytes(),
-                oocyteCollection.getViableOocytes(),
-                oocyteCollection.getNonViableOocytes());
-    }
+//    public static OocyteCollectionPostDto toOocyteCollectionPostDto(OocyteCollection oocyteCollection, Long fivId){
+//
+//        if (oocyteCollection == null){
+//            return null;
+//        }
+//
+//        return new OocyteCollectionPostDto(
+//                fivId,
+//                oocyteCollection.getDate(),
+//                oocyteCollection.getFarm(),
+//                oocyteCollection.getLaboratory(),
+//                oocyteCollection.getClient(),
+//                oocyteCollection.getVeterinarian(),
+//                oocyteCollection.getTechnical(),
+//                DonorCattleSummaryDto.toDonorCattleSummaryDto(oocyteCollection.getDonorCattle()),
+//                BullSummaryDto.toBullSummaryDto(oocyteCollection.getBull()),
+//                oocyteCollection.getTotalOocytes(),
+//                oocyteCollection.getViableOocytes(),
+//                oocyteCollection.getNonViableOocytes());
+//    }
 }

@@ -1,11 +1,13 @@
 package com.gabriel.pive.fiv.controllers;
 
 import com.gabriel.pive.animals.entities.Bull;
+import com.gabriel.pive.fiv.dtos.FivRequestDto;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.services.FivService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,8 @@ public class FivController {
 
     @Operation(summary = "Create a new fiv", description = "It saves and returns a json with the new fiv")
     @PostMapping
-    public ResponseEntity<FivResponseDto> createFiv(){
-        return ResponseEntity.status(HttpStatus.CREATED).body(fivService.createFiv());
+    public ResponseEntity<FivResponseDto> createFiv(@Valid @RequestBody FivRequestDto dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(fivService.createFiv(dto));
     }
 
     @Operation(summary = "List all fivs", description = "It returns a json list with all fivs")

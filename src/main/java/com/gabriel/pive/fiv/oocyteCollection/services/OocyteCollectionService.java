@@ -38,29 +38,24 @@ public class OocyteCollectionService {
     @Autowired
     private FivRepository fivRepository;
 
-    public OocyteCollectionPostDto newOocyteCollection(OocyteCollectionRequestDto dto){
+    public OocyteCollectionResponseDto newOocyteCollection(OocyteCollectionRequestDto dto){
+        Fiv fiv = fivRepository.findById(dto.fivId())
+                .orElseThrow(FivNotFoundException::new);
+
         DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
                 .orElseThrow(DonorCattleNotFoundException::new);
 
         Bull bull = bullRepository.findById(dto.bullId())
                 .orElseThrow(BullNotFoundException::new);
 
-        Fiv fiv = fivRepository.findById(dto.fivId())
-                .orElseThrow(FivNotFoundException::new);
+//        fiv.setStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED);
+//        fivRepository.save(fiv);
 
-        if (fiv.getOocyteCollection() != null){
-            throw new FivAlreadyHasOocyteCollectionException();
-        }
+        OocyteCollection oocyteCollection = dto.toOocyteCollection(fiv, donorCattle, bull);
+        collectionRepository.save(oocyteCollection);
 
-        OocyteCollection oocyteCollection = dto.toOocyteCollection(donorCattle, bull);
 
-        OocyteCollection savedOocyteCollection = collectionRepository.save(oocyteCollection);
-
-        fiv.setOocyteCollection(savedOocyteCollection);
-        fiv.setStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED);
-        fivRepository.save(fiv);
-
-        return OocyteCollectionPostDto.toOocyteCollectionPostDto(savedOocyteCollection, fiv.getId());
+        return OocyteCollectionResponseDto.toOocyteCollectionDto(oocyteCollection);
 
     }
 
@@ -69,20 +64,20 @@ public class OocyteCollectionService {
         return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
 
-    public OocyteCollectionResponseDto editCollection(Long id, OocyteCollectionRequestDto dto){
-        OocyteCollection oocyteCollection = collectionRepository.findById(id)
-                .orElseThrow(OocyteCollectionNotFoundException::new);
-
-        DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
-                .orElseThrow(DonorCattleNotFoundException::new);
-
-        Bull bull = bullRepository.findById(dto.bullId())
-                .orElseThrow(BullNotFoundException::new);
-
-        return OocyteCollectionResponseDto.toOocyteCollectionDto(collectionRepository.save(OocyteCollectionResponseDto.
-                editMapper(oocyteCollection, dto, donorCattle, bull)));
-
-    }
+//    public OocyteCollectionResponseDto editCollection(Long id, OocyteCollectionRequestDto dto){
+//        OocyteCollection oocyteCollection = collectionRepository.findById(id)
+//                .orElseThrow(OocyteCollectionNotFoundException::new);
+//
+//        DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
+//                .orElseThrow(DonorCattleNotFoundException::new);
+//
+//        Bull bull = bullRepository.findById(dto.bullId())
+//                .orElseThrow(BullNotFoundException::new);
+//
+//        return OocyteCollectionResponseDto.toOocyteCollectionDto(collectionRepository.save(OocyteCollectionResponseDto.
+//                editMapper(oocyteCollection, dto, donorCattle, bull)));
+//
+//    }
 
     public OocyteCollectionResponseDto getCollectionById(Long id){
 

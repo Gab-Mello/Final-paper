@@ -30,7 +30,7 @@ public class CultivationService {
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(FivNotFoundException::new);
 
-        if (fiv.getOocyteCollection() == null){
+        if (fiv.getOocyteCollections().isEmpty()){
             throw new FivDoesNotHaveOocyteCollectionException();
         }
 
@@ -75,7 +75,7 @@ public class CultivationService {
             throw  new FivAlreadyHasCultivation();
         }
 
-        if (newFiv.getOocyteCollection() == null){
+        if (newFiv.getOocyteCollections().isEmpty()){
             throw new FivDoesNotHaveOocyteCollectionException();
         }
 

@@ -28,7 +28,7 @@ public class OocyteCollectionController {
     @Operation(summary = "Save a new oocyte collection", description = "It saves and returns a json with the new collection")
     @PostMapping
     public ResponseEntity<?> newOocyteCollection(@Valid @RequestBody OocyteCollectionRequestDto dto){
-        OocyteCollectionPostDto oocyteCollection = oocyteCollectionService.newOocyteCollection(dto);
+        OocyteCollectionResponseDto oocyteCollection = oocyteCollectionService.newOocyteCollection(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(oocyteCollection);
     }
 
@@ -38,11 +38,11 @@ public class OocyteCollectionController {
         return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.getAll());
     }
 
-    @Operation(summary = "Edit a oocyte collection", description = "It returns a json with the oocyte collection edited")
-    @PutMapping("/{id}")
-    public ResponseEntity<OocyteCollectionResponseDto> editOocyteCollection(@PathVariable Long id, @Valid @RequestBody OocyteCollectionRequestDto dto){
-        return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.editCollection(id, dto));
-    }
+//    @Operation(summary = "Edit a oocyte collection", description = "It returns a json with the oocyte collection edited")
+//    @PutMapping("/{id}")
+//    public ResponseEntity<OocyteCollectionResponseDto> editOocyteCollection(@PathVariable Long id, @Valid @RequestBody OocyteCollectionRequestDto dto){
+//        return ResponseEntity.status(HttpStatus.OK).body(oocyteCollectionService.editCollection(id, dto));
+//    }
 
     @Operation(summary = "Find a oocyte collection by Id", description = "It returns a json with the oocyte collection found by Id ")
     @GetMapping("/{id}")
