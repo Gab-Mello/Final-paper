@@ -48,6 +48,10 @@ public class Fiv {
     @Enumerated(EnumType.STRING)
     private FivStatusEnum status;
 
+    private Integer totalOocytesCollected;
+
+    private Integer totalViableOocytesCollected;
+
     public Fiv(LocalDate date, String farm, String laboratory,
                String client, String veterinarian, String technical, String TE){
         this.date = date;
@@ -57,5 +61,7 @@ public class Fiv {
         this.veterinarian = veterinarian;
         this.technical = technical;
         this.TE = TE;
+        this.totalOocytesCollected = 0;
+        this.totalViableOocytesCollected = 0;
     }
 }

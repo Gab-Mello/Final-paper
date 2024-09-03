@@ -13,6 +13,7 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                              String laboratory, String client,
                              String veterinarian, String technical,
                              String TE, List<OocyteCollectionResponseDto> oocyteCollections,
+                             Integer totalOocytesCollected, Integer totalViableOocytesCollected,
                              CultivationSummaryResponseDto cultivation) {
 
 
@@ -28,6 +29,8 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                 fiv.getTechnical(),
                 fiv.getTE(),
                 OocyteCollectionResponseDto.toOocyteCollectionDtoList(fiv.getOocyteCollections()),
+                fiv.getTotalOocytesCollected(),
+                fiv.getTotalViableOocytesCollected(),
                 CultivationSummaryResponseDto.toCultivationSummaryDto(fiv.getEmbryoProduction()));
     }
 
