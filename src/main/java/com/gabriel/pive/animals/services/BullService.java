@@ -5,15 +5,14 @@ import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.exceptions.BullNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.BullRepository;
-import com.gabriel.pive.fiv.cultivation.entities.Embryo;
-import com.gabriel.pive.fiv.cultivation.repositories.EmbryoRepository;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
+import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BullService {

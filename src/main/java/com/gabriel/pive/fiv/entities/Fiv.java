@@ -1,7 +1,6 @@
 package com.gabriel.pive.fiv.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.gabriel.pive.fiv.cultivation.entities.Cultivation;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import jakarta.persistence.*;
@@ -43,8 +42,8 @@ public class Fiv {
     private List<OocyteCollection> oocyteCollections;
 
     @OneToOne
-    @JoinColumn(name = "cultivation_id")
-    private Cultivation cultivation;
+    @JoinColumn(name = "production_id")
+    private EmbryoProduction embryoProduction;
 
     @Enumerated(EnumType.STRING)
     private FivStatusEnum status;

@@ -1,15 +1,12 @@
 package com.gabriel.pive.animals.entities;
 
-import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Setter
 @Getter

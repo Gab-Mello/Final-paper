@@ -14,7 +14,8 @@ public record OocyteCollectionRequestDto(
         @NotNull(message = "Doadora em branco.") Long donorCattleId,
         @NotNull(message = "Touro em branco.")  Long bullId,
         @NotNull(message = "Total de oócitos em branco.")Integer totalOocytes,
-        @NotNull(message = "Oócitos viáveis em branco.")Integer viableOocytes
+        @NotNull(message = "Oócitos viáveis em branco.")Integer viableOocytes,
+        boolean finished
                                          ) {
 
     public OocyteCollection toOocyteCollection(Fiv fiv, DonorCattle donorCattle, Bull bull){

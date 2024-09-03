@@ -1,4 +1,4 @@
-package com.gabriel.pive.fiv.cultivation.exceptions;
+package com.gabriel.pive.fiv.EmbryoProduction.exceptions;
 
 public class AllEmbryosAlreadyRegisteredException extends RuntimeException{
 

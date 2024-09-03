@@ -48,12 +48,14 @@ public class OocyteCollectionService {
         Bull bull = bullRepository.findById(dto.bullId())
                 .orElseThrow(BullNotFoundException::new);
 
-//        fiv.setStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED);
-//        fivRepository.save(fiv);
 
         OocyteCollection oocyteCollection = dto.toOocyteCollection(fiv, donorCattle, bull);
         collectionRepository.save(oocyteCollection);
 
+        if (dto.finished()){
+            fiv.setStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED);
+            fivRepository.save(fiv);
+        }
 
         return OocyteCollectionResponseDto.toOocyteCollectionDto(oocyteCollection);
 

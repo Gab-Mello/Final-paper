@@ -1,8 +1,9 @@
-package com.gabriel.pive.fiv.cultivation.entities;
+package com.gabriel.pive.fiv.EmbryoProduction.entities;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.entities.ReceiverCattle;
+import com.gabriel.pive.fiv.EmbryoProduction.enums.EmbryoDestiny;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +23,8 @@ public class Embryo {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cultivation_id")
-    private Cultivation embryoCultivation;
+    @JoinColumn(name = "production_id")
+    private EmbryoProduction embryoEmbryoProduction;
 
     @ManyToOne
     @JoinColumn(name = "bull_id")
@@ -33,15 +34,16 @@ public class Embryo {
     @JoinColumn(name = "donor_id")
     private DonorCattle embryoDonorCattle;
 
-    private boolean frozen = false;
+    @Enumerated(EnumType.STRING)
+    private EmbryoDestiny destiny;
 
     @OneToOne
     @JoinColumn(name = "receiver_id")
     private ReceiverCattle embryoReceiverCattle;
 
-    public Embryo(Cultivation cultivation, boolean frozen, ReceiverCattle receiverCattle){
-        this.embryoCultivation = cultivation;
-        this.frozen = frozen;
+    public Embryo(EmbryoProduction embryoProduction, EmbryoDestiny destiny, ReceiverCattle receiverCattle){
+        this.embryoEmbryoProduction = embryoProduction;
+        this.destiny = destiny;
         this.embryoReceiverCattle = receiverCattle;
     }
 

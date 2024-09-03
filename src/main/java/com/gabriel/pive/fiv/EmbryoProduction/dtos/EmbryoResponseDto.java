@@ -1,17 +1,15 @@
-package com.gabriel.pive.fiv.cultivation.dtos;
+package com.gabriel.pive.fiv.EmbryoProduction.dtos;
 
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
-import com.gabriel.pive.animals.entities.Bull;
-import com.gabriel.pive.animals.entities.DonorCattle;
-import com.gabriel.pive.animals.entities.ReceiverCattle;
-import com.gabriel.pive.fiv.cultivation.entities.Embryo;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
+import com.gabriel.pive.fiv.EmbryoProduction.enums.EmbryoDestiny;
 
 import java.util.List;
 
 public record EmbryoResponseDto(Long id,
-                                boolean frozen,
+                                EmbryoDestiny destiny,
                                 BullDto bull,
                                 DonorCattleDto donorCattle,
                                 ReceiverCattleDto receiverCattle) {
@@ -19,7 +17,7 @@ public record EmbryoResponseDto(Long id,
     public static EmbryoResponseDto toEmbryoResponseDto(Embryo embryo){
         return new EmbryoResponseDto(
                 embryo.getId(),
-                embryo.isFrozen(),
+                embryo.getDestiny(),
                 BullDto.toBullDto(embryo.getEmbryoBull()),
                 DonorCattleDto.toDonorCattleDto(embryo.getEmbryoDonorCattle()),
                 ReceiverCattleDto.toReceiverCattleDto(embryo.getEmbryoReceiverCattle()));
