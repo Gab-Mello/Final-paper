@@ -10,7 +10,7 @@ import java.util.List;
 public record DonorCattleDto(Long id,
                              @NotBlank(message = "Nome da doadora em branco.") String name,
                              @NotBlank(message = "Raça em branco.") String breed,
-                             @NotNull(message = "Data em branco.") LocalDate birth,
+                             LocalDate birth,
                              @NotBlank(message = "Número de identificação em branco.")String registrationNumber) {
 
     public DonorCattle toDonorCattle(){
