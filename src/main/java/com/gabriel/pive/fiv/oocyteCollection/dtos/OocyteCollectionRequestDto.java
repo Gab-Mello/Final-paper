@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public record OocyteCollectionRequestDto(
         @NotNull(message = "FivId em branco.")Long fivId,
         @NotNull(message = "Doadora em branco.") Long donorCattleId,
-        @NotNull(message = "Touro em branco.")  Long bullId,
+        Long bullId,
         @NotNull(message = "Total de oócitos em branco.")Integer totalOocytes,
         @NotNull(message = "Oócitos viáveis em branco.")Integer viableOocytes,
         boolean finished

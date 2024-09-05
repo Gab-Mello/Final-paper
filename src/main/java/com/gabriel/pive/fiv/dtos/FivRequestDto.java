@@ -13,7 +13,7 @@ public record FivRequestDto(
         @NotBlank(message = "Cliente em branco.") String client,
         @NotBlank(message = "Veterinário em branco.") String veterinarian,
         @NotBlank(message = "Técnico em branco.") String technical,
-        @NotBlank(message = "TE em branco.") String TE
+        String TE
 ) {
 
     public Fiv toFiv(){

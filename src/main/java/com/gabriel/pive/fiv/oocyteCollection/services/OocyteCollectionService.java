@@ -17,6 +17,7 @@ import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteColle
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
+import com.gabriel.pive.fiv.services.FivService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,9 @@ public class OocyteCollectionService {
     @Autowired
     private FivRepository fivRepository;
 
+    @Autowired
+    private FivService fivService;
+
     public OocyteCollectionResponseDto newOocyteCollection(OocyteCollectionRequestDto dto){
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(FivNotFoundException::new);
@@ -48,13 +52,16 @@ public class OocyteCollectionService {
         Bull bull = bullRepository.findById(dto.bullId())
                 .orElseThrow(BullNotFoundException::new);
 
-        fiv.setTotalOocytesCollected(fiv.getTotalOocytesCollected() + dto.totalOocytes());
-        fiv.setTotalViableOocytesCollected(fiv.getTotalViableOocytesCollected() + dto.viableOocytes());
-        fivRepository.save(fiv);
+//        if (dto.viableOocytes() > dto.totalOocytes()){
+//            throw new FivAlreadyHasOocyteCollectionException();
+//        }
+
+        fivService.updateTotalOocytes(fiv, dto.totalOocytes());
+        fivService.updateTotalViableOocytes(fiv, dto.viableOocytes());
 
         OocyteCollection oocyteCollection = dto.toOocyteCollection(fiv, donorCattle, bull);
         collectionRepository.save(oocyteCollection);
-        
+
         if (dto.finished()){
             fiv.setStatus(FivStatusEnum.OOCYTE_COLLECTION_COMPLETED);
             fivRepository.save(fiv);

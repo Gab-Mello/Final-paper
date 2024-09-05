@@ -6,3 +6,5 @@
 - [ ] Delete receiver is getting error sometimes.
 - [ ] Develop pregnancy.
 - [ ] Save production of each "oocyte collection" of the fiv.
+- [ ] Total embryos has to be bigger than viable in oocyte collection.
+- [ ] Change total viable bigger than total exception.

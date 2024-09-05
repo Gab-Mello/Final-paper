@@ -24,6 +24,16 @@ public class FivService {
         return FivResponseDto.toFivResponseDto(fivRepository.save(fiv));
     }
 
+    public void updateTotalOocytes(Fiv fiv, Integer oocytes){
+        fiv.updateTotalOocytesCollected(oocytes);
+        fivRepository.save(fiv);
+    }
+
+    public void updateTotalViableOocytes(Fiv fiv, Integer oocytes){
+        fiv.updateTotalViableOocytesCollected(oocytes);
+        fivRepository.save(fiv);
+    }
+
     public List<FivResponseDto> getAllFives(){
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAllByOrderByIdDesc());
     }
