@@ -53,6 +53,10 @@ public class OocyteCollectionService {
         Bull bull = bullRepository.findById(dto.bullId())
                 .orElseThrow(BullNotFoundException::new);
 
+        if (fivRepository.existsByOocyteCollections_DonorCattleAndId(donorCattle, fiv.getId())){
+            throw new ViableOocytesBiggerThanTotalException();
+        }
+
         if (dto.viableOocytes() > dto.totalOocytes()){
             throw new ViableOocytesBiggerThanTotalException();
         }
