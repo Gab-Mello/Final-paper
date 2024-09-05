@@ -15,6 +15,7 @@ import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
@@ -52,9 +53,9 @@ public class OocyteCollectionService {
         Bull bull = bullRepository.findById(dto.bullId())
                 .orElseThrow(BullNotFoundException::new);
 
-//        if (dto.viableOocytes() > dto.totalOocytes()){
-//            throw new FivAlreadyHasOocyteCollectionException();
-//        }
+        if (dto.viableOocytes() > dto.totalOocytes()){
+            throw new ViableOocytesBiggerThanTotalException();
+        }
 
         fivService.updateTotalOocytes(fiv, dto.totalOocytes());
         fivService.updateTotalViableOocytes(fiv, dto.viableOocytes());

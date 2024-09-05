@@ -8,6 +8,7 @@ import com.gabriel.pive.fiv.EmbryoProduction.exceptions.*;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -96,4 +97,10 @@ public class GlobalExceptionHandler {
     private ResponseEntity<String> moreViableThanTotalEmbryos(MoreViableThanTotalEmbryosException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
+
+    @ExceptionHandler(ViableOocytesBiggerThanTotalException.class)
+    private ResponseEntity<String> viableOocytesBiggerThanTotal(ViableOocytesBiggerThanTotalException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    }
+
 }
