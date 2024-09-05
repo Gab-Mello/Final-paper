@@ -58,7 +58,7 @@ public class OocyteCollectionService {
         }
 
         if (dto.viableOocytes() > dto.totalOocytes()){
-            throw new ViableOocytesBiggerThanTotalException();
+            throw new ViableOocytesBiggerThanTotalException(); //TODO: change de exception
         }
 
         fivService.updateTotalOocytes(fiv, dto.totalOocytes());
