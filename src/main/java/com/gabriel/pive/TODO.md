@@ -3,8 +3,6 @@
 - [x] When editing a animal don't verify if the registration number already exists.
 - [x] Date when a receiver receives an embryo.
 - [x] A fiv has more than one oocyte collection.
+- [ ] Save production of each "oocyte collection" of the fiv.
 - [ ] Delete receiver is getting error sometimes.
 - [ ] Develop pregnancy.
-- [ ] Save production of each "oocyte collection" of the fiv.
-- [ ] Total embryos has to be bigger than viable in oocyte collection.
-- [ ] Change total viable bigger than total exception.

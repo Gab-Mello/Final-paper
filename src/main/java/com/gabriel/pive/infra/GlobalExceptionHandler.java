@@ -6,6 +6,7 @@ import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.*;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.DonorAlreadyCollectedException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
@@ -100,6 +101,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ViableOocytesBiggerThanTotalException.class)
     private ResponseEntity<String> viableOocytesBiggerThanTotal(ViableOocytesBiggerThanTotalException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(DonorAlreadyCollectedException.class)
+    private ResponseEntity<String> donorAlreadyCollected(DonorAlreadyCollectedException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 

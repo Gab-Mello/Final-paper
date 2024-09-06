@@ -13,6 +13,7 @@ import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.DonorAlreadyCollectedException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
@@ -54,11 +55,11 @@ public class OocyteCollectionService {
                 .orElseThrow(BullNotFoundException::new);
 
         if (fivRepository.existsByOocyteCollections_DonorCattleAndId(donorCattle, fiv.getId())){
-            throw new ViableOocytesBiggerThanTotalException();
+            throw new DonorAlreadyCollectedException();
         }
 
         if (dto.viableOocytes() > dto.totalOocytes()){
-            throw new ViableOocytesBiggerThanTotalException(); //TODO: change de exception
+            throw new ViableOocytesBiggerThanTotalException();
         }
 
         fivService.updateTotalOocytes(fiv, dto.totalOocytes());

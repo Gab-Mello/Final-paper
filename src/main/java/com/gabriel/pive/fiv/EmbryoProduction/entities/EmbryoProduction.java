@@ -2,6 +2,7 @@ package com.gabriel.pive.fiv.EmbryoProduction.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class EmbryoProduction {
 
     @JsonIgnore
     @OneToOne(mappedBy = "embryoProduction")
-    private Fiv fiv;
+    private OocyteCollection oocyteCollection;
 
     @OneToMany(mappedBy = "embryoEmbryoProduction" )
     private List<Embryo> embryos = new ArrayList<>();
@@ -34,10 +35,9 @@ public class EmbryoProduction {
 
     private Integer viableEmbryos;
 
-    public EmbryoProduction(Fiv fiv, Integer totalEmbryos, Integer viableEmbryos){
-        this.fiv = fiv;
+    public EmbryoProduction(OocyteCollection oocyteCollection, Integer totalEmbryos, Integer viableEmbryos){
+        this.oocyteCollection = oocyteCollection;
         this.totalEmbryos = totalEmbryos;
         this.viableEmbryos = viableEmbryos;
-
     }
 }

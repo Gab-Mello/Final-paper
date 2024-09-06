@@ -3,6 +3,7 @@ package com.gabriel.pive.fiv.oocyteCollection.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.entities.Fiv;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +23,7 @@ public class OocyteCollection {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "oocyteCollection_id")
+    @JoinColumn(name = "fiv_id")
     @ManyToOne
     private Fiv fiv;
 
@@ -37,6 +38,10 @@ public class OocyteCollection {
     private Integer totalOocytes;
 
     private Integer viableOocytes;
+
+    @OneToOne
+    @JoinColumn(name = "embryoProduction_id")
+    private EmbryoProduction embryoProduction;
 
     public OocyteCollection(Fiv fiv, DonorCattle donorCattle, Bull bull, Integer totalOocytes, Integer viableOocytes){
         this.fiv = fiv;

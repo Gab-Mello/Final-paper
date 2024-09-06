@@ -1,17 +1,14 @@
 package com.gabriel.pive.fiv.EmbryoProduction.services;
 
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.CultivationRequestDto;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.CultivationResponseDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionRequestDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionResponseDto;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ProductionNotFoundException;
-import com.gabriel.pive.fiv.EmbryoProduction.exceptions.FivAlreadyHasCultivation;
-import com.gabriel.pive.fiv.EmbryoProduction.exceptions.FivDoesNotHaveOocyteCollectionException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.MoreViableThanTotalEmbryosException;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
-import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
-import com.gabriel.pive.fiv.entities.Fiv;
-import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
-import com.gabriel.pive.fiv.repositories.FivRepository;
+import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
+import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,77 +21,69 @@ public class ProductionService {
     private ProductionRepository productionRepository;
 
     @Autowired
-    private FivRepository fivRepository;
+    private OocyteCollectionRepository oocyteCollectionRepository;
 
-    public CultivationResponseDto newProduction(CultivationRequestDto dto){
+    public ProductionResponseDto newProduction(ProductionRequestDto dto){
 
-        Fiv fiv = fivRepository.findById(dto.fivId())
-                .orElseThrow(FivNotFoundException::new);
-
-        if (fiv.getOocyteCollections().isEmpty()){
-            throw new FivDoesNotHaveOocyteCollectionException();
-        }
-
-        if (fiv.getEmbryoProduction() != null){
-            throw  new FivAlreadyHasCultivation();
-        }
+        OocyteCollection oocyteCollection = oocyteCollectionRepository.findById(dto.oocyteCollectionId())
+                .orElseThrow(OocyteCollectionNotFoundException::new);
 
         if (dto.viableEmbryos() > dto.totalEmbryos()){
             throw new MoreViableThanTotalEmbryosException();
         }
 
-        EmbryoProduction embryoProduction = dto.toCultivation(fiv);
+        EmbryoProduction embryoProduction = dto.toProduction(oocyteCollection);
 
         EmbryoProduction savedEmbryoProduction = productionRepository.save(embryoProduction);
 
-        fiv.setEmbryoProduction(savedEmbryoProduction);
-        fivRepository.save(fiv);
+        oocyteCollection.setEmbryoProduction(savedEmbryoProduction);
+        oocyteCollectionRepository.save(oocyteCollection);
 
-        return CultivationResponseDto.toCultivationResponseDto(savedEmbryoProduction);
+        return ProductionResponseDto.toProductionResponseDto(savedEmbryoProduction);
 
     }
 
-    public List<CultivationResponseDto> getAllCultivations(){
-        return CultivationResponseDto.toCultivationDtoList(productionRepository.findAll());
+    public List<ProductionResponseDto> getAllCultivations(){
+        return ProductionResponseDto.toCultivationDtoList(productionRepository.findAll());
     }
 
-    public CultivationResponseDto getCultivationById(Long id){
+    public ProductionResponseDto getCultivationById(Long id){
         EmbryoProduction embryoProduction = productionRepository.findById(id)
                 .orElseThrow(ProductionNotFoundException::new);
 
-        return CultivationResponseDto.toCultivationResponseDto(embryoProduction);
+        return ProductionResponseDto.toProductionResponseDto(embryoProduction);
     }
 
-    public CultivationResponseDto editCultivation(Long id, CultivationRequestDto dto){
-        EmbryoProduction embryoProduction = productionRepository.findById(id)
-                .orElseThrow(ProductionNotFoundException::new);
-
-        Fiv newFiv = fivRepository.findById(dto.fivId())
-                .orElseThrow(FivNotFoundException::new);
-
-        if (newFiv.getEmbryoProduction() != null){
-            throw  new FivAlreadyHasCultivation();
-        }
-
-        if (newFiv.getOocyteCollections().isEmpty()){
-            throw new FivDoesNotHaveOocyteCollectionException();
-        }
-
-        Fiv oldFiv = fivRepository.findByEmbryoProductionId(id);
-        oldFiv.setEmbryoProduction(null);
-        fivRepository.save(oldFiv);
-
-
-        embryoProduction.setFiv(newFiv);
-        embryoProduction.setTotalEmbryos(dto.totalEmbryos());
-        embryoProduction.setViableEmbryos(dto.viableEmbryos());
-
-        EmbryoProduction embryoProductionSaved = productionRepository.save(embryoProduction);
-
-        newFiv.setEmbryoProduction(embryoProductionSaved);
-        fivRepository.save(newFiv);
-
-        return CultivationResponseDto.toCultivationResponseDto(embryoProductionSaved);
-
-    }
+//    public CultivationResponseDto editCultivation(Long id, ProductionRequestDto dto){
+//        EmbryoProduction embryoProduction = productionRepository.findById(id)
+//                .orElseThrow(ProductionNotFoundException::new);
+//
+//        Fiv newFiv = fivRepository.findById(dto.fivId())
+//                .orElseThrow(FivNotFoundException::new);
+//
+//        if (newFiv.getEmbryoProduction() != null){
+//            throw  new FivAlreadyHasCultivation();
+//        }
+//
+//        if (newFiv.getOocyteCollections().isEmpty()){
+//            throw new FivDoesNotHaveOocyteCollectionException();
+//        }
+//
+//        Fiv oldFiv = fivRepository.findByEmbryoProductionId(id);
+//        oldFiv.setEmbryoProduction(null);
+//        fivRepository.save(oldFiv);
+//
+//
+//        embryoProduction.setFiv(newFiv);
+//        embryoProduction.setTotalEmbryos(dto.totalEmbryos());
+//        embryoProduction.setViableEmbryos(dto.viableEmbryos());
+//
+//        EmbryoProduction embryoProductionSaved = productionRepository.save(embryoProduction);
+//
+//        newFiv.setEmbryoProduction(embryoProductionSaved);
+//        fivRepository.save(newFiv);
+//
+//        return CultivationResponseDto.toCultivationResponseDto(embryoProductionSaved);
+//
+//    }
 }

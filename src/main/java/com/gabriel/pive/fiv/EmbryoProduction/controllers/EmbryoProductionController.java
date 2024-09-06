@@ -1,7 +1,7 @@
 package com.gabriel.pive.fiv.EmbryoProduction.controllers;
 
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.CultivationRequestDto;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.CultivationResponseDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionResponseDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionRequestDto;
 import com.gabriel.pive.fiv.EmbryoProduction.services.ProductionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,21 +16,21 @@ import java.util.List;
 @Tag(name = "Cultivation", description = "Cultivation management")
 @RestController
 @RequestMapping("/cultivation")
-public class CultivationController {
+public class EmbryoProductionController {
 
     @Autowired
     private ProductionService productionService;
 
-//    @Operation(summary = "Save a new cultivation", description = "It saves and returns a json with the new cultivation")
-//    @PostMapping
-//    public ResponseEntity<?> newCultivation(@Valid @RequestBody CultivationRequestDto dto){
-//            CultivationResponseDto cultivation = productionService.newCultivation(dto);
-//            return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
-//    }
+    @Operation(summary = "Save a new embryo production", description = "It saves and returns a json with the new production")
+    @PostMapping
+    public ResponseEntity<?> newProduction(@Valid @RequestBody ProductionRequestDto dto){
+            ProductionResponseDto cultivation = productionService.newProduction(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
+    }
 
     @Operation(summary = "Get all cultivations", description = "It returns a json list with all cultivations")
     @GetMapping
-    public ResponseEntity<List<CultivationResponseDto>> getAllCultivations(){
+    public ResponseEntity<List<ProductionResponseDto>> getAllCultivations(){
         return ResponseEntity.status(HttpStatus.OK).body(productionService.getAllCultivations());
     }
 
@@ -40,10 +40,10 @@ public class CultivationController {
         return ResponseEntity.status(HttpStatus.OK).body(productionService.getCultivationById(id));
     }
 
-    @Operation(summary = "edit a cultivation by Id", description = "It returns a json with the cultivation edited")
-    @PutMapping("/{id}")
-    public ResponseEntity<?> editCultivation(@PathVariable Long id, @Valid @RequestBody CultivationRequestDto dto){
-        CultivationResponseDto cultivation = productionService.editCultivation(id,dto);
-        return ResponseEntity.status(HttpStatus.OK).body(cultivation);
-    }
+//    @Operation(summary = "edit a cultivation by Id", description = "It returns a json with the cultivation edited")
+//    @PutMapping("/{id}")
+//    public ResponseEntity<?> editCultivation(@PathVariable Long id, @Valid @RequestBody ProductionRequestDto dto){
+//        CultivationResponseDto cultivation = productionService.editCultivation(id,dto);
+//        return ResponseEntity.status(HttpStatus.OK).body(cultivation);
+//    }
 }
