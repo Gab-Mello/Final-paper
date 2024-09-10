@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record BullDto(Long id,
-                      @NotBlank(message = "Nome do touro em branco.") String name,
+                      String name,
                       @NotBlank(message = "Número de identificação em branco.") String registrationNumber) {
 
     public Bull toBull(){

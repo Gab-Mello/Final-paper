@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record DonorCattleDto(Long id,
-                             @NotBlank(message = "Nome da doadora em branco.") String name,
-                             @NotBlank(message = "Raça em branco.") String breed,
+                             String name,
+                             String breed,
                              LocalDate birth,
                              @NotBlank(message = "Número de identificação em branco.")String registrationNumber) {
 
