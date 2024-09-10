@@ -73,7 +73,8 @@ public class DonorCattleService {
         DonorCattle donorCattle = donorCattleRepository.findById(id)
                 .orElseThrow(DonorCattleNotFoundException::new);
 
-        if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != donorCattle){
+        if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != donorCattle
+            && donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
             throw new RegistrationNumberAlreadyExistsException("Uma doadora com este número de registro já existe.");
         }
 
