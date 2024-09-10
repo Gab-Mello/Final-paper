@@ -3,6 +3,7 @@ package com.gabriel.pive.fiv.EmbryoProduction.services;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionRequestDto;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionResponseDto;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
+import com.gabriel.pive.fiv.EmbryoProduction.exceptions.OocyteCollectionAlreadyHasProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ProductionNotFoundException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.MoreViableThanTotalEmbryosException;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
@@ -28,6 +29,9 @@ public class ProductionService {
         OocyteCollection oocyteCollection = oocyteCollectionRepository.findById(dto.oocyteCollectionId())
                 .orElseThrow(OocyteCollectionNotFoundException::new);
 
+        if(oocyteCollection.getEmbryoProduction() != null ){
+            throw new OocyteCollectionAlreadyHasProduction();
+        }
         if (dto.viableEmbryos() > dto.totalEmbryos()){
             throw new MoreViableThanTotalEmbryosException();
         }

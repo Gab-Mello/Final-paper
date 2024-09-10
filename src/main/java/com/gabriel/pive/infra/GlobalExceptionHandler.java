@@ -60,8 +60,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
-    @ExceptionHandler(FivAlreadyHasCultivation.class)
-    private ResponseEntity<String> fivAlreadyHasCultivation(FivAlreadyHasCultivation exception){
+    @ExceptionHandler(OocyteCollectionAlreadyHasProduction.class)
+    private ResponseEntity<String> fivAlreadyHasCultivation(OocyteCollectionAlreadyHasProduction exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 

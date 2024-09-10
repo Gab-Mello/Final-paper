@@ -6,6 +6,8 @@ import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.dtos.DonorCattleSummaryDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionSummaryDto;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 
@@ -15,7 +17,8 @@ import java.util.List;
 public record OocyteCollectionResponseDto( DonorCattleDto donorCattle,
                                            BullDto bull,
                                            Integer totalOocytes,
-                                           Integer viableOocytes
+                                           Integer viableOocytes,
+                                           ProductionSummaryDto embryoProduction
 ) {
 
     public static OocyteCollectionResponseDto toOocyteCollectionDto(OocyteCollection oocyteCollection){
@@ -28,7 +31,8 @@ public record OocyteCollectionResponseDto( DonorCattleDto donorCattle,
                 DonorCattleSummaryDto.toDonorCattleSummaryDto(oocyteCollection.getDonorCattle()),
                 BullSummaryDto.toBullSummaryDto(oocyteCollection.getBull()),
                 oocyteCollection.getTotalOocytes(),
-                oocyteCollection.getViableOocytes());
+                oocyteCollection.getViableOocytes(),
+                ProductionSummaryDto.toProductionSummaryDto(oocyteCollection.getEmbryoProduction()));
     }
 
     public static List<OocyteCollectionResponseDto> toOocyteCollectionDtoList(List<OocyteCollection> list){

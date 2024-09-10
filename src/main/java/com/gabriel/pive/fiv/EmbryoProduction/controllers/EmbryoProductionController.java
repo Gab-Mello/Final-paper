@@ -15,7 +15,7 @@ import java.util.List;
 
 @Tag(name = "Cultivation", description = "Cultivation management")
 @RestController
-@RequestMapping("/cultivation")
+@RequestMapping("/production")
 public class EmbryoProductionController {
 
     @Autowired
@@ -24,8 +24,8 @@ public class EmbryoProductionController {
     @Operation(summary = "Save a new embryo production", description = "It saves and returns a json with the new production")
     @PostMapping
     public ResponseEntity<?> newProduction(@Valid @RequestBody ProductionRequestDto dto){
-            ProductionResponseDto cultivation = productionService.newProduction(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(cultivation);
+            ProductionResponseDto production = productionService.newProduction(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(production);
     }
 
     @Operation(summary = "Get all cultivations", description = "It returns a json list with all cultivations")

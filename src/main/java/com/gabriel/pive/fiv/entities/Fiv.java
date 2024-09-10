@@ -43,10 +43,6 @@ public class Fiv {
     @OneToMany(mappedBy = "fiv")
     private List<OocyteCollection> oocyteCollections;
 
-    @OneToOne
-    @JoinColumn(name = "production_id")
-    private EmbryoProduction embryoProduction;
-
     @Enumerated(EnumType.STRING)
     private FivStatusEnum status;
 
