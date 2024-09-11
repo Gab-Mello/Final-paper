@@ -3,6 +3,7 @@ package com.gabriel.pive.animals.services;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
+import com.gabriel.pive.animals.exceptions.InvalidDateException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
@@ -12,6 +13,7 @@ import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -30,6 +32,11 @@ public class DonorCattleService {
         if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
             throw new RegistrationNumberAlreadyExistsException("Uma doadora com este número de registro já existe.");
         }
+
+        if (dto.birth().isAfter(LocalDate.now())){
+            throw new InvalidDateException();
+        }
+
         DonorCattle donorCattle = donorCattleRepository.save(dto.toDonorCattle());
         return DonorCattleDto.toDonorCattleDto(donorCattle);
     }
@@ -76,6 +83,10 @@ public class DonorCattleService {
         if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != donorCattle
             && donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
             throw new RegistrationNumberAlreadyExistsException("Uma doadora com este número de registro já existe.");
+        }
+
+        if (dto.birth().isAfter(LocalDate.now())){
+            throw new InvalidDateException();
         }
 
         donorCattle.setName(dto.name());

@@ -1,9 +1,6 @@
 package com.gabriel.pive.infra;
 
-import com.gabriel.pive.animals.exceptions.BullNotFoundException;
-import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
-import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
-import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
+import com.gabriel.pive.animals.exceptions.*;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.*;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.DonorAlreadyCollectedException;
@@ -106,6 +103,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DonorAlreadyCollectedException.class)
     private ResponseEntity<String> donorAlreadyCollected(DonorAlreadyCollectedException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidDateException.class)
+    private ResponseEntity<String> invalidDate(InvalidDateException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 
