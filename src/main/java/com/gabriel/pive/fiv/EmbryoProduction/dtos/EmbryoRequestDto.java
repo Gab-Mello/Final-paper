@@ -15,11 +15,11 @@ public record EmbryoRequestDto(@NotNull(message = "Id do cultivo em branco.") Lo
                                @NotNull(message = "Destino em branco") EmbryoDestiny destiny,
                                Long receiverCattleId) {
 
-    public Embryo toEmbryo(ReceiverCattle receiverCattle, EmbryoProduction embryoProduction){
+    public Embryo toEmbryo(EmbryoProduction embryoProduction){
         return new Embryo(
                 embryoProduction,
-                destiny,
-                receiverCattle);
+                destiny
+                );
     }
 
 }

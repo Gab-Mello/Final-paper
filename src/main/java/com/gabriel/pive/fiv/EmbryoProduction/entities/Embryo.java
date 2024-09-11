@@ -41,10 +41,9 @@ public class Embryo {
     @JoinColumn(name = "receiver_id")
     private ReceiverCattle embryoReceiverCattle;
 
-    public Embryo(EmbryoProduction embryoProduction, EmbryoDestiny destiny, ReceiverCattle receiverCattle){
+    public Embryo(EmbryoProduction embryoProduction, EmbryoDestiny destiny){
         this.embryoEmbryoProduction = embryoProduction;
         this.destiny = destiny;
-        this.embryoReceiverCattle = receiverCattle;
     }
 
 

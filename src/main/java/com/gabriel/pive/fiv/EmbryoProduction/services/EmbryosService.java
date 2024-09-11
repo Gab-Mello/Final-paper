@@ -15,6 +15,10 @@ import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ReceiverCattleAlreadyHas
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
+import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.enums.FivStatusEnum;
+import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
+import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,44 +44,40 @@ public class EmbryosService {
     @Autowired
     private PregnancyRepository pregnancyRepository;
 
-//    public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
-//
-//        EmbryoProduction production = productionRepository.findById(dto.productionId())
-//                .orElseThrow(ProductionNotFoundException::new);
-//
-//        if (production.getEmbryos().size() == production.getViableEmbryos()){
-//            throw new AllEmbryosAlreadyRegisteredException();
-//        }
-//
-//        if (dto.destiny() == EmbryoDestiny.FROZEN){
-//            Embryo embryo = dto.toEmbryo(null, production);
-//            embryo.setEmbryoBull(production.getFiv().getOocyteCollection().getBull());
-//            embryo.setEmbryoDonorCattle(production.getFiv().getOocyteCollection().getDonorCattle());
-//            return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
-//        }
-//
-//        ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
-//                .orElseThrow(ReceiverCattleNotFoundException::new);
-//
-//        if (receiverCattle.getEmbryo() != null){
-//            throw new ReceiverCattleAlreadyHasEmbryoException();
-//        }
-//
-//        if (cultivation.getEmbryos().size() == cultivation.getViableEmbryos() - 1){
-//            Fiv fiv = cultivation.getFiv();
-//            fiv.setStatus(FivStatusEnum.COMPLETED);
-//            fivRepository.save(fiv);
-//        }
-//
-//        Embryo embryo = dto.toEmbryo(receiverCattle, cultivation);
-//        embryo.setEmbryoBull(cultivation.getFiv().getOocyteCollection().getBull());
-//        embryo.setEmbryoDonorCattle(cultivation.getFiv().getOocyteCollection().getDonorCattle());
-//
-//        Pregnancy pregnancy = new Pregnancy(dto.date(), receiverCattle, PregnancyStatus.IN_PROGRESS);
-//        pregnancyRepository.save(pregnancy);
-//
-//        return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
-//    }
+    public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
+
+        EmbryoProduction production = productionRepository.findById(dto.productionId())
+                .orElseThrow(ProductionNotFoundException::new);
+
+        if (production.getEmbryos().size() == production.getViableEmbryos()){
+            throw new AllEmbryosAlreadyRegisteredException();
+        }
+
+        Embryo embryo = dto.toEmbryo(production);
+        embryo.setEmbryoBull(production.getOocyteCollection().getBull());
+        embryo.setEmbryoDonorCattle(production.getOocyteCollection().getDonorCattle());
+
+        if (dto.destiny() == EmbryoDestiny.TRANSFERRED){
+            ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
+                    .orElseThrow(ReceiverCattleNotFoundException::new);
+
+            if (receiverCattle.getEmbryo() != null){
+                throw new ReceiverCattleAlreadyHasEmbryoException();
+            }
+
+            embryo.setEmbryoReceiverCattle(receiverCattle);
+            Pregnancy pregnancy = new Pregnancy(dto.date(), receiverCattle, PregnancyStatus.IN_PROGRESS);
+            pregnancyRepository.save(pregnancy);
+        }
+
+        if (production.getEmbryos().size() == production.getViableEmbryos() - 1){
+            Fiv fiv = production.getOocyteCollection().getFiv();
+            fiv.setStatus(FivStatusEnum.COMPLETED);
+            fivRepository.save(fiv);
+        }
+
+        return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
+    }
 
 //    public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){
 //        Embryo embryo = embryoRepository.findById(id).

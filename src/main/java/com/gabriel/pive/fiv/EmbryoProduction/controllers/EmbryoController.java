@@ -21,12 +21,12 @@ public class EmbryoController {
     @Autowired
     private EmbryosService embryosService;
 
-//    @Operation(summary = "Save a new embryo", description = "It saves and returns a json with the new embryo")
-//    @PostMapping
-//    public ResponseEntity<?> saveEmbryo(@Valid @RequestBody EmbryoRequestDto dto){
-//        EmbryoResponseDto embryo = embryosService.saveEmbryo(dto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
-//    }
+    @Operation(summary = "Save a new embryo", description = "It saves and returns a json with the new embryo")
+    @PostMapping
+    public ResponseEntity<?> saveEmbryo(@Valid @RequestBody EmbryoRequestDto dto){
+        EmbryoResponseDto embryo = embryosService.saveEmbryo(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
+    }
 
 //    @Operation(summary = "edit a embryo by Id", description = "It returns a json with the new embryo")
 //    @PutMapping("/{id}")
