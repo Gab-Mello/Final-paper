@@ -6,6 +6,9 @@ public record ProductionSummaryDto(Integer totalEmbryos,
                                    Integer viableEmbryos) {
 
     public static ProductionSummaryDto toProductionSummaryDto(EmbryoProduction production){
+        if (production == null){
+            return null;
+        }
         return new ProductionSummaryDto(production.getTotalEmbryos(), production.getViableEmbryos());
     }
 }
