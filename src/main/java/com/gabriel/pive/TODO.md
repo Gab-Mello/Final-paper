@@ -7,3 +7,4 @@
 - [x] Save production of each "oocyte collection" of the fiv.
 - [ ] Delete receiver is getting error sometimes.
 - [ ] Develop pregnancy.
+- [ ] change fiv status (completed) logic.

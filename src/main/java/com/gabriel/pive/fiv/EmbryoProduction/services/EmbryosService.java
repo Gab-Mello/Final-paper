@@ -74,7 +74,7 @@ public class EmbryosService {
             Fiv fiv = production.getOocyteCollection().getFiv();
             fiv.setStatus(FivStatusEnum.COMPLETED);
             fivRepository.save(fiv);
-        }
+        } //ToDo: change this logic
 
         return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
     }
