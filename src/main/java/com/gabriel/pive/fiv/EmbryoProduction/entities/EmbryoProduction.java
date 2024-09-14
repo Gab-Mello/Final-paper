@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_cultivations")
+@Table(name = "tb_productions")
 @Entity
 public class EmbryoProduction {
 
@@ -33,11 +33,10 @@ public class EmbryoProduction {
 
     private Integer totalEmbryos;
 
-    private Integer viableEmbryos;
+    private Float embryosPercentage;
 
-    public EmbryoProduction(OocyteCollection oocyteCollection, Integer totalEmbryos, Integer viableEmbryos){
+    public EmbryoProduction(OocyteCollection oocyteCollection, Integer totalEmbryos){
         this.oocyteCollection = oocyteCollection;
         this.totalEmbryos = totalEmbryos;
-        this.viableEmbryos = viableEmbryos;
     }
 }

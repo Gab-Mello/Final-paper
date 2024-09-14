@@ -36,6 +36,11 @@ public class FivService {
         fivRepository.save(fiv);
     }
 
+    public void updateTotalEmbryos(Fiv fiv, Integer numberEmbryos){
+        fiv.setTotalEmbryos(fiv.getTotalEmbryos() + numberEmbryos);
+        fivRepository.save(fiv);
+    }
+
     public List<FivResponseDto> getAllFives(){
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAllByOrderByIdDesc());
     }

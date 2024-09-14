@@ -3,8 +3,7 @@ package com.gabriel.pive.fiv.EmbryoProduction.dtos;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 
 public record CultivationSummaryResponseDto(Long id,
-                                            Integer totalEmbryos,
-                                            Integer viableEmbryos
+                                            Integer totalEmbryos
                                             ) {
 
     public static CultivationSummaryResponseDto toCultivationSummaryDto(EmbryoProduction embryoProduction){
@@ -13,8 +12,7 @@ public record CultivationSummaryResponseDto(Long id,
         }
         return new CultivationSummaryResponseDto(
                 embryoProduction.getId(),
-                embryoProduction.getTotalEmbryos(),
-                embryoProduction.getViableEmbryos()
+                embryoProduction.getTotalEmbryos()
         );
     }
 

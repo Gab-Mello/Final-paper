@@ -6,7 +6,6 @@ import java.util.List;
 
 public record ProductionResponseDto(Long id, Long oocyteCollectionId,
                                     Integer totalEmbryos,
-                                    Integer viableEmbryos,
                                     Integer embryosRegistered,
                                     List<EmbryoResponseDto> embryos) {
 
@@ -15,7 +14,6 @@ public record ProductionResponseDto(Long id, Long oocyteCollectionId,
                 embryoProduction.getId(),
                 embryoProduction.getOocyteCollection().getId(),
                 embryoProduction.getTotalEmbryos(),
-                embryoProduction.getViableEmbryos(),
                 embryoProduction.getEmbryos().size(),
                 EmbryoResponseDto.toEmbryoResponseDtoList(embryoProduction.getEmbryos())
                 );

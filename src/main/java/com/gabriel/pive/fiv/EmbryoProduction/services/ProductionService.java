@@ -5,11 +5,11 @@ import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionResponseDto;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.OocyteCollectionAlreadyHasProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ProductionNotFoundException;
-import com.gabriel.pive.fiv.EmbryoProduction.exceptions.MoreViableThanTotalEmbryosException;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.fiv.services.FivService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,9 @@ public class ProductionService {
     @Autowired
     private OocyteCollectionRepository oocyteCollectionRepository;
 
+    @Autowired
+    private FivService fivService;
+
     public ProductionResponseDto newProduction(ProductionRequestDto dto){
 
         OocyteCollection oocyteCollection = oocyteCollectionRepository.findById(dto.oocyteCollectionId())
@@ -32,17 +35,19 @@ public class ProductionService {
         if(oocyteCollection.getEmbryoProduction() != null ){
             throw new OocyteCollectionAlreadyHasProduction();
         }
-        if (dto.viableEmbryos() > dto.totalEmbryos()){
-            throw new MoreViableThanTotalEmbryosException();
-        }
 
         EmbryoProduction embryoProduction = dto.toProduction(oocyteCollection);
 
+        Float EmbryosPercentage =
+                ((float) embryoProduction.getTotalEmbryos() / embryoProduction.getOocyteCollection().getViableOocytes()) * 100;
+
+        embryoProduction.setEmbryosPercentage(EmbryosPercentage);
         EmbryoProduction savedEmbryoProduction = productionRepository.save(embryoProduction);
 
         oocyteCollection.setEmbryoProduction(savedEmbryoProduction);
         oocyteCollectionRepository.save(oocyteCollection);
 
+        fivService.updateTotalEmbryos(oocyteCollection.getFiv(), embryoProduction.getTotalEmbryos());
         return ProductionResponseDto.toProductionResponseDto(savedEmbryoProduction);
 
     }

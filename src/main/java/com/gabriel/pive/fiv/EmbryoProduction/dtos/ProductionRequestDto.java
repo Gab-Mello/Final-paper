@@ -8,14 +8,13 @@ import jakarta.validation.constraints.NotNull;
 
 
 public record ProductionRequestDto(Long oocyteCollectionId,
-                                   @NotNull(message = "Número total de embriões em branco.") Integer totalEmbryos,
-                                   @NotNull(message = "Número de embriões viáveis em branco.") Integer viableEmbryos) {
+                                   @NotNull(message = "Número total de embriões em branco.") Integer totalEmbryos
+                                    ) {
 
     public EmbryoProduction toProduction(OocyteCollection oocyteCollection){
         return new EmbryoProduction(
                 oocyteCollection,
-                totalEmbryos,
-                viableEmbryos);
+                totalEmbryos);
     }
 
 

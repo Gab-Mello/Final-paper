@@ -14,7 +14,8 @@ import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import java.time.LocalDate;
 import java.util.List;
 
-public record OocyteCollectionResponseDto( DonorCattleDto donorCattle,
+public record OocyteCollectionResponseDto( Long id,
+                                           DonorCattleDto donorCattle,
                                            BullDto bull,
                                            Integer totalOocytes,
                                            Integer viableOocytes,
@@ -28,6 +29,7 @@ public record OocyteCollectionResponseDto( DonorCattleDto donorCattle,
         }
 
         return new OocyteCollectionResponseDto(
+                oocyteCollection.getId(),
                 DonorCattleSummaryDto.toDonorCattleSummaryDto(oocyteCollection.getDonorCattle()),
                 BullSummaryDto.toBullSummaryDto(oocyteCollection.getBull()),
                 oocyteCollection.getTotalOocytes(),
