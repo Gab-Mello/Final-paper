@@ -74,7 +74,7 @@ public class EmbryosService {
 
         if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos() - 1){
             fiv.setStatus(FivStatusEnum.COMPLETED);
-        } //ToDo: change this logic
+        }
 
         fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
         fivRepository.save(fiv);

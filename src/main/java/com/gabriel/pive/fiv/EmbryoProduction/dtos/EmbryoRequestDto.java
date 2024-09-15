@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public record EmbryoRequestDto(@NotNull(message = "Id do cultivo em branco.") Long productionId,
+public record EmbryoRequestDto(@NotNull(message = "Id da produção em branco.") Long productionId,
                                @NotNull(message = "Data em branco.") LocalDate date,
                                @NotNull(message = "Destino em branco") EmbryoDestiny destiny,
                                Long receiverCattleId) {
