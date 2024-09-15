@@ -52,6 +52,8 @@ public class Fiv {
 
     private Integer totalEmbryos;
 
+    private Float EmbryosPercentage;
+
     public Fiv(LocalDate date, String farm, String laboratory,
                String client, String veterinarian, String technical, String TE){
         this.date = date;

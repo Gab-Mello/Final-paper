@@ -48,6 +48,7 @@ public class ProductionService {
         oocyteCollectionRepository.save(oocyteCollection);
 
         fivService.updateTotalEmbryos(oocyteCollection.getFiv(), embryoProduction.getTotalEmbryos());
+
         return ProductionResponseDto.toProductionResponseDto(savedEmbryoProduction);
 
     }
