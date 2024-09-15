@@ -2,6 +2,7 @@ package com.gabriel.pive.fiv.EmbryoProduction.controllers;
 
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.TransferInitialDto;
 import com.gabriel.pive.fiv.EmbryoProduction.services.TransferService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class TransferController {
     @Autowired
     private TransferService transferService;
 
+    @Operation(summary = "Save a new embryo transfer", description = "It saves and returns a json with the new trasnfer")
     @PostMapping
     public ResponseEntity<TransferInitialDto> newTransfer(@RequestBody TransferInitialDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(transferService.newTransfer(dto));
