@@ -1,6 +1,7 @@
 package com.gabriel.pive.fiv.entities;
 
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoTransfer;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.repositories.FivRepository;
@@ -12,6 +13,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -42,6 +44,9 @@ public class Fiv {
 
     @OneToMany(mappedBy = "fiv")
     private List<OocyteCollection> oocyteCollections;
+
+    @OneToMany(mappedBy = "fivTransfer")
+    private List<EmbryoTransfer> embryoTransfer = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private FivStatusEnum status;

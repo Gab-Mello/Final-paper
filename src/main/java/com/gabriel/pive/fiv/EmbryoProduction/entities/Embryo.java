@@ -41,6 +41,10 @@ public class Embryo {
     @JoinColumn(name = "receiver_id")
     private ReceiverCattle embryoReceiverCattle;
 
+    @ManyToOne
+    @JoinColumn(name = "transfer_id")
+    private EmbryoTransfer transfer;
+
     public Embryo(EmbryoProduction embryoProduction, EmbryoDestiny destiny){
         this.embryoEmbryoProduction = embryoProduction;
         this.destiny = destiny;

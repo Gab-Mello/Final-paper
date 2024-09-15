@@ -5,8 +5,10 @@ import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
 import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.EmbryoRequestDto;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.EmbryoResponseDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.TransferInitialDto;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoTransfer;
 import com.gabriel.pive.fiv.EmbryoProduction.enums.EmbryoDestiny;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.AllEmbryosAlreadyRegisteredException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.EmbryoNotFoundException;
@@ -15,8 +17,10 @@ import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ReceiverCattleAlreadyHas
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
+import com.gabriel.pive.fiv.EmbryoProduction.repositories.TransferRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
+import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
@@ -44,7 +48,8 @@ public class EmbryosService {
     @Autowired
     private PregnancyRepository pregnancyRepository;
 
-    public EmbryoResponseDto saveEmbryo(EmbryoRequestDto dto){
+
+    public EmbryoResponseDto saveEmbryoTransfer(EmbryoRequestDto dto){
 
         EmbryoProduction production = productionRepository.findById(dto.productionId())
                 .orElseThrow(ProductionNotFoundException::new);
@@ -80,6 +85,7 @@ public class EmbryosService {
         fivRepository.save(fiv);
         return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
     }
+
 
 //    public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){
 //        Embryo embryo = embryoRepository.findById(id).
