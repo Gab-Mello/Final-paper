@@ -52,7 +52,9 @@ public class Fiv {
 
     private Integer totalEmbryos;
 
-    private Float EmbryosPercentage;
+    private Float embryosPercentage;
+
+    private Integer embryosRegistered;
 
     public Fiv(LocalDate date, String farm, String laboratory,
                String client, String veterinarian, String technical, String TE){
@@ -66,6 +68,7 @@ public class Fiv {
         this.totalOocytesCollected = 0;
         this.totalViableOocytesCollected = 0;
         this.totalEmbryos = 0;
+        this.embryosRegistered = 0;
     }
 
     public void updateTotalOocytesCollected(Integer oocytes){

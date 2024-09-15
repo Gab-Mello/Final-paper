@@ -49,6 +49,8 @@ public class EmbryosService {
         EmbryoProduction production = productionRepository.findById(dto.productionId())
                 .orElseThrow(ProductionNotFoundException::new);
 
+        Fiv fiv = production.getOocyteCollection().getFiv();
+
         if (production.getEmbryos().size() == production.getTotalEmbryos()){
             throw new AllEmbryosAlreadyRegisteredException();
         }
@@ -70,12 +72,12 @@ public class EmbryosService {
             pregnancyRepository.save(pregnancy);
         }
 
-        if (production.getEmbryos().size() == production.getTotalEmbryos() - 1){
-            Fiv fiv = production.getOocyteCollection().getFiv();
+        if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos() - 1){
             fiv.setStatus(FivStatusEnum.COMPLETED);
-            fivRepository.save(fiv);
         } //ToDo: change this logic
 
+        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
+        fivRepository.save(fiv);
         return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
     }
 

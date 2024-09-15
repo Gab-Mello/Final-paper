@@ -14,7 +14,8 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                              String veterinarian, String technical,
                              String TE, List<OocyteCollectionResponseDto> oocyteCollections,
                              Integer fivTotalOocytesCollected, Integer fivTotalViableOocytesCollected,
-                             Integer fivTotalEmbryos, Float fivEmbryosPercentage) {
+                             Integer fivTotalEmbryos, Float fivEmbryosPercentage,
+                             Integer embryosRegistered) {
 
 
     public static FivResponseDto toFivResponseDto(Fiv fiv){
@@ -32,7 +33,8 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                 fiv.getTotalOocytesCollected(),
                 fiv.getTotalViableOocytesCollected(),
                 fiv.getTotalEmbryos(),
-                fiv.getEmbryosPercentage()
+                fiv.getEmbryosPercentage(),
+                fiv.getEmbryosRegistered()
 
         );
     }

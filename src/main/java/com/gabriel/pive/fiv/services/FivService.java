@@ -44,7 +44,6 @@ public class FivService {
     }
 
 
-
     public List<FivResponseDto> getAllFives(){
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAllByOrderByIdDesc());
     }
