@@ -57,6 +57,12 @@ public class Embryo {
         this.destiny = destiny;
     }
 
+    public Embryo(EmbryoProduction production, DonorCattle donorCattle, Bull bull, EmbryoDestiny destiny){
+        this.embryoEmbryoProduction = production;
+        this.embryoDonorCattle = donorCattle;
+        this.embryoBull = bull;
+        this.destiny = destiny;
+    }
 
 
 }

@@ -1,9 +1,6 @@
 package com.gabriel.pive.fiv.EmbryoProduction.controllers;
 
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.EmbryoRequestDto;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.EmbryoResponseDto;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.TransferDataDto;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.TransferResponseDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.*;
 import com.gabriel.pive.fiv.EmbryoProduction.services.EmbryosService;
 import com.gabriel.pive.fiv.EmbryoProduction.services.TransferService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +37,12 @@ public class EmbryoController {
     @PostMapping("/transfer")
     public ResponseEntity<TransferResponseDto> saveEmbryoInTransfer(@Valid @RequestBody TransferDataDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(transferService.saveTransferData(dto));
+    }
+
+    @Operation(summary = "Save frozen embryos", description = "It saves and returns a json with the production")
+    @PostMapping("/frozen")
+    public ResponseEntity<ProductionResponseDto> saveFrozenEmbryos(@Valid @RequestBody FrozenEmbryosDto dto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(embryosService.frozenEmbryos(dto));
     }
 
 //    @Operation(summary = "edit a embryo by Id", description = "It returns a json with the new embryo")

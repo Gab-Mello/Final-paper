@@ -1,30 +1,23 @@
 package com.gabriel.pive.fiv.EmbryoProduction.services;
 
-import com.gabriel.pive.animals.entities.ReceiverCattle;
-import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
+import com.gabriel.pive.animals.entities.Bull;
+import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.EmbryoRequestDto;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.EmbryoResponseDto;
-import com.gabriel.pive.fiv.EmbryoProduction.dtos.TransferInitialDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.*;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
-import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoTransfer;
 import com.gabriel.pive.fiv.EmbryoProduction.enums.EmbryoDestiny;
-import com.gabriel.pive.fiv.EmbryoProduction.exceptions.AllEmbryosAlreadyRegisteredException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.EmbryoNotFoundException;
+
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ProductionNotFoundException;
-import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ReceiverCattleAlreadyHasEmbryoException;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
-import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
-import com.gabriel.pive.fiv.EmbryoProduction.repositories.TransferRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
-import com.gabriel.pive.fiv.enums.FivStatusEnum;
-import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
-import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
-import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
+import com.gabriel.pive.fiv.services.FivService;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,44 +41,29 @@ public class EmbryosService {
     @Autowired
     private PregnancyRepository pregnancyRepository;
 
+    @Autowired
+    private ProductionService productionService;
 
-//    public EmbryoResponseDto saveEmbryoTransfer(EmbryoRequestDto dto){
-//
-//        EmbryoProduction production = productionRepository.findById(dto.productionId())
-//                .orElseThrow(ProductionNotFoundException::new);
-//
-//        Fiv fiv = production.getOocyteCollection().getFiv();
-//
-//        if (production.getEmbryos().size() == production.getTotalEmbryos()){
-//            throw new AllEmbryosAlreadyRegisteredException();
-//        }
-//
-//        Embryo embryo = dto.toEmbryo(production);
-//        embryo.setEmbryoBull(production.getOocyteCollection().getBull());
-//        embryo.setEmbryoDonorCattle(production.getOocyteCollection().getDonorCattle());
-//
-//        if (dto.destiny() == EmbryoDestiny.TRANSFERRED){
-//            ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
-//                    .orElseThrow(ReceiverCattleNotFoundException::new);
-//
-//            if (receiverCattle.getEmbryo() != null){
-//                throw new ReceiverCattleAlreadyHasEmbryoException();
-//            }
-//
-//            embryo.setEmbryoReceiverCattle(receiverCattle);
-//            Pregnancy pregnancy = new Pregnancy(dto.date(), receiverCattle, PregnancyStatus.IN_PROGRESS);
-//            pregnancyRepository.save(pregnancy);
-//        }
-//
-//        if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos() - 1){
-//            fiv.setStatus(FivStatusEnum.COMPLETED);
-//        }
-//
-//        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
-//        fivRepository.save(fiv);
-//        return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
-//    }
+    public ProductionResponseDto frozenEmbryos(FrozenEmbryosDto dto){
 
+        EmbryoProduction production = productionRepository.findById(dto.productionId())
+                .orElseThrow(ProductionNotFoundException::new);
+
+        Integer embryosQuantity = dto.embryosQuantity();
+
+        productionService.updateFivWithFrozenEmbryos(production,embryosQuantity);
+
+        DonorCattle donorCattle = production.getOocyteCollection().getDonorCattle();
+        Bull bull = production.getOocyteCollection().getBull();
+
+        for (int i = 0 ; i <embryosQuantity; i++){
+            Embryo embryo = new Embryo(production, donorCattle, bull, EmbryoDestiny.FROZEN);
+            embryoRepository.save(embryo);
+            production.getEmbryos().add(embryo);
+        }
+
+        return ProductionResponseDto.toProductionResponseDto(production);
+    }
 
 //    public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){
 //        Embryo embryo = embryoRepository.findById(id).

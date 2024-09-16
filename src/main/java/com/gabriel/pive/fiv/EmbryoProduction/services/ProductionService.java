@@ -3,12 +3,15 @@ package com.gabriel.pive.fiv.EmbryoProduction.services;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionRequestDto;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionResponseDto;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
+import com.gabriel.pive.fiv.EmbryoProduction.exceptions.InvalidNumberOfEmbryosException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.OocyteCollectionAlreadyHasProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ProductionNotFoundException;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
+import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,9 @@ public class ProductionService {
 
     @Autowired
     private FivService fivService;
+
+    @Autowired
+    private FivRepository fivRepository;
 
     public ProductionResponseDto newProduction(ProductionRequestDto dto){
 
@@ -62,6 +68,21 @@ public class ProductionService {
                 .orElseThrow(ProductionNotFoundException::new);
 
         return ProductionResponseDto.toProductionResponseDto(embryoProduction);
+    }
+
+    public void updateFivWithFrozenEmbryos(EmbryoProduction production, Integer number){
+
+        Integer actualNumberOfEmbryos = production.getEmbryos().size();
+        Integer updatedNumberOfEmbryos = actualNumberOfEmbryos + number;
+
+        Fiv fiv = production.getOocyteCollection().getFiv();
+        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + number);
+
+        if (updatedNumberOfEmbryos > production.getTotalEmbryos()
+                || fiv.getEmbryosRegistered() > fiv.getTotalEmbryos()){
+            throw new InvalidNumberOfEmbryosException();
+        }
+        fivRepository.save(fiv);
     }
 
 //    public CultivationResponseDto editCultivation(Long id, ProductionRequestDto dto){

@@ -2,6 +2,7 @@ package com.gabriel.pive.fiv.services;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.exceptions.InvalidDateException;
+import com.gabriel.pive.fiv.EmbryoProduction.exceptions.InvalidNumberOfEmbryosException;
 import com.gabriel.pive.fiv.dtos.FivRequestDto;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;
@@ -45,6 +46,17 @@ public class FivService {
 
     public void updateEmbryosRegistered(Fiv fiv){
         fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
+        fivRepository.save(fiv);
+    }
+
+    public void updateWithFrozenEmbryos(Fiv fiv, Integer number){
+        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + number);
+        System.out.println("registered: " + fiv.getEmbryosRegistered());
+        System.out.println("total: " + fiv.getTotalEmbryos());
+        if (fiv.getEmbryosRegistered() > fiv.getTotalEmbryos() || fiv.getTotalEmbryos() < fiv.getEmbryosRegistered()){
+            throw new InvalidNumberOfEmbryosException();
+        }
+
         fivRepository.save(fiv);
     }
 

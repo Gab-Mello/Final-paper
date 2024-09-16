@@ -110,4 +110,9 @@ public class GlobalExceptionHandler {
     private ResponseEntity<String> transferNotFound(TransferNotFoundException exception){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
+
+    @ExceptionHandler(InvalidNumberOfEmbryosException.class)
+    private ResponseEntity<String> invalidNumberOfEmbryos(InvalidNumberOfEmbryosException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
 }
