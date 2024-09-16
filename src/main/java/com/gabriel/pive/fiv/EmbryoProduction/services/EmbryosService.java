@@ -69,7 +69,12 @@ public class EmbryosService {
     }
 
     public void discardedEmbryos(DiscardedEmbryosDto dto){
+        EmbryoProduction production = productionRepository.findById(dto.productionId())
+                .orElseThrow(ProductionNotFoundException::new);
 
+        Integer embryosQuantity = dto.embryosQuantity();
+
+        fivService.updateFivWithFrozenOrDiscardedEmbryos(production,embryosQuantity);
     }
 
 //    public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){
