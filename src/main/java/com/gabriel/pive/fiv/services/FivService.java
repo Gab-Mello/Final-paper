@@ -2,6 +2,7 @@ package com.gabriel.pive.fiv.services;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.exceptions.InvalidDateException;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.InvalidNumberOfEmbryosException;
 import com.gabriel.pive.fiv.dtos.FivRequestDto;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
@@ -40,7 +41,6 @@ public class FivService {
     public void updateTotalEmbryos(Fiv fiv, Integer numberEmbryos){
         fiv.setTotalEmbryos(fiv.getTotalEmbryos() + numberEmbryos);
         Float embryosPercentage =  ((float)fiv.getTotalEmbryos() / fiv.getTotalViableOocytesCollected()) * 100;
-        System.out.println(embryosPercentage);
         fiv.setEmbryosPercentage(embryosPercentage);
         fivRepository.save(fiv);
     }
@@ -50,14 +50,18 @@ public class FivService {
         fivRepository.save(fiv);
     }
 
-    public void updateWithFrozenEmbryos(Fiv fiv, Integer number){
+    public void updateFivWithFrozenOrDiscardedEmbryos(EmbryoProduction production, Integer number){
+
+        Integer actualNumberOfEmbryos = production.getEmbryos().size();
+        Integer updatedNumberOfEmbryos = actualNumberOfEmbryos + number;
+
+        Fiv fiv = production.getOocyteCollection().getFiv();
         fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + number);
-        System.out.println("registered: " + fiv.getEmbryosRegistered());
-        System.out.println("total: " + fiv.getTotalEmbryos());
-        if (fiv.getEmbryosRegistered() > fiv.getTotalEmbryos() || fiv.getTotalEmbryos() < fiv.getEmbryosRegistered()){
+
+        if (updatedNumberOfEmbryos > production.getTotalEmbryos()
+                || fiv.getEmbryosRegistered() > fiv.getTotalEmbryos()){
             throw new InvalidNumberOfEmbryosException();
         }
-
         fivRepository.save(fiv);
     }
 

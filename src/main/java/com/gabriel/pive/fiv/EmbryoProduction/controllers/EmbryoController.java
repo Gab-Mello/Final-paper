@@ -42,7 +42,14 @@ public class EmbryoController {
     @Operation(summary = "Save frozen embryos", description = "It saves and returns a json with the production")
     @PostMapping("/frozen")
     public ResponseEntity<ProductionResponseDto> saveFrozenEmbryos(@Valid @RequestBody FrozenEmbryosDto dto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(embryosService.frozenEmbryos(dto));
+        return ResponseEntity.status(HttpStatus.OK).body(embryosService.frozenEmbryos(dto));
+    }
+
+    @Operation(summary = "Save number of discarded embryos", description = "It saves the number of discarded fivs")
+    @PostMapping("/discarded")
+    public ResponseEntity<?> saveFrozenEmbryos(@Valid @RequestBody DiscardedEmbryosDto dto){
+        embryosService.discardedEmbryos(dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 //    @Operation(summary = "edit a embryo by Id", description = "It returns a json with the new embryo")

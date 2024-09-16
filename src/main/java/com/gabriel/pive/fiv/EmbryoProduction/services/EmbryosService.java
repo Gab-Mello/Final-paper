@@ -44,6 +44,9 @@ public class EmbryosService {
     @Autowired
     private ProductionService productionService;
 
+    @Autowired
+    private FivService fivService;
+
     public ProductionResponseDto frozenEmbryos(FrozenEmbryosDto dto){
 
         EmbryoProduction production = productionRepository.findById(dto.productionId())
@@ -51,7 +54,7 @@ public class EmbryosService {
 
         Integer embryosQuantity = dto.embryosQuantity();
 
-        productionService.updateFivWithFrozenEmbryos(production,embryosQuantity);
+        fivService.updateFivWithFrozenOrDiscardedEmbryos(production,embryosQuantity);
 
         DonorCattle donorCattle = production.getOocyteCollection().getDonorCattle();
         Bull bull = production.getOocyteCollection().getBull();
@@ -63,6 +66,10 @@ public class EmbryosService {
         }
 
         return ProductionResponseDto.toProductionResponseDto(production);
+    }
+
+    public void discardedEmbryos(DiscardedEmbryosDto dto){
+
     }
 
 //    public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){

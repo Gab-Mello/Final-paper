@@ -70,20 +70,7 @@ public class ProductionService {
         return ProductionResponseDto.toProductionResponseDto(embryoProduction);
     }
 
-    public void updateFivWithFrozenEmbryos(EmbryoProduction production, Integer number){
 
-        Integer actualNumberOfEmbryos = production.getEmbryos().size();
-        Integer updatedNumberOfEmbryos = actualNumberOfEmbryos + number;
-
-        Fiv fiv = production.getOocyteCollection().getFiv();
-        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + number);
-
-        if (updatedNumberOfEmbryos > production.getTotalEmbryos()
-                || fiv.getEmbryosRegistered() > fiv.getTotalEmbryos()){
-            throw new InvalidNumberOfEmbryosException();
-        }
-        fivRepository.save(fiv);
-    }
 
 //    public CultivationResponseDto editCultivation(Long id, ProductionRequestDto dto){
 //        EmbryoProduction embryoProduction = productionRepository.findById(id)
