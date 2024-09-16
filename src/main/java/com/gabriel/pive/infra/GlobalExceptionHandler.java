@@ -106,4 +106,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 
+    @ExceptionHandler(TransferNotFoundException.class)
+    private ResponseEntity<String> transferNotFound(TransferNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
 }

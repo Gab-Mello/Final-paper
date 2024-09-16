@@ -49,42 +49,42 @@ public class EmbryosService {
     private PregnancyRepository pregnancyRepository;
 
 
-    public EmbryoResponseDto saveEmbryoTransfer(EmbryoRequestDto dto){
-
-        EmbryoProduction production = productionRepository.findById(dto.productionId())
-                .orElseThrow(ProductionNotFoundException::new);
-
-        Fiv fiv = production.getOocyteCollection().getFiv();
-
-        if (production.getEmbryos().size() == production.getTotalEmbryos()){
-            throw new AllEmbryosAlreadyRegisteredException();
-        }
-
-        Embryo embryo = dto.toEmbryo(production);
-        embryo.setEmbryoBull(production.getOocyteCollection().getBull());
-        embryo.setEmbryoDonorCattle(production.getOocyteCollection().getDonorCattle());
-
-        if (dto.destiny() == EmbryoDestiny.TRANSFERRED){
-            ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
-                    .orElseThrow(ReceiverCattleNotFoundException::new);
-
-            if (receiverCattle.getEmbryo() != null){
-                throw new ReceiverCattleAlreadyHasEmbryoException();
-            }
-
-            embryo.setEmbryoReceiverCattle(receiverCattle);
-            Pregnancy pregnancy = new Pregnancy(dto.date(), receiverCattle, PregnancyStatus.IN_PROGRESS);
-            pregnancyRepository.save(pregnancy);
-        }
-
-        if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos() - 1){
-            fiv.setStatus(FivStatusEnum.COMPLETED);
-        }
-
-        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
-        fivRepository.save(fiv);
-        return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
-    }
+//    public EmbryoResponseDto saveEmbryoTransfer(EmbryoRequestDto dto){
+//
+//        EmbryoProduction production = productionRepository.findById(dto.productionId())
+//                .orElseThrow(ProductionNotFoundException::new);
+//
+//        Fiv fiv = production.getOocyteCollection().getFiv();
+//
+//        if (production.getEmbryos().size() == production.getTotalEmbryos()){
+//            throw new AllEmbryosAlreadyRegisteredException();
+//        }
+//
+//        Embryo embryo = dto.toEmbryo(production);
+//        embryo.setEmbryoBull(production.getOocyteCollection().getBull());
+//        embryo.setEmbryoDonorCattle(production.getOocyteCollection().getDonorCattle());
+//
+//        if (dto.destiny() == EmbryoDestiny.TRANSFERRED){
+//            ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
+//                    .orElseThrow(ReceiverCattleNotFoundException::new);
+//
+//            if (receiverCattle.getEmbryo() != null){
+//                throw new ReceiverCattleAlreadyHasEmbryoException();
+//            }
+//
+//            embryo.setEmbryoReceiverCattle(receiverCattle);
+//            Pregnancy pregnancy = new Pregnancy(dto.date(), receiverCattle, PregnancyStatus.IN_PROGRESS);
+//            pregnancyRepository.save(pregnancy);
+//        }
+//
+//        if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos() - 1){
+//            fiv.setStatus(FivStatusEnum.COMPLETED);
+//        }
+//
+//        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
+//        fivRepository.save(fiv);
+//        return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
+//    }
 
 
 //    public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){

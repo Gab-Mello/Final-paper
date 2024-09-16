@@ -43,7 +43,17 @@ public class FivService {
         fivRepository.save(fiv);
     }
 
+    public void updateEmbryosRegistered(Fiv fiv){
+        fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
+        fivRepository.save(fiv);
+    }
 
+    public void checkToSetFivAsCompleted(Fiv fiv){
+        if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos() - 1){
+            fiv.setStatus(FivStatusEnum.COMPLETED);
+            fivRepository.save(fiv);
+        }
+    }
     public List<FivResponseDto> getAllFives(){
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAllByOrderByIdDesc());
     }

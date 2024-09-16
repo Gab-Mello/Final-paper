@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.EmbryoProduction.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.entities.ReceiverCattle;
@@ -41,12 +42,18 @@ public class Embryo {
     @JoinColumn(name = "receiver_id")
     private ReceiverCattle embryoReceiverCattle;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "transfer_id")
     private EmbryoTransfer transfer;
 
-    public Embryo(EmbryoProduction embryoProduction, EmbryoDestiny destiny){
-        this.embryoEmbryoProduction = embryoProduction;
+    public Embryo(EmbryoProduction production, EmbryoTransfer transfer,
+                  ReceiverCattle receiverCattle, DonorCattle donorCattle, Bull bull, EmbryoDestiny destiny){
+        this.embryoEmbryoProduction = production;
+        this.transfer = transfer;
+        this.embryoReceiverCattle = receiverCattle;
+        this.embryoDonorCattle = donorCattle;
+        this.embryoBull = bull;
         this.destiny = destiny;
     }
 
