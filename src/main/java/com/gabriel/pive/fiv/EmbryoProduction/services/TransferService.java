@@ -8,6 +8,8 @@ import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TransferService {
 
@@ -22,5 +24,9 @@ public class TransferService {
                 orElseThrow(FivNotFoundException::new);
 
         return TransferInitialDto.toTransferDto(transferRepository.save(dto.toTransfer(fiv)));
+    }
+
+    public List<TransferInitialDto> getTransfersByFivId(Long fivId){
+        return TransferInitialDto.toTrasnferDtoList(transferRepository.findByFivTransferId(fivId));
     }
 }

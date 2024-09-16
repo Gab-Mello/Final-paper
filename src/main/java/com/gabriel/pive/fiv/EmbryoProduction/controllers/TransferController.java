@@ -7,10 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Embryos transfer", description = "Embryos transfer management")
 @RestController
@@ -24,5 +23,11 @@ public class TransferController {
     @PostMapping
     public ResponseEntity<TransferInitialDto> newTransfer(@RequestBody TransferInitialDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(transferService.newTransfer(dto));
+    }
+
+    @Operation(summary = "Get fiv's transfers", description = "It returns a json list with the fiv's transfers")
+    @GetMapping
+    public ResponseEntity<List<TransferInitialDto>> getTransfersByFivId(@RequestParam Long fivId){
+        return ResponseEntity.status(HttpStatus.OK).body(transferService.getTransfersByFivId(fivId));
     }
 }
