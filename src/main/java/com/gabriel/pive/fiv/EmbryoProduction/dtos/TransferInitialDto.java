@@ -13,6 +13,9 @@ public record TransferInitialDto(Long fivId,
                                  String farm) {
 
     public EmbryoTransfer toTransfer(Fiv fiv){
+        if (fiv == null){
+            return null;
+        }
         return new EmbryoTransfer(
                 fiv,
                 date,
@@ -22,6 +25,9 @@ public record TransferInitialDto(Long fivId,
     }
 
     public static TransferInitialDto toTransferDto(EmbryoTransfer embryoTransfer){
+        if(embryoTransfer==null){
+            return null;
+        }
         return new TransferInitialDto(
                 embryoTransfer.getFivTransfer().getId(),
                 embryoTransfer.getDate(),
