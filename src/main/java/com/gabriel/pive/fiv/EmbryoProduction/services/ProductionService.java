@@ -42,6 +42,10 @@ public class ProductionService {
             throw new OocyteCollectionAlreadyHasProduction();
         }
 
+        if(dto.totalEmbryos() > oocyteCollection.getViableOocytes()){
+            throw new InvalidNumberOfEmbryosException();
+        }
+
         EmbryoProduction embryoProduction = dto.toProduction(oocyteCollection);
 
         Float EmbryosPercentage =
