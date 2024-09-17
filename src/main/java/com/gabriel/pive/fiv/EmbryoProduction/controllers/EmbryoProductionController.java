@@ -28,16 +28,16 @@ public class EmbryoProductionController {
             return ResponseEntity.status(HttpStatus.CREATED).body(production);
     }
 
-    @Operation(summary = "Get all cultivations", description = "It returns a json list with all cultivations")
+    @Operation(summary = "Get all embryo productions", description = "It returns a json list with all productions")
     @GetMapping
-    public ResponseEntity<List<ProductionResponseDto>> getAllCultivations(){
-        return ResponseEntity.status(HttpStatus.OK).body(productionService.getAllCultivations());
+    public ResponseEntity<List<ProductionResponseDto>> getAllProductions(){
+        return ResponseEntity.status(HttpStatus.OK).body(productionService.getAllProductions());
     }
 
-    @Operation(summary = "Get a cultivation by Id", description = "It returns a json with the cultivation")
+    @Operation(summary = "Get a embryo production by Id", description = "It returns a json with the production")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCultivationById(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.OK).body(productionService.getCultivationById(id));
+    public ResponseEntity<?> getProductionById(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(productionService.getProductionById(id));
     }
 
 //    @Operation(summary = "edit a cultivation by Id", description = "It returns a json with the cultivation edited")

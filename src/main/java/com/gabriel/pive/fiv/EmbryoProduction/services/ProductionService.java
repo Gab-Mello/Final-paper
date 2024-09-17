@@ -63,11 +63,11 @@ public class ProductionService {
 
     }
 
-    public List<ProductionResponseDto> getAllCultivations(){
+    public List<ProductionResponseDto> getAllProductions(){
         return ProductionResponseDto.toCultivationDtoList(productionRepository.findAll());
     }
 
-    public ProductionResponseDto getCultivationById(Long id){
+    public ProductionResponseDto getProductionById(Long id){
         EmbryoProduction embryoProduction = productionRepository.findById(id)
                 .orElseThrow(ProductionNotFoundException::new);
 
