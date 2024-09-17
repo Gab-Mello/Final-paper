@@ -24,15 +24,6 @@ public class EmbryoController {
     @Autowired
     private TransferService transferService;
 
-   /* @Operation(summary = "Save a new embryo", description = "It saves and returns a json with the new embryo")
-    @PostMapping
-    public ResponseEntity<?> saveEmbryo(@Valid @RequestBody EmbryoRequestDto dto){
-        EmbryoResponseDto embryo = embryosService
-                .saveEmbryo(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(embryo);
-    }*/
-
-
     @Operation(summary = "Save a embryo in a transfer", description = "It saves and returns a json with the transfer")
     @PostMapping("/transfer")
     public ResponseEntity<TransferResponseDto> saveEmbryoInTransfer(@Valid @RequestBody TransferDataDto dto){
@@ -51,13 +42,6 @@ public class EmbryoController {
         embryosService.discardedEmbryos(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
-//    @Operation(summary = "edit a embryo by Id", description = "It returns a json with the new embryo")
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> editEmbryo(@PathVariable Long id, @Valid @RequestBody EmbryoRequestDto dto){
-//        EmbryoResponseDto embryo = embryosService.editEmbryo(id,dto);
-//        return ResponseEntity.status(HttpStatus.OK).body(embryo);
-//        }
 
     @Operation(summary = "Get all embryos", description = "It returns a json list with all embryos")
     @GetMapping
