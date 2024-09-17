@@ -1,6 +1,7 @@
 package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
+import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
 import com.gabriel.pive.animals.exceptions.InvalidDateException;
@@ -44,6 +45,10 @@ public class DonorCattleService {
     public List<DonorCattleDto> findAll(){
         List<DonorCattle> list = donorCattleRepository.findAll();
         return DonorCattleDto.toDonorCattleDtoList(list);
+    }
+
+    public List<DonorCattleDto> getAvailableDonorsInFiv(Long fivId){
+        return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.findByOocyteCollections_Fiv_IdNot(fivId));
     }
 
     public DonorCattleDto findById(Long id){

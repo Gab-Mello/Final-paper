@@ -34,6 +34,12 @@ public class DonorCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findAll());
     }
 
+    @Operation(summary = "get available donor in fiv", description = "It returns a list with all donor cattle that wasn't used in the specific fiv.")
+    @GetMapping("/{fivId}/available")
+    public ResponseEntity<List<DonorCattleDto>> getAvailableReceiversInFiv(@PathVariable Long fivId){
+        return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.getAvailableDonorsInFiv(fivId));
+    }
+
     @Operation(summary = "Find donors with registration number", description = "It returns a json list with donor cattles that match the registration number")
     @GetMapping("/search")
     public ResponseEntity<List<DonorCattleDto>> findByRegistrationNumber(@RequestParam String registrationNumber) {
