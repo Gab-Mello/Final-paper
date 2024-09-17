@@ -9,8 +9,10 @@ import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsExcept
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
+import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,9 @@ public class DonorCattleService {
 
     @Autowired
     private OocyteCollectionRepository oocyteCollectionRepository;
+
+    @Autowired
+    private FivRepository fivRepository;
 
     public DonorCattleDto create(DonorCattleDto dto){
         if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
@@ -48,7 +53,8 @@ public class DonorCattleService {
     }
 
     public List<DonorCattleDto> getAvailableDonorsInFiv(Long fivId){
-        return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.findByOocyteCollections_Fiv_IdNot(fivId));
+        fivRepository.findById(fivId).orElseThrow(FivNotFoundException::new);
+        return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.findDonorsNotUsedInFiv(fivId));
     }
 
     public DonorCattleDto findById(Long id){
