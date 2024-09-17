@@ -5,6 +5,7 @@ import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,11 +15,22 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                              String veterinarian, String technical,
                              String TE, List<OocyteCollectionResponseDto> oocyteCollections,
                              Integer fivTotalOocytesCollected, Integer fivTotalViableOocytesCollected,
-                             Integer fivTotalEmbryos, Float fivEmbryosPercentage,
+                             Integer fivTotalEmbryos, String fivEmbryosPercentage,
                              Integer embryosRegistered) {
 
 
     public static FivResponseDto toFivResponseDto(Fiv fiv){
+        Float percentage = fiv.getEmbryosPercentage();
+        String formattedPercentage;
+
+        if (percentage == null || percentage == 0){
+            formattedPercentage = "0.00%";
+        }
+        else{
+            DecimalFormat df = new DecimalFormat("#.00");
+            formattedPercentage = df.format(percentage) + "%";
+        }
+
         return new FivResponseDto(
                 fiv.getId(),
                 fiv.getStatus(),
@@ -33,7 +45,7 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                 fiv.getTotalOocytesCollected(),
                 fiv.getTotalViableOocytesCollected(),
                 fiv.getTotalEmbryos(),
-                fiv.getEmbryosPercentage(),
+                formattedPercentage,
                 fiv.getEmbryosRegistered()
 
         );
