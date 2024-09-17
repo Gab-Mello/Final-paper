@@ -12,6 +12,7 @@ import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoTransfer;
 import com.gabriel.pive.fiv.EmbryoProduction.enums.EmbryoDestiny;
+import com.gabriel.pive.fiv.EmbryoProduction.exceptions.AllEmbryosAlreadyRegisteredException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ProductionNotFoundException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ReceiverCattleAlreadyHasEmbryoException;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.TransferNotFoundException;
@@ -19,6 +20,7 @@ import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.TransferRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
+import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
@@ -60,16 +62,21 @@ public class TransferService {
     }
 
     public TransferResponseDto saveTransferData(TransferDataDto dto){
-        EmbryoTransfer transfer = transferRepository.findById(dto.transferId())
-                .orElseThrow(TransferNotFoundException::new);
-
-        ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverId())
-                .orElseThrow(ReceiverCattleNotFoundException::new);
 
         EmbryoProduction production = productionRepository.findById(dto.productionId())
                 .orElseThrow(ProductionNotFoundException::new);
 
         Fiv fiv = production.getOocyteCollection().getFiv();
+
+        if (fiv.getStatus() == FivStatusEnum.COMPLETED){
+            throw new AllEmbryosAlreadyRegisteredException();
+        }
+
+        EmbryoTransfer transfer = transferRepository.findById(dto.transferId())
+                .orElseThrow(TransferNotFoundException::new);
+
+        ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverId())
+                .orElseThrow(ReceiverCattleNotFoundException::new);
 
         DonorCattle donorCattle = production.getOocyteCollection().getDonorCattle();
 
@@ -78,6 +85,8 @@ public class TransferService {
         if (receiverCattle.getEmbryo() != null){
             throw new ReceiverCattleAlreadyHasEmbryoException();
         }
+
+        fivService.checkToSetFivAsCompleted(fiv);
 
         Embryo embryo = new Embryo(production, transfer, receiverCattle,
                                     donorCattle, bull, EmbryoDestiny.TRANSFERRED);
