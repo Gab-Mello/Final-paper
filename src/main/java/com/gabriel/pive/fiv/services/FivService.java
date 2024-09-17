@@ -62,6 +62,11 @@ public class FivService {
                 || fiv.getEmbryosRegistered() > fiv.getTotalEmbryos()){
             throw new InvalidNumberOfEmbryosException();
         }
+
+        if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos()){
+            fiv.setStatus(FivStatusEnum.COMPLETED);
+        }
+
         fivRepository.save(fiv);
     }
 
