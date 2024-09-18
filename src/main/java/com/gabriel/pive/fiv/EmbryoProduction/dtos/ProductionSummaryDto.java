@@ -4,7 +4,7 @@ import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 
 import java.text.DecimalFormat;
 
-public record ProductionSummaryDto(Integer totalEmbryos, String embryosPercentage) {
+public record ProductionSummaryDto(Long id, Integer totalEmbryos, String embryosPercentage) {
 
     public static ProductionSummaryDto toProductionSummaryDto(EmbryoProduction production){
         if (production == null){
@@ -22,7 +22,8 @@ public record ProductionSummaryDto(Integer totalEmbryos, String embryosPercentag
             formattedPercentage = df.format(percentage) + "%";
         }
 
-        return new ProductionSummaryDto(production.getTotalEmbryos(),
+        return new ProductionSummaryDto(production.getId(),
+                                        production.getTotalEmbryos(),
                                         formattedPercentage);
     }
 }
