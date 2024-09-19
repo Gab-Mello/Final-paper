@@ -57,8 +57,8 @@ public class TransferService {
         return TransferInitialDto.toTransferDto(transferRepository.save(dto.toTransfer(fiv)));
     }
 
-    public List<TransferInitialDto> getTransfersByFivId(Long fivId){
-        return TransferInitialDto.toTrasnferDtoList(transferRepository.findByFivTransferId(fivId));
+    public List<TransferResponseDto> getTransfersByFivId(Long fivId){
+        return TransferResponseDto.toTrasnferResponseDtoList(transferRepository.findByFivTransferId(fivId));
     }
 
     public TransferResponseDto saveTransferData(TransferDataDto dto){

@@ -1,6 +1,7 @@
 package com.gabriel.pive.fiv.EmbryoProduction.controllers;
 
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.TransferInitialDto;
+import com.gabriel.pive.fiv.EmbryoProduction.dtos.TransferResponseDto;
 import com.gabriel.pive.fiv.EmbryoProduction.services.TransferService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +28,7 @@ public class TransferController {
 
     @Operation(summary = "Get fiv's transfers", description = "It returns a json list with the fiv's transfers")
     @GetMapping
-    public ResponseEntity<List<TransferInitialDto>> getTransfersByFivId(@RequestParam Long fivId){
+    public ResponseEntity<List<TransferResponseDto>> getTransfersByFivId(@RequestParam Long fivId){
         return ResponseEntity.status(HttpStatus.OK).body(transferService.getTransfersByFivId(fivId));
     }
 }

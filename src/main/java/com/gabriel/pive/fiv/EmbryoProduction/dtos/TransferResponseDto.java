@@ -22,4 +22,10 @@ public record TransferResponseDto(Long id,
                 EmbryoResponseDto.toEmbryoResponseDtoList(transfer.getEmbryos())
         );
     }
+
+    public static List<TransferResponseDto> toTrasnferResponseDtoList(List<EmbryoTransfer> list){
+        List<TransferResponseDto> listDto = list.stream().map(transfer->
+                TransferResponseDto.toTransferResponseDto(transfer)).toList();
+        return listDto;
+    }
 }
