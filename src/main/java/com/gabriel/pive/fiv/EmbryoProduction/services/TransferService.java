@@ -94,7 +94,7 @@ public class TransferService {
         embryoRepository.save(embryo);
 
         fivService.checkToSetFivAsCompleted(fiv);
-        fivService.updateEmbryosRegistered(fiv);
+        fivService.updateEmbryosRegistered(fiv, production);
 
         return TransferResponseDto.toTransferResponseDto(transfer);
     }

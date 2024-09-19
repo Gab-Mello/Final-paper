@@ -4,6 +4,8 @@ import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.exceptions.InvalidDateException;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.InvalidNumberOfEmbryosException;
+import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
+import com.gabriel.pive.fiv.EmbryoProduction.services.ProductionService;
 import com.gabriel.pive.fiv.dtos.FivRequestDto;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;
@@ -21,6 +23,9 @@ public class FivService {
 
     @Autowired
     private FivRepository fivRepository;
+
+    @Autowired
+    private ProductionRepository productionRepository;
 
     public FivResponseDto createFiv(FivRequestDto dto){
         Fiv fiv = dto.toFiv();
@@ -45,8 +50,10 @@ public class FivService {
         fivRepository.save(fiv);
     }
 
-    public void updateEmbryosRegistered(Fiv fiv){
+    public void updateEmbryosRegistered(Fiv fiv, EmbryoProduction production){
         fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
+        production.setEmbryosRegistered(production.getEmbryosRegistered() + 1);
+        productionRepository.save(production);
         fivRepository.save(fiv);
     }
 
@@ -58,6 +65,8 @@ public class FivService {
         Fiv fiv = production.getOocyteCollection().getFiv();
         fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + number);
 
+        production.setEmbryosRegistered(production.getEmbryosRegistered() + number);
+
         if (updatedNumberOfEmbryos > production.getTotalEmbryos()
                 || fiv.getEmbryosRegistered() > fiv.getTotalEmbryos()){
             throw new InvalidNumberOfEmbryosException();
@@ -67,6 +76,7 @@ public class FivService {
             fiv.setStatus(FivStatusEnum.COMPLETED);
         }
 
+        productionRepository.save(production);
         fivRepository.save(fiv);
     }
 

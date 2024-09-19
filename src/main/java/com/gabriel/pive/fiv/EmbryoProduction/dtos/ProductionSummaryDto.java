@@ -28,6 +28,6 @@ public record ProductionSummaryDto(Long id,
         return new ProductionSummaryDto(production.getId(),
                                         production.getTotalEmbryos(),
                                         formattedPercentage,
-                                        production.getEmbryos().size());
+                                        production.getEmbryosRegistered());
     }
 }

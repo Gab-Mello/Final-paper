@@ -14,7 +14,7 @@ public record ProductionResponseDto(Long id, Long oocyteCollectionId,
                 embryoProduction.getId(),
                 embryoProduction.getOocyteCollection().getId(),
                 embryoProduction.getTotalEmbryos(),
-                embryoProduction.getEmbryos().size(),
+                embryoProduction.getEmbryosRegistered(),
                 EmbryoResponseDto.toEmbryoResponseDtoList(embryoProduction.getEmbryos())
                 );
     }

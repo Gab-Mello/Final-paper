@@ -35,8 +35,11 @@ public class EmbryoProduction {
 
     private Float embryosPercentage;
 
+    private Integer embryosRegistered;
+
     public EmbryoProduction(OocyteCollection oocyteCollection, Integer totalEmbryos){
         this.oocyteCollection = oocyteCollection;
         this.totalEmbryos = totalEmbryos;
+        this.embryosRegistered = 0;
     }
 }
