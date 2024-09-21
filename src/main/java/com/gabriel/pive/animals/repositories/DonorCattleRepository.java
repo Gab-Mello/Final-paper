@@ -27,4 +27,12 @@ public interface DonorCattleRepository extends JpaRepository<DonorCattle,Long> {
             "GROUP BY d.id " +
             "ORDER BY avgOocytes DESC")
     List<Object[]> findDonorsWithHighestOocytesCollected();
+
+    @Query("SELECT d, AVG(ep.embryosPercentage) as avgPercentage " +
+            "FROM DonorCattle d " +
+            "JOIN d.oocyteCollections oc " +
+            "JOIN oc.embryoProduction ep " +
+            "GROUP BY d.id " +
+            "ORDER BY avgPercentage DESC")
+    List<Object[]> findDonorsWithHighestEmbryoPercentage();
 }

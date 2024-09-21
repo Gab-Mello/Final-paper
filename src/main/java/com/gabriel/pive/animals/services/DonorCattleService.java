@@ -1,9 +1,6 @@
 package com.gabriel.pive.animals.services;
 
-import com.gabriel.pive.animals.dtos.DonorCattleAverageDto;
-import com.gabriel.pive.animals.dtos.DonorCattleDto;
-import com.gabriel.pive.animals.dtos.DonorCattleSummaryDto;
-import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
+import com.gabriel.pive.animals.dtos.*;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
 import com.gabriel.pive.animals.exceptions.InvalidDateException;
@@ -62,21 +59,32 @@ public class DonorCattleService {
         return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.findDonorsNotUsedInFiv(fivId));
     }
 
-    public List<DonorCattleAverageDto> getDonorsWithHighestOocytesCollected() {
+    public List<DonorCattleAverageOocytesDto> getDonorsWithHighestOocytesCollected() {
         List<Object[]> results = donorCattleRepository.findDonorsWithHighestOocytesCollected();
 
         return results.stream()
-                .map(result -> new DonorCattleAverageDto(
+                .map(result -> new DonorCattleAverageOocytesDto(
                         DonorCattleSummaryDto.toDonorCattleSummaryDto((DonorCattle) result[0]), // DonorCattle entity
                         formatDoubleToTwoDecimals((Double) result[1]) // Average of viable oocytes
                 ))
                 .collect(Collectors.toList());
     }
 
+    public List<DonorCattleAverageEmbryoDto> getDonorsWithHighestEmbryoPercentage() {
+        List<Object[]> results = donorCattleRepository.findDonorsWithHighestEmbryoPercentage();
+
+        return results.stream()
+                .map(result -> DonorCattleAverageEmbryoDto.toDonorCattleAverageEmbryoDto(
+                        (DonorCattle) result[0], // DonorCattle entity
+                        (Double) result[1]) // Average percentage
+                )
+                .collect(Collectors.toList());
+    }
+
     private Double formatDoubleToTwoDecimals(Double value) {
         if (value == null) return null;
         BigDecimal bd = BigDecimal.valueOf(value);
-        bd = bd.setScale(2, RoundingMode.HALF_UP); // Arredonda para 2 casas decimais
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
 

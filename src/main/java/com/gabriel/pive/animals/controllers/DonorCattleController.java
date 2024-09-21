@@ -1,9 +1,8 @@
 package com.gabriel.pive.animals.controllers;
 
-import com.gabriel.pive.animals.dtos.DonorCattleAverageDto;
+import com.gabriel.pive.animals.dtos.DonorCattleAverageOocytesDto;
+import com.gabriel.pive.animals.dtos.DonorCattleAverageEmbryoDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
-import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
-import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.services.DonorCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,9 +42,15 @@ public class DonorCattleController {
 
     @Operation(summary = "List donors with highest oocytes collected", description = "It returns a json list the donors and the average")
     @GetMapping("/highest-average-oocytes")
-    public ResponseEntity<List<DonorCattleAverageDto>> getDonorsWithHighestOocytesCollected() {
-        List<DonorCattleAverageDto> donorAverages = donorCattleService.getDonorsWithHighestOocytesCollected();
-        return ResponseEntity.ok(donorAverages);
+    public ResponseEntity<List<DonorCattleAverageOocytesDto>> getDonorsWithHighestOocytesCollected() {
+        List<DonorCattleAverageOocytesDto> donors = donorCattleService.getDonorsWithHighestOocytesCollected();
+        return ResponseEntity.status(HttpStatus.OK).body(donors);
+    }
+
+    @GetMapping("/highest-average-embryo-percentage")
+    public ResponseEntity<List<DonorCattleAverageEmbryoDto>> getDonorsWithHighestEmbryoPercentage() {
+        List<DonorCattleAverageEmbryoDto> donors = donorCattleService.getDonorsWithHighestEmbryoPercentage();
+        return ResponseEntity.status(HttpStatus.OK).body(donors);
     }
 
     @Operation(summary = "Find donors with registration number", description = "It returns a json list with donor cattles that match the registration number")
