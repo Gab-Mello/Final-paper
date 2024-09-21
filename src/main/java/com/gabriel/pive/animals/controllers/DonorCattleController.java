@@ -40,13 +40,14 @@ public class DonorCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.getAvailableDonorsInFiv(fivId));
     }
 
-    @Operation(summary = "List donors with highest oocytes collected", description = "It returns a json list the donors and the average")
+    @Operation(summary = "List donors with highest oocytes collected", description = "It returns a json list with the donors filtered and the average")
     @GetMapping("/highest-average-oocytes")
     public ResponseEntity<List<DonorCattleAverageOocytesDto>> getDonorsWithHighestOocytesCollected() {
         List<DonorCattleAverageOocytesDto> donors = donorCattleService.getDonorsWithHighestOocytesCollected();
         return ResponseEntity.status(HttpStatus.OK).body(donors);
     }
 
+    @Operation(summary = "List donors with highest embryo percentage", description = "It returns a json list with the donors filtered and the percentage")
     @GetMapping("/highest-average-embryo-percentage")
     public ResponseEntity<List<DonorCattleAverageEmbryoDto>> getDonorsWithHighestEmbryoPercentage() {
         List<DonorCattleAverageEmbryoDto> donors = donorCattleService.getDonorsWithHighestEmbryoPercentage();
