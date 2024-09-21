@@ -1,5 +1,6 @@
 package com.gabriel.pive.animals.services;
 
+import com.gabriel.pive.animals.dtos.DonorCattleAverageDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
 import com.gabriel.pive.animals.entities.DonorCattle;
@@ -16,8 +17,11 @@ import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DonorCattleService {
@@ -55,6 +59,24 @@ public class DonorCattleService {
     public List<DonorCattleDto> getAvailableDonorsInFiv(Long fivId){
         fivRepository.findById(fivId).orElseThrow(FivNotFoundException::new);
         return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.findDonorsNotUsedInFiv(fivId));
+    }
+
+    public List<DonorCattleAverageDto> getDonorsWithHighestOocytesCollected() {
+        List<Object[]> results = donorCattleRepository.findDonorsWithHighestOocytesCollected();
+
+        return results.stream()
+                .map(result -> new DonorCattleAverageDto(
+                        (DonorCattle) result[0], // DonorCattle entity
+                        formatDoubleToTwoDecimals((Double) result[1]) // Average of viable oocytes
+                ))
+                .collect(Collectors.toList());
+    }
+
+    private Double formatDoubleToTwoDecimals(Double value) {
+        if (value == null) return null;
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(2, RoundingMode.HALF_UP); // Arredonda para 2 casas decimais
+        return bd.doubleValue();
     }
 
     public DonorCattleDto findById(Long id){

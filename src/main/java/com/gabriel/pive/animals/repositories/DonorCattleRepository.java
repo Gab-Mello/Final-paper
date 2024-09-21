@@ -19,4 +19,12 @@ public interface DonorCattleRepository extends JpaRepository<DonorCattle,Long> {
             "OR d.id NOT IN " +
             "(SELECT o.donorCattle.id FROM OocyteCollection o)")
     List<DonorCattle> findDonorsNotUsedInFiv(@Param("fivId") Long fivId);
+
+
+    @Query("SELECT d, AVG(oc.viableOocytes) as avgOocytes " +
+            "FROM DonorCattle d " +
+            "JOIN d.oocyteCollections oc " +
+            "GROUP BY d.id " +
+            "ORDER BY avgOocytes DESC")
+    List<Object[]> findDonorsWithHighestOocytesCollected();
 }

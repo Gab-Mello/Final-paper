@@ -1,5 +1,6 @@
 package com.gabriel.pive.animals.controllers;
 
+import com.gabriel.pive.animals.dtos.DonorCattleAverageDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
@@ -38,6 +39,13 @@ public class DonorCattleController {
     @GetMapping("/{fivId}/available")
     public ResponseEntity<List<DonorCattleDto>> getAvailableReceiversInFiv(@PathVariable Long fivId){
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.getAvailableDonorsInFiv(fivId));
+    }
+
+
+    @GetMapping("/highest-average-oocytes")
+    public ResponseEntity<List<DonorCattleAverageDto>> getDonorsWithHighestOocytesCollected() {
+        List<DonorCattleAverageDto> donorAverages = donorCattleService.getDonorsWithHighestOocytesCollected();
+        return ResponseEntity.ok(donorAverages);
     }
 
     @Operation(summary = "Find donors with registration number", description = "It returns a json list with donor cattles that match the registration number")
