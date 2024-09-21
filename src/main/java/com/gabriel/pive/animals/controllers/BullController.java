@@ -1,6 +1,8 @@
 package com.gabriel.pive.animals.controllers;
 
+import com.gabriel.pive.animals.dtos.BullAverageEmbryoDto;
 import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.dtos.DonorCattleAverageEmbryoDto;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.services.BullService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +34,13 @@ public class BullController {
     @GetMapping
     public ResponseEntity<List<BullDto>> listBulls(){
         return ResponseEntity.status(HttpStatus.OK).body(bullService.findAll());
+    }
+
+    @Operation(summary = "List bulls with highest embryo percentage", description = "It returns a json list with the bulls filtered and the percentage")
+    @GetMapping("/highest-average-embryo-percentage")
+    public ResponseEntity<List<BullAverageEmbryoDto>> getBullsWithHighestEmbryoPercentage() {
+        List<BullAverageEmbryoDto> bulls = bullService.getBullsWithHighestEmbryoPercentage();
+        return ResponseEntity.status(HttpStatus.OK).body(bulls);
     }
 
     @Operation(summary = "Find bulls with registration number", description = "It returns a json list of bulls that match the registration number")

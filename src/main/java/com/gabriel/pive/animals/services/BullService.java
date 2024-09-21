@@ -1,5 +1,6 @@
 package com.gabriel.pive.animals.services;
 
+import com.gabriel.pive.animals.dtos.BullAverageEmbryoDto;
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.exceptions.BullNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BullService {
@@ -38,6 +40,17 @@ public class BullService {
     public List<BullDto> findAll(){
         List<Bull> list = bullRepository.findAll();
         return BullDto.toBullDtoList(list);
+    }
+
+    public List<BullAverageEmbryoDto> getBullsWithHighestEmbryoPercentage() {
+        List<Object[]> results = bullRepository.findBullsWithHighestEmbryoPercentage();
+
+        return results.stream()
+                .map(result -> BullAverageEmbryoDto.toBullAverageEmbryoDto(
+                        (Bull) result[0], // Bull
+                        (Double) result[1] // Average embryos percentage
+                ))
+                .collect(Collectors.toList());
     }
 
     public BullDto findById(Long id){
