@@ -2,6 +2,7 @@ package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.DonorCattleAverageDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
+import com.gabriel.pive.animals.dtos.DonorCattleSummaryDto;
 import com.gabriel.pive.animals.dtos.ReceiverCattleDto;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.exceptions.DonorCattleNotFoundException;
@@ -66,7 +67,7 @@ public class DonorCattleService {
 
         return results.stream()
                 .map(result -> new DonorCattleAverageDto(
-                        (DonorCattle) result[0], // DonorCattle entity
+                        DonorCattleSummaryDto.toDonorCattleSummaryDto((DonorCattle) result[0]), // DonorCattle entity
                         formatDoubleToTwoDecimals((Double) result[1]) // Average of viable oocytes
                 ))
                 .collect(Collectors.toList());

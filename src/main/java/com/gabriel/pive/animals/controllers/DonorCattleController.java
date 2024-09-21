@@ -41,7 +41,7 @@ public class DonorCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.getAvailableDonorsInFiv(fivId));
     }
 
-
+    @Operation(summary = "List donors with highest oocytes collected", description = "It returns a json list the donors and the average")
     @GetMapping("/highest-average-oocytes")
     public ResponseEntity<List<DonorCattleAverageDto>> getDonorsWithHighestOocytesCollected() {
         List<DonorCattleAverageDto> donorAverages = donorCattleService.getDonorsWithHighestOocytesCollected();
