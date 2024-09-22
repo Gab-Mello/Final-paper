@@ -4,11 +4,13 @@ import com.gabriel.pive.animals.entities.Bull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public record BullDto(Long id,
                       String name,
-                      @NotBlank(message = "Número de identificação em branco.") String registrationNumber) {
+                      @NotBlank(message = "Número de identificação em branco.") String registrationNumber,
+                      String averageEmbryoPercentage) {
 
     public Bull toBull(){
         return new Bull(
@@ -22,10 +24,22 @@ public record BullDto(Long id,
             return null;
         }
 
+        Double percentage = bull.getAverageEmbryoPercentage();
+        String formattedPercentage;
+
+        if (percentage == null || percentage == 0){
+            formattedPercentage = "0.00%";
+        }
+        else{
+            DecimalFormat df = new DecimalFormat("#.00");
+            formattedPercentage = df.format(percentage) + "%";
+        }
+
         return new BullDto(
                 bull.getId(),
                 bull.getName(),
-                bull.getRegistrationNumber()
+                bull.getRegistrationNumber(),
+                formattedPercentage
         );
     }
     public static List<BullDto> toBullDtoList(List<Bull> list){

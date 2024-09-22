@@ -28,6 +28,8 @@ public class Bull {
 
     private String registrationNumber;
 
+    private Double averageEmbryoPercentage;
+
     @JsonIgnore
     @OneToMany(mappedBy = "bull")
     private List<OocyteCollection> oocyteCollections = new ArrayList<>();

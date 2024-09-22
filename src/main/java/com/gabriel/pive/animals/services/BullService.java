@@ -2,7 +2,9 @@ package com.gabriel.pive.animals.services;
 
 import com.gabriel.pive.animals.dtos.BullAverageEmbryoDto;
 import com.gabriel.pive.animals.dtos.BullDto;
+import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;
+import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.exceptions.BullNotFoundException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.BullRepository;
@@ -42,16 +44,33 @@ public class BullService {
         return BullDto.toBullDtoList(list);
     }
 
-    public List<BullAverageEmbryoDto> getBullsWithHighestEmbryoPercentage() {
-        List<Object[]> results = bullRepository.findBullsWithHighestEmbryoPercentage();
-
-        return results.stream()
-                .map(result -> BullAverageEmbryoDto.toBullAverageEmbryoDto(
-                        (Bull) result[0], // Bull
-                        (Double) result[1] // Average embryos percentage
-                ))
-                .collect(Collectors.toList());
+    public List<BullDto> getBullsWithHighestEmbryoPercentage() {
+        List<Bull> bulls = bullRepository.findBullsWithHighestEmbryoPercentage();
+        return BullDto.toBullDtoList(bulls);
     }
+
+    public void updateAverageViableEmbryos(Bull bull) {
+        List<OocyteCollection> oocyteCollections = bull.getOocyteCollections();
+
+        double totalEmbryosPercent = 0;
+        int collectionCount = 0;
+
+        for (OocyteCollection collection : oocyteCollections) {
+            if (collection.getEmbryoProduction() != null) {
+                totalEmbryosPercent += collection.getEmbryoProduction().getEmbryosPercentage();
+                collectionCount++;
+            }
+        }
+
+        if (collectionCount > 0) {
+            double averageEmbryosPercentage = totalEmbryosPercent / collectionCount;
+            bull.setAverageEmbryoPercentage(averageEmbryosPercentage);
+        } else {
+            bull.setAverageEmbryoPercentage(0.0);
+        }
+        bullRepository.save(bull);
+    }
+
 
     public BullDto findById(Long id){
         Bull bull = bullRepository.findById(id)

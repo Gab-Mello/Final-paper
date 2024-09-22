@@ -14,11 +14,7 @@ public interface BullRepository extends JpaRepository<Bull,Long> {
 
     List<Bull> findByRegistrationNumberStartingWith(String registrationNumber);
 
-    @Query("SELECT t, AVG(ep.embryosPercentage) as avgEmbryosPercentage " +
-            "FROM Bull t " +
-            "JOIN t.oocyteCollections oc " +
-            "JOIN oc.embryoProduction ep " +
-            "GROUP BY t.id " +
-            "ORDER BY avgEmbryosPercentage DESC")
-    List<Object[]> findBullsWithHighestEmbryoPercentage();
+    @Query("SELECT t FROM Bull t " +
+            "ORDER BY t.averageEmbryoPercentage DESC")
+    List<Bull> findBullsWithHighestEmbryoPercentage();
 }

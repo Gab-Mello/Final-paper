@@ -36,8 +36,8 @@ public class BullController {
 
     @Operation(summary = "List bulls with highest embryo percentage", description = "It returns a json list with the bulls filtered and the percentage")
     @GetMapping("/highest-average-embryo-percentage")
-    public ResponseEntity<List<BullAverageEmbryoDto>> getBullsWithHighestEmbryoPercentage() {
-        List<BullAverageEmbryoDto> bulls = bullService.getBullsWithHighestEmbryoPercentage();
+    public ResponseEntity<List<BullDto>> getBullsWithHighestEmbryoPercentage() {
+        List<BullDto> bulls = bullService.getBullsWithHighestEmbryoPercentage();
         return ResponseEntity.status(HttpStatus.OK).body(bulls);
     }
 
