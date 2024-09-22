@@ -1,7 +1,5 @@
 package com.gabriel.pive.animals.controllers;
 
-import com.gabriel.pive.animals.dtos.DonorCattleAverageOocytesDto;
-import com.gabriel.pive.animals.dtos.DonorCattleAverageEmbryoDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.services.DonorCattleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,15 +40,15 @@ public class DonorCattleController {
 
     @Operation(summary = "List donors with highest oocytes collected", description = "It returns a json list with the donors filtered and the average")
     @GetMapping("/highest-average-oocytes")
-    public ResponseEntity<List<DonorCattleAverageOocytesDto>> getDonorsWithHighestOocytesCollected() {
-        List<DonorCattleAverageOocytesDto> donors = donorCattleService.getDonorsWithHighestOocytesCollected();
+    public ResponseEntity<List<DonorCattleDto>> getDonorsWithHighestOocytesCollected() {
+        List<DonorCattleDto> donors = donorCattleService.getDonorsWithHighestOocytesCollected();
         return ResponseEntity.status(HttpStatus.OK).body(donors);
     }
 
     @Operation(summary = "List donors with highest embryo percentage", description = "It returns a json list with the donors filtered and the percentage")
     @GetMapping("/highest-average-embryo-percentage")
-    public ResponseEntity<List<DonorCattleAverageEmbryoDto>> getDonorsWithHighestEmbryoPercentage() {
-        List<DonorCattleAverageEmbryoDto> donors = donorCattleService.getDonorsWithHighestEmbryoPercentage();
+    public ResponseEntity<List<DonorCattleDto>> getDonorsWithHighestEmbryoPercentage() {
+        List<DonorCattleDto> donors = donorCattleService.getDonorsWithHighestEmbryoPercentage();
         return ResponseEntity.status(HttpStatus.OK).body(donors);
     }
 

@@ -33,8 +33,12 @@ public class DonorCattle {
 
     private String registrationNumber;
 
+    private Double averageViableOocytes;
+
+    private Double averageEmbryoPercentage;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "donorCattle")
+    @OneToMany(mappedBy = "donorCattle", fetch = FetchType.EAGER)
     private List<OocyteCollection> oocyteCollections = new ArrayList<>();
 
     @OneToMany(mappedBy = "embryoDonorCattle")
@@ -45,5 +49,29 @@ public class DonorCattle {
         this.breed = breed;
         this.birth = birth;
         this.registrationNumber = registrationNumber;
+        this.averageViableOocytes = 0.0;
+        this.averageEmbryoPercentage = 0.0;
+    }
+
+    public void updateAverageViableOocytes() {
+        if (oocyteCollections != null && !oocyteCollections.isEmpty()) {
+            double totalViableOocytes = oocyteCollections.stream()
+                    .mapToInt(OocyteCollection::getViableOocytes)
+                    .sum();
+            this.averageViableOocytes = totalViableOocytes / oocyteCollections.size();
+        } else {
+            this.averageViableOocytes = 0.0;
+        }
+    }
+
+    public void updateEmbryoPercentage() {
+        if (oocyteCollections != null && !oocyteCollections.isEmpty()) {
+            double totalPercentage = oocyteCollections.stream()
+                    .mapToDouble(oc -> oc.getEmbryoProduction().getEmbryosPercentage())
+                    .sum();
+            this.averageEmbryoPercentage = totalPercentage / oocyteCollections.size();
+        } else {
+            this.averageEmbryoPercentage = 0.0;
+        }
     }
 }

@@ -21,18 +21,11 @@ public interface DonorCattleRepository extends JpaRepository<DonorCattle,Long> {
     List<DonorCattle> findDonorsNotUsedInFiv(@Param("fivId") Long fivId);
 
 
-    @Query("SELECT d, AVG(oc.viableOocytes) as avgOocytes " +
-            "FROM DonorCattle d " +
-            "JOIN d.oocyteCollections oc " +
-            "GROUP BY d.id " +
-            "ORDER BY avgOocytes DESC")
-    List<Object[]> findDonorsWithHighestOocytesCollected();
+    @Query("SELECT d FROM DonorCattle d " +
+            "ORDER BY d.averageViableOocytes DESC")
+    List<DonorCattle> findDonorsWithHighestOocytesCollected();
 
-    @Query("SELECT d, AVG(ep.embryosPercentage) as avgPercentage " +
-            "FROM DonorCattle d " +
-            "JOIN d.oocyteCollections oc " +
-            "JOIN oc.embryoProduction ep " +
-            "GROUP BY d.id " +
-            "ORDER BY avgPercentage DESC")
-    List<Object[]> findDonorsWithHighestEmbryoPercentage();
+    @Query("SELECT d FROM DonorCattle d " +
+            "ORDER BY d.averageEmbryoPercentage DESC")
+    List<DonorCattle> findDonorsWithHighestEmbryoPercentage();
 }

@@ -3,7 +3,6 @@ package com.gabriel.pive.fiv.oocyteCollection.dtos;
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.dtos.BullSummaryDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
-import com.gabriel.pive.animals.dtos.DonorCattleSummaryDto;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 
 import java.time.LocalDate;

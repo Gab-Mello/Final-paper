@@ -1,5 +1,6 @@
 package com.gabriel.pive.fiv.EmbryoProduction.services;
 
+import com.gabriel.pive.animals.services.DonorCattleService;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionRequestDto;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionResponseDto;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
@@ -33,6 +34,9 @@ public class ProductionService {
     @Autowired
     private FivRepository fivRepository;
 
+    @Autowired
+    private DonorCattleService donorCattleService;
+
     public ProductionResponseDto newProduction(ProductionRequestDto dto){
 
         OocyteCollection oocyteCollection = oocyteCollectionRepository.findById(dto.oocyteCollectionId())
@@ -58,6 +62,8 @@ public class ProductionService {
         oocyteCollectionRepository.save(oocyteCollection);
 
         fivService.updateTotalEmbryos(oocyteCollection.getFiv(), embryoProduction.getTotalEmbryos());
+
+        donorCattleService.updateAverageViableEmbryos(embryoProduction.getOocyteCollection().getDonorCattle());
 
         return ProductionResponseDto.toProductionResponseDto(savedEmbryoProduction);
 

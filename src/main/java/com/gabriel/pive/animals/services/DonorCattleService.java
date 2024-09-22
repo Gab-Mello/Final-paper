@@ -59,26 +59,48 @@ public class DonorCattleService {
         return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.findDonorsNotUsedInFiv(fivId));
     }
 
-    public List<DonorCattleAverageOocytesDto> getDonorsWithHighestOocytesCollected() {
-        List<Object[]> results = donorCattleRepository.findDonorsWithHighestOocytesCollected();
+    public List<DonorCattleDto> getDonorsWithHighestOocytesCollected() {
+        List<DonorCattle> donors = donorCattleRepository.findDonorsWithHighestOocytesCollected();
 
-        return results.stream()
-                .map(result -> new DonorCattleAverageOocytesDto(
-                        DonorCattleSummaryDto.toDonorCattleSummaryDto((DonorCattle) result[0]), // DonorCattle entity
-                        formatDoubleToTwoDecimals((Double) result[1]) // Average of viable oocytes
-                ))
-                .collect(Collectors.toList());
+        return DonorCattleDto.toDonorCattleDtoList(donors);
     }
 
-    public List<DonorCattleAverageEmbryoDto> getDonorsWithHighestEmbryoPercentage() {
-        List<Object[]> results = donorCattleRepository.findDonorsWithHighestEmbryoPercentage();
+    public List<DonorCattleDto> getDonorsWithHighestEmbryoPercentage() {
+        List<DonorCattle> donors = donorCattleRepository.findDonorsWithHighestEmbryoPercentage();
+        return DonorCattleDto.toDonorCattleDtoList(donors);
+    }
 
-        return results.stream()
-                .map(result -> DonorCattleAverageEmbryoDto.toDonorCattleAverageEmbryoDto(
-                        (DonorCattle) result[0], // DonorCattle entity
-                        (Double) result[1]) // Average percentage
-                )
-                .collect(Collectors.toList());
+    public void updateAverageViableOocytes(DonorCattle donorCattle) {
+        List<OocyteCollection> oocyteCollections = donorCattle.getOocyteCollections();
+
+        double totalViableOocytes = oocyteCollections.stream()
+                .mapToInt(OocyteCollection::getViableOocytes)
+                .sum();
+        donorCattle.setAverageViableOocytes(totalViableOocytes/oocyteCollections.size());
+
+        donorCattleRepository.save(donorCattle);
+    }
+
+    public void updateAverageViableEmbryos(DonorCattle donorCattle) {
+        List<OocyteCollection> oocyteCollections = donorCattle.getOocyteCollections();
+
+        double totalEmbryosPercent = 0;
+        int collectionCount = 0;
+
+        for (OocyteCollection collection : oocyteCollections) {
+            if (collection.getEmbryoProduction() != null) {
+                totalEmbryosPercent += collection.getEmbryoProduction().getEmbryosPercentage();
+                collectionCount++;
+            }
+        }
+
+        if (collectionCount > 0) {
+            double averageEmbryosPercentage = totalEmbryosPercent / collectionCount;
+            donorCattle.setAverageEmbryoPercentage(averageEmbryosPercentage);
+        } else {
+            donorCattle.setAverageEmbryoPercentage(0.0);
+        }
+        donorCattleRepository.save(donorCattle);
     }
 
     private Double formatDoubleToTwoDecimals(Double value) {

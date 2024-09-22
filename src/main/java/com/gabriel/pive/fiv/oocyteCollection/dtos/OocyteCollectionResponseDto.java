@@ -3,7 +3,6 @@ package com.gabriel.pive.fiv.oocyteCollection.dtos;
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.dtos.BullSummaryDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
-import com.gabriel.pive.animals.dtos.DonorCattleSummaryDto;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.ProductionSummaryDto;
@@ -30,7 +29,7 @@ public record OocyteCollectionResponseDto( Long id,
 
         return new OocyteCollectionResponseDto(
                 oocyteCollection.getId(),
-                DonorCattleSummaryDto.toDonorCattleSummaryDto(oocyteCollection.getDonorCattle()),
+                DonorCattleDto.toDonorCattleDto(oocyteCollection.getDonorCattle()),
                 BullSummaryDto.toBullSummaryDto(oocyteCollection.getBull()),
                 oocyteCollection.getTotalOocytes(),
                 oocyteCollection.getViableOocytes(),
