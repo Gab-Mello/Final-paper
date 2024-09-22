@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-@Tag(name = "Notification", description = "server send events (notification)")
+@Tag(name = "Notification", description = "Server send events (notification)")
 @RestController
 public class SseController {
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("donor")
-@Tag(name = "Donor", description = "donors management")
+@Tag(name = "Donor", description = "Donors management")
 public class DonorCattleController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class DonorCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.findAll());
     }
 
-    @Operation(summary = "get available donor in fiv", description = "It returns a list with all donor cattle that wasn't used in the specific fiv.")
+    @Operation(summary = "Get available donor in fiv", description = "It returns a list with all donor cattle that wasn't used in the specific fiv.")
     @GetMapping("/{fivId}/available")
     public ResponseEntity<List<DonorCattleDto>> getAvailableReceiversInFiv(@PathVariable Long fivId){
         return ResponseEntity.status(HttpStatus.OK).body(donorCattleService.getAvailableDonorsInFiv(fivId));

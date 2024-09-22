@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("schedule")
-@Tag(name = "Schedule", description = "calendar management")
+@Tag(name = "Schedule", description = "Calendar management")
 public class ScheduleController {
 
     @Autowired

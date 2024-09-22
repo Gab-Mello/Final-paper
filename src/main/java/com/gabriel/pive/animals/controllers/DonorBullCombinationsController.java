@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/donor-bull-combinations")
-@Tag(name = "Donor and bull combinations", description = "get best donors and bulls combinations")
+@Tag(name = "Donor and bull combinations", description = "Get best donors and bulls combinations")
 public class DonorBullCombinationsController {
 
     @Autowired

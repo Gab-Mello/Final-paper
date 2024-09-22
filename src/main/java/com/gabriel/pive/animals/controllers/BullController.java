@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bull")
-@Tag(name = "Bull", description = "bulls management")
+@Tag(name = "Bull", description = "Bulls management")
 public class BullController {
 
     @Autowired

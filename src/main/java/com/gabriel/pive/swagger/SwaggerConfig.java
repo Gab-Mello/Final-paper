@@ -15,8 +15,8 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("PIVE management application API")
-                        .version("1.0.0")
-                        .description("API documentation for the In Vitro Production of Embryos (PIVE) management application in cattle.")
+                        .version("2.0.0")
+                        .description("API documentation for the management application of in vitro embryo production (PIVE) in cattle.")
                         );
 
     }

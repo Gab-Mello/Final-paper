@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("receiver")
-@Tag(name = "Receiver", description = "receiver cattles management")
+@Tag(name = "Receiver", description = "Receiver cattle management")
 public class ReceiverCattleController {
 
     @Autowired
@@ -61,13 +61,13 @@ public class ReceiverCattleController {
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.edit(id,dto));
     }
 
-    @Operation(summary = "get all available receiver cattle", description = "It returns a list with all receiver cattle that doesn't have an embryo")
+    @Operation(summary = "Get all available receiver cattle", description = "It returns a list with all receiver cattle that doesn't have an embryo")
     @GetMapping("/available")
     public ResponseEntity<List<ReceiverCattleDto>> getAvailableReceivers(){
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.getAvailableReceivers());
     }
 
-    @Operation(summary = "get all pregnant receiver cattle", description = "It returns a list with all pregnant receiver cattle")
+    @Operation(summary = "Get all pregnant receiver cattle", description = "It returns a list with all pregnant receiver cattle")
     @GetMapping("/pregnant")
     public ResponseEntity<List<ReceiverCattleDto>> getPregnantReceivers(){
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.getAllPregnantReceivers());
