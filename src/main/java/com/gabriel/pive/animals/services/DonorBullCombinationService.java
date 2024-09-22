@@ -61,7 +61,9 @@ public class DonorBullCombinationService {
                 }
             }
 
-            combinations.sort(Comparator.comparing(DonorBullCombinationDto::averageCombinationEmbryosPercentage).reversed());
+        combinations.sort(Comparator.comparing((DonorBullCombinationDto dto) ->
+                        Double.parseDouble(dto.averageCombinationEmbryosPercentage().replace("%", "").replace(",", ".")))
+                .reversed());
 
-            return combinations;
+        return combinations;
         }}
