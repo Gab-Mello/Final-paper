@@ -22,6 +22,9 @@ import com.gabriel.pive.fiv.EmbryoProduction.repositories.TransferRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
+import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
+import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
+import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +52,9 @@ public class TransferService {
 
     @Autowired
     private FivService fivService;
+
+    @Autowired
+    private PregnancyRepository pregnancyRepository;
 
     public TransferInitialDto newTransfer(TransferInitialDto dto){
         Fiv fiv = fivRepository.findById(dto.fivId()).
@@ -92,6 +98,9 @@ public class TransferService {
                                     donorCattle, bull, EmbryoDestiny.TRANSFERRED);
 
         embryoRepository.save(embryo);
+
+        Pregnancy pregnancy = new Pregnancy(transfer.getDate(), receiverCattle, PregnancyStatus.IN_PROGRESS);
+        pregnancyRepository.save(pregnancy);
 
         fivService.checkToSetFivAsCompleted(fiv);
         fivService.updateEmbryosRegistered(fiv, production);
