@@ -1,6 +1,8 @@
 package com.gabriel.pive.fiv.pregnancy.services;
 
 import com.gabriel.pive.animals.entities.ReceiverCattle;
+import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
+import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
@@ -16,6 +18,9 @@ public class PregnancyService {
 
     @Autowired
     private PregnancyRepository pregnancyRepository;
+
+    @Autowired
+    private EmbryoRepository embryoRepository;
 
     @Scheduled(cron = "@daily")
     public void updateGestationalAge(){
@@ -38,6 +43,9 @@ public class PregnancyService {
             pregnancy.setStatus(PregnancyStatus.PREGNANT);
         } else {
             pregnancy.setStatus(PregnancyStatus.NOT_PREGNANT);
+            Embryo embryo = receiverCattle.getEmbryo();
+            embryo.setEmbryoReceiverCattle(null);
+            embryoRepository.save(embryo);
         }
 
         pregnancyRepository.save(pregnancy);
