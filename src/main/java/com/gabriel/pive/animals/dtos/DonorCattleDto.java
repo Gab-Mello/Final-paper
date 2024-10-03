@@ -21,7 +21,7 @@ public record DonorCattleDto(Long id,
                 name,
                 breed,
                 birth,
-                registrationNumber);
+                registrationNumber.toUpperCase());
     }
 
     public static DonorCattleDto toDonorCattleDto(DonorCattle donorCattle){

@@ -15,7 +15,7 @@ public record BullDto(Long id,
     public Bull toBull(){
         return new Bull(
                 name,
-                registrationNumber);
+                registrationNumber.toUpperCase());
     }
 
     public static BullDto toBullDto(Bull bull){

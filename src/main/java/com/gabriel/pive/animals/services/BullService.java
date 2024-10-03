@@ -80,7 +80,7 @@ public class BullService {
 
     public List<BullDto> findByRegistrationNumber(String registrationNumber){
         return BullDto.toBullDtoList(bullRepository.
-                findByRegistrationNumberStartingWith(registrationNumber));
+                findByRegistrationNumberStartingWith(registrationNumber.toUpperCase()));
     }
 
     public void delete(Long id){

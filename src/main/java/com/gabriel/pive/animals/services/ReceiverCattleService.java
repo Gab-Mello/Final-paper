@@ -37,7 +37,7 @@ public class ReceiverCattleService {
 
     public List<ReceiverCattleDto> findByRegistrationNumber(String registrationNumber){
         return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.
-                findByRegistrationNumberStartingWith(registrationNumber));
+                findByRegistrationNumberStartingWith(registrationNumber.toUpperCase()));
     }
 
     public ReceiverCattleDto findById(Long id){

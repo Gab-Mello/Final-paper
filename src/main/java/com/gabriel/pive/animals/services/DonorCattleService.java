@@ -119,7 +119,7 @@ public class DonorCattleService {
 
     public List<DonorCattleDto> findByRegistrationNumber(String registrationNumber){
         return DonorCattleDto.toDonorCattleDtoList(donorCattleRepository.
-                findByRegistrationNumberStartingWith(registrationNumber));
+                findByRegistrationNumberStartingWith(registrationNumber.toUpperCase()));
     }
 
     public void delete(Long id){

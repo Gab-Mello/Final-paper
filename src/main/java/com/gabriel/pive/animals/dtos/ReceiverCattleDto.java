@@ -17,7 +17,7 @@ public record ReceiverCattleDto(Long id,
         return new ReceiverCattle(
                 name,
                 breed,
-                registrationNumber);
+                registrationNumber.toUpperCase());
     }
 
     public static ReceiverCattleDto toReceiverCattleDto(ReceiverCattle receiverCattle){
