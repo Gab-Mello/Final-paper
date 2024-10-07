@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "Pregnancy", description = "Confirm pregnancy")
+@Tag(name = "Pregnancy", description = "Pregnancy management")
 @RestController
 @RequestMapping("/pregnancy")
 public class PregnancyController {
