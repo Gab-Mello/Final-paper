@@ -8,6 +8,7 @@ import com.gabriel.pive.animals.exceptions.InvalidDateException;
 import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsException;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
+import com.gabriel.pive.fiv.EmbryoProduction.enums.EmbryoDestiny;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
@@ -62,7 +63,6 @@ public class DonorCattleService {
 
     public List<DonorCattleDto> getDonorsWithHighestOocytesCollected() {
         List<DonorCattle> donors = donorCattleRepository.findDonorsWithHighestOocytesCollected();
-
         return DonorCattleDto.toDonorCattleDtoList(donors);
     }
 

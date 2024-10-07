@@ -1,7 +1,6 @@
 package com.gabriel.pive.fiv.EmbryoProduction.dtos;
 
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
-
 import java.text.DecimalFormat;
 
 public record ProductionSummaryDto(Long id,
@@ -10,6 +9,8 @@ public record ProductionSummaryDto(Long id,
                                    Integer embryosRegistered) {
 
     public static ProductionSummaryDto toProductionSummaryDto(EmbryoProduction production){
+
+
         if (production == null){
             return null;
         }

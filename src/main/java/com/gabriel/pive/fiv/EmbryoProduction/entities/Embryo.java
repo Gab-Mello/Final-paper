@@ -36,7 +36,7 @@ public class Embryo {
     private DonorCattle embryoDonorCattle;
 
     @Enumerated(EnumType.STRING)
-    private EmbryoDestiny destiny;
+    public EmbryoDestiny destiny;
 
     @OneToOne
     @JoinColumn(name = "receiver_id")

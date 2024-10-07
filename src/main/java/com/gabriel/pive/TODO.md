@@ -3,4 +3,4 @@
 - [x] Develop endpoint to get only available donors.
 - [x] Return percentage numbers with only 2 cases.
 - [ ] Delete receiver is getting error sometimes.
-- [ ] Develop end point to ge pregnancy in progress.
+- [ ] Develop pregnancy data, like % of pregnancy in production.
