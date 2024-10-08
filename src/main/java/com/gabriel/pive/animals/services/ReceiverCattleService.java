@@ -81,7 +81,7 @@ public class ReceiverCattleService {
         return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.findByPregnancyStatus(PregnancyStatus.PREGNANT));
     }
 
-    public List<ReceiverCattleDto> getAllInProgressPregnantReceivers(){
-        return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.findByPregnancyStatus(PregnancyStatus.IN_PROGRESS));
+    public List<ReceiverCattleDto> getAllInProgressPregnantReceivers(Long fivId){
+        return ReceiverCattleDto.toReceiverCattleDtoList(receiverCattleRepository.findAllInProgressByFivId(fivId));
     }
 }

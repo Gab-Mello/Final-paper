@@ -41,7 +41,8 @@ public class PregnancyService {
 
         if (is_pregnant) {
             pregnancy.setStatus(PregnancyStatus.PREGNANT);
-        } else {
+        }
+        else {
             pregnancy.setStatus(PregnancyStatus.NOT_PREGNANT);
             Embryo embryo = receiverCattle.getEmbryo();
             embryo.setEmbryoReceiverCattle(null);

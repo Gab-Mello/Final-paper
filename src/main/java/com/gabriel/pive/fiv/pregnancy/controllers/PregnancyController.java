@@ -35,11 +35,11 @@ public class PregnancyController {
                 .orElseThrow(ReceiverCattleNotFoundException::new);
 
         pregnancyService.confirmPregnancy(receiverCattle, dto.is_pregnant());
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body("Pregnancy saved.");
     }
 
     @GetMapping("/in-progress-receivers")
-    public ResponseEntity<List<ReceiverCattleDto>> getInProgressPregnantReceivers(){
-        return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.getAllInProgressPregnantReceivers());
+    public ResponseEntity<List<ReceiverCattleDto>> getInProgressPregnantReceivers(@RequestBody Long fivId){
+        return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.getAllInProgressPregnantReceivers(fivId));
     }
 }
