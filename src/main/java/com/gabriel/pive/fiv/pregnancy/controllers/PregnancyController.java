@@ -7,6 +7,7 @@ import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.animals.services.ReceiverCattleService;
 import com.gabriel.pive.fiv.pregnancy.dtos.PregnancyRequestDto;
 import com.gabriel.pive.fiv.pregnancy.services.PregnancyService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ public class PregnancyController {
     @Autowired
     private ReceiverCattleService receiverCattleService;
 
+    @Operation(summary = "Confirm a pregnancy", description = "Confirm or not if the receiver is pregnant.")
     @PostMapping
     public ResponseEntity<?> confirmPregnancy(@RequestBody PregnancyRequestDto dto){
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
@@ -38,8 +40,9 @@ public class PregnancyController {
         return ResponseEntity.status(HttpStatus.OK).body("Pregnancy saved.");
     }
 
-    @GetMapping("/in-progress-receivers")
-    public ResponseEntity<List<ReceiverCattleDto>> getInProgressPregnantReceivers(@RequestBody Long fivId){
+    @Operation(summary = "Find in progress pregnant receivers", description = "It returns a json list with all in-progress pregnant receivers from the specified fiv.")
+    @GetMapping("/in-progress-receivers/{fivId}")
+    public ResponseEntity<List<ReceiverCattleDto>> getInProgressPregnantReceivers(@PathVariable Long fivId){
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.getAllInProgressPregnantReceivers(fivId));
     }
 }
