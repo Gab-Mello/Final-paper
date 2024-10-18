@@ -86,6 +86,7 @@ public class FivService {
             fivRepository.save(fiv);
         }
     }
+
     public List<FivResponseDto> getAllFives(){
         return FivResponseDto.toFivResponseDtoList(fivRepository.findAllByOrderByIdDesc());
     }
@@ -116,7 +117,5 @@ public class FivService {
     public List<FivResponseDto> filterFivesByDonor(Long donorId){
         return FivResponseDto.toFivResponseDtoList(fivRepository.findByOocyteCollections_DonorCattle_IdOrderByIdDesc(donorId));
     }
-
-
 
 }

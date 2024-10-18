@@ -126,6 +126,4 @@ public class OocyteCollectionService {
         return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
 
-
-
 }
