@@ -55,6 +55,7 @@ public class EmbryoProduction {
         this.oocyteCollection = oocyteCollection;
         this.totalEmbryos = totalEmbryos;
         this.embryosRegistered = 0;
+        this.totalPregnancy = 0;
     }
 
 }

@@ -4,4 +4,5 @@
 - [x] Return percentage numbers with only 2 cases.
 - [x] Finish in-progress-receivers.
 - [ ] Delete receiver is getting error sometimes.
-- [ ] Develop pregnancy data, like % of pregnancy in production.
+- [ ] Finish the development of pregnancy data, like % of pregnancy in production.
+- [ ] Develop the number of embryos transferred, frozen and discarded is correct.

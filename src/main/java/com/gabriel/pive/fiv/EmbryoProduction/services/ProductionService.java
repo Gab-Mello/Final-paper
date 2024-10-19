@@ -91,10 +91,5 @@ public class ProductionService {
         return ProductionResponseDto.toProductionResponseDto(embryoProduction);
     }
 
-    public void updatePregnancyData(EmbryoProduction production){
-        Fiv fiv = production.getOocyteCollection().getFiv();
-        Float productionPregnancyPercentage = (float) production.getTotalPregnancy() / production.getTotalEmbryos();
-
-    }
 
 }

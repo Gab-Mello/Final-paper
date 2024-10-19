@@ -4,10 +4,13 @@ import com.gabriel.pive.animals.entities.ReceiverCattle;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
+import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.services.ProductionService;
+import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
+import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,13 +28,35 @@ public class PregnancyService {
     private EmbryoRepository embryoRepository;
 
     @Autowired
-    private ProductionService productionService;
+    private ProductionRepository productionRepository;
+
+    @Autowired
+    private FivRepository fivRepository;
 
     @Scheduled(cron = "@daily")
     public void updateGestationalAge(){
         for (Pregnancy pregnancy : pregnancyRepository.findAll()){
             pregnancy.setGestationalAge(calculateGestationalAge(pregnancy.getTransferDay()));
         }
+    }
+
+    public void updatePregnancyData(EmbryoProduction production){
+        Fiv fiv = production.getOocyteCollection().getFiv();
+
+        Integer productionTotalPregnancy = production.getTotalPregnancy() + 1;
+        Float productionPregnancyPercentage = (float) productionTotalPregnancy / production.getTransferredEmbryosNumber() * 100;
+
+        production.setTotalPregnancy(productionTotalPregnancy);
+        production.setPregnancyPercentage(productionPregnancyPercentage);
+        productionRepository.save(production);
+
+        Integer fivTotalPregnancy = fiv.getFivTotalPregnancy() + 1;
+        Float fivPregnancyPercentage = (float) fivTotalPregnancy / fiv.getTotalEmbryos() * 100;
+
+        fiv.setFivTotalPregnancy(fivTotalPregnancy);
+        fiv.setFivPregnancyPercentage(fivPregnancyPercentage);
+        fivRepository.save(fiv);
+
     }
 
     private Integer calculateGestationalAge(LocalDate transferDay) {
@@ -47,7 +72,7 @@ public class PregnancyService {
 
         if (is_pregnant) {
             pregnancy.setStatus(PregnancyStatus.PREGNANT);
-            productionService.updatePregnancyData(production);
+            updatePregnancyData(production);
         }
 
         else {
