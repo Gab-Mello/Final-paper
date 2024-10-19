@@ -51,7 +51,7 @@ public class PregnancyService {
         productionRepository.save(production);
 
         Integer fivTotalPregnancy = fiv.getFivTotalPregnancy() + 1;
-        Float fivPregnancyPercentage = (float) fivTotalPregnancy / fiv.getTotalEmbryos() * 100;
+        Float fivPregnancyPercentage = (float) fivTotalPregnancy / fiv.getFivTransferredEmbryosNumber() * 100;
 
         fiv.setFivTotalPregnancy(fivTotalPregnancy);
         fiv.setFivPregnancyPercentage(fivPregnancyPercentage);

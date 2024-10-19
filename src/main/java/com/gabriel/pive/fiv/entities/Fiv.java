@@ -61,6 +61,12 @@ public class Fiv {
 
     private Integer embryosRegistered;
 
+    private Integer fivFrozenEmbryosNumber;
+
+    private Integer fivDiscardedEmbryosNumber;
+
+    private Integer fivTransferredEmbryosNumber;
+
     private Integer fivTotalPregnancy;
 
     private Float fivPregnancyPercentage;
@@ -79,6 +85,9 @@ public class Fiv {
         this.totalEmbryos = 0;
         this.embryosRegistered = 0;
         this.fivTotalPregnancy = 0;
+        this.fivTransferredEmbryosNumber = 0;
+        this.fivDiscardedEmbryosNumber = 0;
+        this.fivFrozenEmbryosNumber = 0;
     }
 
     public void updateTotalOocytesCollected(Integer oocytes){
