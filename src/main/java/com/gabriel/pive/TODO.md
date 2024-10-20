@@ -5,4 +5,4 @@
 - [x] Finish in-progress-receivers.
 - [ ] Delete receiver is getting error sometimes.
 - [ ] Finish the development of pregnancy data, like % of pregnancy in production.
-- [ ] Develop the number of embryos transferred, frozen and discarded is correct.
+- [ ] Develop the number of frozen and discarded embryos in production and fiv.
