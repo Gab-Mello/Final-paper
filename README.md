@@ -8,4 +8,3 @@ The backend was built with Java and Spring Boot, using a RESTful API documented 
 
 This project has been selected to participate in MOSTRATEC, the largest science and technology fair in Latin America.
 
-Documentation: <a> http://18.188.243.197:8080/swagger-ui/index.html#/ </a>
