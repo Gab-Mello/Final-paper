@@ -78,6 +78,7 @@ public class TransferService {
         Fiv fiv = production.getOocyteCollection().getFiv();
 
         if (fiv.getStatus() == FivStatusEnum.COMPLETED){
+            System.out.println("teste");
             throw new AllEmbryosAlreadyRegisteredException();
         }
 
