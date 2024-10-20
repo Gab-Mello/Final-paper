@@ -101,5 +101,21 @@ public class ProductionService {
         productionRepository.save(production);
     }
 
+    public void updateFrozenOrDiscardedEmbryosNumber(EmbryoProduction production, Integer number, Boolean is_frozen){
+        Fiv fiv = production.getOocyteCollection().getFiv();
+
+        if (is_frozen){
+            production.setFrozenEmbryosNumber(production.getFrozenEmbryosNumber() + number);
+            fiv.setFivFrozenEmbryosNumber(fiv.getFivFrozenEmbryosNumber() + number);
+        }
+        else {
+            production.setDiscardedEmbryosNumber(production.getDiscardedEmbryosNumber() + number);
+            fiv.setFivDiscardedEmbryosNumber(fiv.getFivDiscardedEmbryosNumber() + number);
+        }
+
+        productionRepository.save(production);
+        fivRepository.save(fiv);
+    }
+
 
 }

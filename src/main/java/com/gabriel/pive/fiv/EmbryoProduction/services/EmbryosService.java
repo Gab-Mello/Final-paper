@@ -55,6 +55,7 @@ public class EmbryosService {
         Integer embryosQuantity = dto.embryosQuantity();
 
         fivService.updateFivWithFrozenOrDiscardedEmbryos(production,embryosQuantity);
+        productionService.updateFrozenOrDiscardedEmbryosNumber(production, embryosQuantity, true);
 
         DonorCattle donorCattle = production.getOocyteCollection().getDonorCattle();
         Bull bull = production.getOocyteCollection().getBull();
@@ -75,20 +76,9 @@ public class EmbryosService {
         Integer embryosQuantity = dto.embryosQuantity();
 
         fivService.updateFivWithFrozenOrDiscardedEmbryos(production,embryosQuantity);
+        productionService.updateFrozenOrDiscardedEmbryosNumber(production, embryosQuantity, false);
     }
 
-//    public EmbryoResponseDto editEmbryo(Long id, EmbryoRequestDto dto){
-//        Embryo embryo = embryoRepository.findById(id).
-//                orElseThrow(EmbryoNotFoundException::new);
-//
-//        ReceiverCattle receiverCattle = receiverCattleRepository.findById(dto.receiverCattleId())
-//                .orElseThrow(ReceiverCattleNotFoundException::new);
-//
-//        embryo.setEmbryoReceiverCattle(receiverCattle);
-//        embryo.setFrozen(dto.frozen());
-//
-//        return EmbryoResponseDto.toEmbryoResponseDto(embryoRepository.save(embryo));
-//    }
 
     public List<EmbryoResponseDto> getAllEmbryos(){
         return EmbryoResponseDto.toEmbryoResponseDtoList(embryoRepository.findAll());
