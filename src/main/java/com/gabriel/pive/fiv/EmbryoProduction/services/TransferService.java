@@ -56,6 +56,9 @@ public class TransferService {
     @Autowired
     private PregnancyRepository pregnancyRepository;
 
+    @Autowired
+    private ProductionService productionService;
+
     public TransferInitialDto newTransfer(TransferInitialDto dto){
         Fiv fiv = fivRepository.findById(dto.fivId()).
                 orElseThrow(FivNotFoundException::new);
@@ -101,6 +104,8 @@ public class TransferService {
 
         Pregnancy pregnancy = new Pregnancy(transfer.getDate(), receiverCattle, PregnancyStatus.IN_PROGRESS);
         pregnancyRepository.save(pregnancy);
+
+        productionService.updateTransferredEmbryosNumber(production);
 
         fivService.checkToSetFivAsCompleted(fiv);
         fivService.updateEmbryosRegistered(fiv, production);

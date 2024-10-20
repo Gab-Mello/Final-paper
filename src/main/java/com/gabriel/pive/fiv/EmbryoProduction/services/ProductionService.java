@@ -91,5 +91,15 @@ public class ProductionService {
         return ProductionResponseDto.toProductionResponseDto(embryoProduction);
     }
 
+    public void updateTransferredEmbryosNumber(EmbryoProduction production){
+        production.setTransferredEmbryosNumber(production.getTransferredEmbryosNumber() + 1);
+
+        Fiv fiv = production.getOocyteCollection().getFiv();
+        fiv.setFivTransferredEmbryosNumber(fiv.getFivTransferredEmbryosNumber() + 1);
+
+        fivRepository.save(fiv);
+        productionRepository.save(production);
+    }
+
 
 }

@@ -56,6 +56,9 @@ public class EmbryoProduction {
         this.totalEmbryos = totalEmbryos;
         this.embryosRegistered = 0;
         this.totalPregnancy = 0;
+        this.transferredEmbryosNumber = 0;
+        this.frozenEmbryosNumber = 0;
+        this.discardedEmbryosNumber = 0;
     }
 
 }

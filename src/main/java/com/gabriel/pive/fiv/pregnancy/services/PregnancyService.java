@@ -41,7 +41,6 @@ public class PregnancyService {
     }
 
     public void updatePregnancyData(EmbryoProduction production){
-        Fiv fiv = production.getOocyteCollection().getFiv();
 
         Integer productionTotalPregnancy = production.getTotalPregnancy() + 1;
         Float productionPregnancyPercentage = (float) productionTotalPregnancy / production.getTransferredEmbryosNumber() * 100;
@@ -50,6 +49,7 @@ public class PregnancyService {
         production.setPregnancyPercentage(productionPregnancyPercentage);
         productionRepository.save(production);
 
+        Fiv fiv = production.getOocyteCollection().getFiv();
         Integer fivTotalPregnancy = fiv.getFivTotalPregnancy() + 1;
         Float fivPregnancyPercentage = (float) fivTotalPregnancy / fiv.getFivTransferredEmbryosNumber() * 100;
 
