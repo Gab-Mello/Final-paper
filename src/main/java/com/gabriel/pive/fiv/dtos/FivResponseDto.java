@@ -16,20 +16,18 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                              String TE, List<OocyteCollectionResponseDto> oocyteCollections,
                              Integer fivTotalOocytesCollected, Integer fivTotalViableOocytesCollected,
                              Integer fivTotalEmbryos, String fivEmbryosPercentage,
-                             Integer embryosRegistered) {
+                             Integer fivEmbryosRegistered,
+                             Integer fivNumberTransferredEmbryos,
+                             Integer fivNumberFrozenEmbryos,
+                             Integer fivNumberDiscardedEmbryos,
+                             Integer fivNumberPregnancies,
+                             String fivPregnancyPercentage) {
 
 
     public static FivResponseDto toFivResponseDto(Fiv fiv){
-        Float percentage = fiv.getEmbryosPercentage();
-        String formattedPercentage;
 
-        if (percentage == null || percentage == 0){
-            formattedPercentage = "0.00%";
-        }
-        else{
-            DecimalFormat df = new DecimalFormat("#.00");
-            formattedPercentage = df.format(percentage) + "%";
-        }
+        String formattedEmbryosPercentage = formatPercentage(fiv.getEmbryosPercentage());
+        String formattedPregnancyPercentage = formatPercentage(fiv.getFivPregnancyPercentage());
 
         return new FivResponseDto(
                 fiv.getId(),
@@ -45,8 +43,13 @@ public record FivResponseDto(Long id, FivStatusEnum status,
                 fiv.getTotalOocytesCollected(),
                 fiv.getTotalViableOocytesCollected(),
                 fiv.getTotalEmbryos(),
-                formattedPercentage,
-                fiv.getEmbryosRegistered()
+                formattedEmbryosPercentage,
+                fiv.getEmbryosRegistered(),
+                fiv.getFivTransferredEmbryosNumber(),
+                fiv.getFivFrozenEmbryosNumber(),
+                fiv.getFivDiscardedEmbryosNumber(),
+                fiv.getFivTotalPregnancy(),
+                formattedPregnancyPercentage
 
         );
     }
@@ -54,5 +57,15 @@ public record FivResponseDto(Long id, FivStatusEnum status,
     public static List<FivResponseDto> toFivResponseDtoList(List<Fiv> list){
         List<FivResponseDto> listDto = list.stream().map(fiv -> toFivResponseDto(fiv)).toList();
         return listDto;
+    }
+
+    public static String formatPercentage(Float percentage){
+        if (percentage == null || percentage == 0){
+            return  "0.00%";
+        }
+        else{
+            DecimalFormat df = new DecimalFormat("#.00");
+            return df.format(percentage) + "%";
+        }
     }
 }

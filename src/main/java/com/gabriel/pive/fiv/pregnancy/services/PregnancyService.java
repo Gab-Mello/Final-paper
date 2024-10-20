@@ -9,6 +9,7 @@ import com.gabriel.pive.fiv.EmbryoProduction.services.ProductionService;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
+import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,24 @@ public class PregnancyService {
         }
     }
 
-    public void updatePregnancyData(EmbryoProduction production){
+    public void updatePregnancyData(EmbryoProduction production, Boolean is_pregnant){
+        Fiv fiv = production.getOocyteCollection().getFiv();
 
-        Integer productionTotalPregnancy = production.getTotalPregnancy() + 1;
+        Integer productionTotalPregnancy = production.getTotalPregnancy();
+        Integer fivTotalPregnancy = fiv.getFivTotalPregnancy();
+
+        if (is_pregnant){
+            productionTotalPregnancy = production.getTotalPregnancy() + 1;
+            fivTotalPregnancy = fiv.getFivTotalPregnancy() + 1;
+        }
+
         Float productionPregnancyPercentage = (float) productionTotalPregnancy / production.getTransferredEmbryosNumber() * 100;
 
         production.setTotalPregnancy(productionTotalPregnancy);
         production.setPregnancyPercentage(productionPregnancyPercentage);
         productionRepository.save(production);
 
-        Fiv fiv = production.getOocyteCollection().getFiv();
-        Integer fivTotalPregnancy = fiv.getFivTotalPregnancy() + 1;
+
         Float fivPregnancyPercentage = (float) fivTotalPregnancy / fiv.getFivTransferredEmbryosNumber() * 100;
 
         fiv.setFivTotalPregnancy(fivTotalPregnancy);
@@ -67,12 +75,17 @@ public class PregnancyService {
     }
 
     public void confirmPregnancy(ReceiverCattle receiverCattle, boolean is_pregnant){
+
+        if (receiverCattle.getEmbryo() == null){
+            throw new ReceiverCattleDoesNotHaveAnEmbryoException();
+        }
+
         Pregnancy pregnancy = receiverCattle.getPregnancy();
         EmbryoProduction production = receiverCattle.getEmbryo().getEmbryoEmbryoProduction();
 
         if (is_pregnant) {
             pregnancy.setStatus(PregnancyStatus.PREGNANT);
-            updatePregnancyData(production);
+
         }
 
         else {
@@ -82,6 +95,7 @@ public class PregnancyService {
             embryoRepository.save(embryo);
         }
 
+        updatePregnancyData(production, is_pregnant);
         pregnancyRepository.save(pregnancy);
     }
     }

@@ -7,6 +7,7 @@ import com.gabriel.pive.fiv.oocyteCollection.exceptions.DonorAlreadyCollectedExc
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
+import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -114,5 +115,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidNumberOfEmbryosException.class)
     private ResponseEntity<String> invalidNumberOfEmbryos(InvalidNumberOfEmbryosException exception){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(ReceiverCattleDoesNotHaveAnEmbryoException.class)
+    private ResponseEntity<String> receiverDoesNotHaveAnEmbryo(ReceiverCattleDoesNotHaveAnEmbryoException exception){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 }
