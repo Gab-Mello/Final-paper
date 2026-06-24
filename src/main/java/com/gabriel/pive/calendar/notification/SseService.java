@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -44,25 +45,31 @@ public class SseService {
     }
 
     @Scheduled(fixedDelay = 24, timeUnit = TimeUnit.HOURS)
+    @Transactional
     public void sendNotification(){
 
         List<Schedule> pendingNotifications = scheduleRepository.findByDateAndProcedureStatus(LocalDate.now(), ProcedureStatus.PENDING);
 
         for (Schedule notification : pendingNotifications){
+            boolean delivered = false;
             for (SseEmitter emitter : emitters){
-                    try{
-                        emitter.send(SseEmitter.event().name("notification").data(notification.getProcedureType()));
-                        log.debug("Sent SSE notification for schedule id={} type={}",
-                                notification.getId(), notification.getProcedureType());
-                        notification.setProcedureStatus(ProcedureStatus.SUCCESS);
-                        scheduleRepository.save(notification);
-                    }catch (IOException e){
-                        log.warn("Dropping unreachable SSE emitter while sending schedule id={}: {}",
-                                notification.getId(), e.getMessage());
-                        emitters.remove(emitter);
-                    }
+                try {
+                    emitter.send(SseEmitter.event().name("notification").data(notification.getProcedureType()));
+                    log.debug("Sent SSE notification for schedule id={} type={}",
+                            notification.getId(), notification.getProcedureType());
+                    delivered = true;
+                } catch (IOException e) {
+                    log.warn("Dropping unreachable SSE emitter while sending schedule id={}: {}",
+                            notification.getId(), e.getMessage());
+                    emitters.remove(emitter);
+                }
             }
-
+            if (delivered) {
+                notification.setProcedureStatus(ProcedureStatus.SUCCESS);
+                // Dirty-checking flushes the change at transaction commit; no
+                // explicit save() needed. Schedules where no emitter received
+                // the event stay PENDING and will be retried on the next run.
+            }
         }
     }
 }
