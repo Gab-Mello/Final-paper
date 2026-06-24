@@ -12,7 +12,7 @@ import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,19 +21,14 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PregnancyService {
 
-    @Autowired
-    private PregnancyRepository pregnancyRepository;
-
-    @Autowired
-    private EmbryoRepository embryoRepository;
-
-    @Autowired
-    private ProductionRepository productionRepository;
-
-    @Autowired
-    private FivRepository fivRepository;
+    private final PregnancyRepository pregnancyRepository;
+    private final EmbryoRepository embryoRepository;
+    private final ProductionRepository productionRepository;
+    private final FivRepository fivRepository;
 
     @Scheduled(cron = "@daily")
     @Transactional
@@ -43,6 +38,7 @@ public class PregnancyService {
         }
     }
 
+    @Transactional
     public void updatePregnancyData(EmbryoProduction production, Boolean is_pregnant){
         Fiv fiv = production.getOocyteCollection().getFiv();
 
@@ -89,6 +85,7 @@ public class PregnancyService {
         return (int) ChronoUnit.DAYS.between(transferDay, LocalDate.now());
     }
 
+    @Transactional
     public void confirmPregnancy(ReceiverCattle receiverCattle, boolean is_pregnant){
 
         if (receiverCattle.getEmbryo() == null){
