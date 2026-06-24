@@ -27,38 +27,27 @@ import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TransferService {
 
-    @Autowired
-    private TransferRepository transferRepository;
+    private final TransferRepository transferRepository;
+    private final FivRepository fivRepository;
+    private final ReceiverCattleRepository receiverCattleRepository;
+    private final ProductionRepository productionRepository;
+    private final EmbryoRepository embryoRepository;
+    private final FivService fivService;
+    private final PregnancyRepository pregnancyRepository;
+    private final ProductionService productionService;
 
-    @Autowired
-    private FivRepository fivRepository;
-
-    @Autowired
-    private ReceiverCattleRepository receiverCattleRepository;
-
-    @Autowired
-    private ProductionRepository productionRepository;
-
-    @Autowired
-    private EmbryoRepository embryoRepository;
-
-    @Autowired
-    private FivService fivService;
-
-    @Autowired
-    private PregnancyRepository pregnancyRepository;
-
-    @Autowired
-    private ProductionService productionService;
-
+    @Transactional
     public TransferInitialDto newTransfer(TransferInitialDto dto){
         Fiv fiv = fivRepository.findById(dto.fivId()).
                 orElseThrow(FivNotFoundException::new);
@@ -70,6 +59,7 @@ public class TransferService {
         return TransferResponseDto.toTrasnferResponseDtoList(transferRepository.findByFivTransferId(fivId));
     }
 
+    @Transactional
     public TransferResponseDto saveTransferData(TransferDataDto dto){
 
         EmbryoProduction production = productionRepository.findById(dto.productionId())

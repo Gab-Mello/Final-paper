@@ -3,11 +3,12 @@ package com.gabriel.pive.fiv.EmbryoProduction.dtos;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoTransfer;
 import com.gabriel.pive.fiv.entities.Fiv;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public record TransferInitialDto(Long fivId,
+public record TransferInitialDto(@NotNull(message = "Id da fiv em branco.") Long fivId,
                                  LocalDate date,
                                  String responsible,
                                  String farm) {
