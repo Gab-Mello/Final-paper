@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(FivAlreadyHasOocyteCollectionException.class)
-    private ResponseEntity<String> embryoNotFound(FivAlreadyHasOocyteCollectionException exception){
+    private ResponseEntity<String> fivAlreadyHasOocyteCollection(FivAlreadyHasOocyteCollectionException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 
