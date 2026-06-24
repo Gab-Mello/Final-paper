@@ -45,4 +45,5 @@ src/main/resources/application.properties
 
 # Local-only refactoring study notes (educational, not source of truth)
 REFACTORING_NOTES.md
+refactoring-notes/
 
