@@ -14,18 +14,21 @@ import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BullService {
 
     private final BullRepository bullRepository;
     private final EmbryoRepository embryoRepository;
     private final OocyteCollectionRepository oocyteCollectionRepository;
 
+    @Transactional
     public BullDto create(BullDto dto){
 
         if (bullRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
@@ -45,6 +48,7 @@ public class BullService {
         return BullDto.toBullDtoList(bulls);
     }
 
+    @Transactional
     public void updateAverageViableEmbryos(Bull bull) {
         List<OocyteCollection> oocyteCollections = bull.getOocyteCollections();
 
@@ -79,6 +83,7 @@ public class BullService {
                 findByRegistrationNumberStartingWith(registrationNumber.toUpperCase()));
     }
 
+    @Transactional
     public void delete(Long id){
         Bull bull = bullRepository.findById(id)
                 .orElseThrow(BullNotFoundException::new);
@@ -98,6 +103,7 @@ public class BullService {
         bullRepository.deleteById(id);
     }
 
+    @Transactional
     public BullDto edit(Long id, BullDto dto){
         Bull bull = bullRepository.findById(id)
                 .orElseThrow(BullNotFoundException::new);
