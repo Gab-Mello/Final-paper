@@ -45,7 +45,10 @@ public class FivService {
 
     public void updateTotalEmbryos(Fiv fiv, Integer numberEmbryos){
         fiv.setTotalEmbryos(fiv.getTotalEmbryos() + numberEmbryos);
-        Float embryosPercentage =  ((float)fiv.getTotalEmbryos() / fiv.getTotalViableOocytesCollected()) * 100;
+        Integer viableOocytes = fiv.getTotalViableOocytesCollected();
+        Float embryosPercentage = (viableOocytes == null || viableOocytes == 0)
+                ? 0.0f
+                : ((float) fiv.getTotalEmbryos() / viableOocytes) * 100;
         fiv.setEmbryosPercentage(embryosPercentage);
         fivRepository.save(fiv);
     }
