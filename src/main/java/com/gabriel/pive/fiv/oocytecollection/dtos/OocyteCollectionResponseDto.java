@@ -42,24 +42,4 @@ public record OocyteCollectionResponseDto( Long id,
         List<OocyteCollectionResponseDto> listDto = list.stream().map(collection -> toOocyteCollectionDto(collection)).toList();
         return listDto;
     }
-
-//    public static OocyteCollection editMapper(OocyteCollection oocyteCollection, OocyteCollectionRequestDto dto,
-//                                                         DonorCattle donorCattle,
-//                                                         Bull bull){
-//        oocyteCollection.getFiv().setDate(dto.date());
-//        oocyteCollection.setFarm(dto.farm());
-//        oocyteCollection.setLaboratory(dto.laboratory());
-//        oocyteCollection.setClient(dto.client());
-//        oocyteCollection.setVeterinarian(dto.veterinarian());
-//        oocyteCollection.setTechnical(dto.technical());
-//        oocyteCollection.setDonorCattle(donorCattle);
-//        oocyteCollection.setBull(bull);
-//        oocyteCollection.setTotalOocytes(dto.totalOocytes());
-//        oocyteCollection.setViableOocytes(dto.viableOocytes());
-//        oocyteCollection.setNonViableOocytes(dto.totalOocytes() - dto.viableOocytes());
-//
-//        return oocyteCollection;
-//    }
-
-
 }

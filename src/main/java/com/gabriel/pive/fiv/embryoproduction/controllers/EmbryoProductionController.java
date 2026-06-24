@@ -39,11 +39,4 @@ public class EmbryoProductionController {
     public ResponseEntity<ProductionResponseDto> getProductionById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(productionService.getProductionById(id));
     }
-
-//    @Operation(summary = "edit a cultivation by Id", description = "It returns a json with the cultivation edited")
-//    @PutMapping("/{id}")
-//    public ResponseEntity<?> editCultivation(@PathVariable Long id, @Valid @RequestBody ProductionRequestDto dto){
-//        CultivationResponseDto cultivation = productionService.editCultivation(id,dto);
-//        return ResponseEntity.status(HttpStatus.OK).body(cultivation);
-//    }
 }
