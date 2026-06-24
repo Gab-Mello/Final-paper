@@ -45,7 +45,6 @@ REFACTORING_NOTES.md
 
 # --- Project docs not needed inside the build ---
 HELP.md
-CHANGELOG.md
 README.md
 docker/
 
