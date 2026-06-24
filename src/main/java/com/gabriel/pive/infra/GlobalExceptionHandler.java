@@ -117,14 +117,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OocyteCollectionNotFoundException.class)
     public ResponseEntity<Object> oocyteCollectionNotFound(OocyteCollectionNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException exception, HttpServletRequest request) {
-        FieldError fieldError = (FieldError) exception.getBindingResult().getAllErrors().get(0);
-        String errorMessage = fieldError.getDefaultMessage();
-        return buildBody(HttpStatus.CONFLICT, errorMessage, request);
+        String errorMessage = exception.getBindingResult().getAllErrors().stream()
+                .map(error -> error instanceof FieldError fieldError
+                        ? fieldError.getField() + ": " + fieldError.getDefaultMessage()
+                        : error.getDefaultMessage())
+                .collect(java.util.stream.Collectors.joining("; "));
+        return buildBody(HttpStatus.BAD_REQUEST, errorMessage, request);
     }
 
     @ExceptionHandler(ViableOocytesBiggerThanTotalException.class)
@@ -149,7 +152,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidNumberOfEmbryosException.class)
     public ResponseEntity<Object> invalidNumberOfEmbryos(InvalidNumberOfEmbryosException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
+        return buildBody(HttpStatus.BAD_REQUEST, exception.getMessage(), request);
     }
 
     @ExceptionHandler(ReceiverCattleDoesNotHaveAnEmbryoException.class)
