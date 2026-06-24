@@ -87,16 +87,15 @@ public class BullService {
         Bull bull = bullRepository.findById(id)
                 .orElseThrow(BullNotFoundException::new);
 
+        // Dirty-checking flushes both loops at commit; no explicit save() needed.
         List<Embryo> embryos = embryoRepository.findAllByEmbryoBull(bull);
         for (Embryo embryo : embryos) {
             embryo.setEmbryoBull(null);
-            embryoRepository.save(embryo);
         }
 
         List<OocyteCollection> oocyteCollections = oocyteCollectionRepository.findAllByBull(bull);
         for (OocyteCollection collection : oocyteCollections) {
             collection.setBull(null);
-            oocyteCollectionRepository.save(collection);
         }
 
         bullRepository.deleteById(id);

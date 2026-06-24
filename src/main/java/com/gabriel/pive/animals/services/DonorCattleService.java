@@ -126,16 +126,15 @@ public class DonorCattleService {
         DonorCattle donorCattle = donorCattleRepository.findById(id)
                         .orElseThrow(DonorCattleNotFoundException::new);
 
+        // Dirty-checking flushes both loops at commit; no explicit save() needed.
         List<Embryo> embryos = embryoRepository.findAllByEmbryoDonorCattle(donorCattle);
         for (Embryo embryo : embryos){
             embryo.setEmbryoDonorCattle(null);
-            embryoRepository.save(embryo);
         }
 
         List<OocyteCollection> oocyteCollections = oocyteCollectionRepository.findAllByDonorCattle(donorCattle);
         for (OocyteCollection collection : oocyteCollections) {
             collection.setDonorCattle(null);
-            oocyteCollectionRepository.save(collection);
         }
 
         donorCattleRepository.deleteById(id);
