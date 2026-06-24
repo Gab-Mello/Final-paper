@@ -54,19 +54,32 @@ public class PregnancyService {
             fivTotalPregnancy = fiv.getFivTotalPregnancy() + 1;
         }
 
-        Float productionPregnancyPercentage = (float) productionTotalPregnancy / production.getTransferredEmbryosNumber() * 100;
+        Float productionPregnancyPercentage = percentage(productionTotalPregnancy, production.getTransferredEmbryosNumber());
 
         production.setTotalPregnancy(productionTotalPregnancy);
         production.setPregnancyPercentage(productionPregnancyPercentage);
         productionRepository.save(production);
 
 
-        Float fivPregnancyPercentage = (float) fivTotalPregnancy / fiv.getFivTransferredEmbryosNumber() * 100;
+        Float fivPregnancyPercentage = percentage(fivTotalPregnancy, fiv.getFivTransferredEmbryosNumber());
 
         fiv.setFivTotalPregnancy(fivTotalPregnancy);
         fiv.setFivPregnancyPercentage(fivPregnancyPercentage);
         fivRepository.save(fiv);
 
+    }
+
+    /**
+     * Returns {@code (numerator / denominator) * 100} as a {@link Float}, or
+     * {@code 0.0f} when {@code denominator} is null or zero. Used by pregnancy-rate
+     * calculations where "no transferred embryos" must surface as 0% rather than
+     * {@code NaN} / {@code Infinity}.
+     */
+    private static Float percentage(Integer numerator, Integer denominator){
+        if (denominator == null || denominator == 0){
+            return 0.0f;
+        }
+        return (float) numerator / denominator * 100;
     }
 
     private Integer calculateGestationalAge(LocalDate transferDay) {
