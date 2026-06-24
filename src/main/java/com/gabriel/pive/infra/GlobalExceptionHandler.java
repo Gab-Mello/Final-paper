@@ -8,7 +8,10 @@ import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteColle
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
 import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -23,6 +26,8 @@ import java.time.Instant;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * Gate for the error response body shape. When {@code true} (the default),
@@ -158,5 +163,28 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ReceiverCattleDoesNotHaveAnEmbryoException.class)
     public ResponseEntity<Object> receiverDoesNotHaveAnEmbryo(ReceiverCattleDoesNotHaveAnEmbryoException exception, HttpServletRequest request){
         return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
+    }
+
+    /**
+     * JPA's {@link EntityNotFoundException} is thrown when code reaches into a lazy
+     * proxy whose underlying row no longer exists. Map it to 404 so controllers
+     * don't need their own try/catch blocks (the {@code ScheduleController}'s
+     * existing try/catch can be removed in a later phase).
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> entityNotFound(EntityNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
+    }
+
+    /**
+     * Last-resort catch-all. Any exception that no other handler claimed lands
+     * here. We log the full stack at ERROR (server-side observability) and
+     * respond with a safe, generic 500 body — never leaking implementation
+     * details such as class names, file paths or partial stack traces to clients.
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> unexpected(Exception exception, HttpServletRequest request){
+        log.error("Unhandled exception on {} {}", request.getMethod(), request.getRequestURI(), exception);
+        return buildBody(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error.", request);
     }
 }
