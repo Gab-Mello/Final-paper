@@ -8,20 +8,21 @@ import com.gabriel.pive.animals.entities.ReceiverCattle;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.pregnancy.enums.PregnancyStatus;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ReceiverCattleService {
 
-    @Autowired
-    private ReceiverCattleRepository receiverCattleRepository;
+    private final ReceiverCattleRepository receiverCattleRepository;
+    private final EmbryoRepository embryoRepository;
 
-    @Autowired
-    private EmbryoRepository embryoRepository;
-
+    @Transactional
     public ReceiverCattleDto create(ReceiverCattleDto dto){
         if (receiverCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
             throw new RegistrationNumberAlreadyExistsException("Uma receptora com este número de registro já existe.");
@@ -46,6 +47,7 @@ public class ReceiverCattleService {
         return ReceiverCattleDto.toReceiverCattleDto(receiverCattle);
     }
 
+    @Transactional
     public void delete(Long id){
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
                 .orElseThrow(ReceiverCattleNotFoundException::new);
@@ -59,6 +61,7 @@ public class ReceiverCattleService {
         receiverCattleRepository.deleteById(id);
     }
 
+    @Transactional
     public ReceiverCattleDto edit(Long id, ReceiverCattleDto dto){
         ReceiverCattle receiverCattle = receiverCattleRepository.findById(id)
                 .orElseThrow(ReceiverCattleNotFoundException::new);
