@@ -15,9 +15,7 @@ public interface DonorCattleRepository extends JpaRepository<DonorCattle,Long> {
     List<DonorCattle> findByRegistrationNumberStartingWith(String registrationNumber);
 
     @Query("SELECT d FROM DonorCattle d WHERE d.id NOT IN " +
-            "(SELECT o.donorCattle.id FROM OocyteCollection o WHERE o.fiv.id = :fivId) " +
-            "OR d.id NOT IN " +
-            "(SELECT o.donorCattle.id FROM OocyteCollection o)")
+            "(SELECT o.donorCattle.id FROM OocyteCollection o WHERE o.fiv.id = :fivId)")
     List<DonorCattle> findDonorsNotUsedInFiv(@Param("fivId") Long fivId);
 
 
