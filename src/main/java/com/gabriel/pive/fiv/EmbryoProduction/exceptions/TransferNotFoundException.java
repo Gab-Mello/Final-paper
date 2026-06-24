@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.EmbryoProduction.exceptions;
 
-public class TransferNotFoundException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class TransferNotFoundException extends BusinessException {
 
     public TransferNotFoundException(){
-        super("Transferência de embriões não encontrada.");
+        super(HttpStatus.NOT_FOUND, "Transferência de embriões não encontrada.");
     }
 }

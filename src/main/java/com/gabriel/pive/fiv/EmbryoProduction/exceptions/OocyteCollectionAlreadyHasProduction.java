@@ -1,10 +1,11 @@
 package com.gabriel.pive.fiv.EmbryoProduction.exceptions;
 
-public class OocyteCollectionAlreadyHasProduction extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class OocyteCollectionAlreadyHasProduction extends BusinessException {
 
     public OocyteCollectionAlreadyHasProduction(){
-        super(
-                "Esta coleta já possui uma produção de embriões registrada."
-        );
+        super(HttpStatus.CONFLICT, "Esta coleta já possui uma produção de embriões registrada.");
     }
 }

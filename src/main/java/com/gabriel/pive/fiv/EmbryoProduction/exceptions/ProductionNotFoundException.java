@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.EmbryoProduction.exceptions;
 
-public class ProductionNotFoundException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class ProductionNotFoundException extends BusinessException {
 
     public ProductionNotFoundException(){
-        super("Produção não encontrada.");
+        super(HttpStatus.NOT_FOUND, "Produção não encontrada.");
     }
 }

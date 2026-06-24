@@ -1,6 +1,5 @@
 package com.gabriel.pive.infra;
 
-import com.gabriel.pive.fiv.EmbryoProduction.exceptions.*;
 import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -56,44 +55,10 @@ public class GlobalExceptionHandler {
      * extending {@link BusinessException}. The status comes from the exception
      * itself ({@link BusinessException#getStatus()}), so adding a new domain
      * exception requires no edit to this handler.
-     *
-     * <p>Phase 4 migrates the codebase's custom exceptions to extend
-     * {@code BusinessException} one domain at a time; as each migrates, its
-     * dedicated handler method below is removed.
      */
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException exception, HttpServletRequest request){
         return buildBody(exception.getStatus(), exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(AllEmbryosAlreadyRegisteredException.class)
-    public ResponseEntity<Object> allEmbryosAlreadyRegistered(AllEmbryosAlreadyRegisteredException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(ProductionNotFoundException.class)
-    public ResponseEntity<Object> cultivationNotFound(ProductionNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(EmbryoNotFoundException.class)
-    public ResponseEntity<Object> embryoNotFound(EmbryoNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(OocyteCollectionAlreadyHasProduction.class)
-    public ResponseEntity<Object> fivAlreadyHasCultivation(OocyteCollectionAlreadyHasProduction exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(FivDoesNotHaveOocyteCollectionException.class)
-    public ResponseEntity<Object> fivDoesNotHaveOocyteCollection(FivDoesNotHaveOocyteCollectionException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(ReceiverCattleAlreadyHasEmbryoException.class)
-    public ResponseEntity<Object> receiverCattleAlreadyHasEmbryo(ReceiverCattleAlreadyHasEmbryoException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -104,16 +69,6 @@ public class GlobalExceptionHandler {
                         : error.getDefaultMessage())
                 .collect(java.util.stream.Collectors.joining("; "));
         return buildBody(HttpStatus.BAD_REQUEST, errorMessage, request);
-    }
-
-    @ExceptionHandler(TransferNotFoundException.class)
-    public ResponseEntity<Object> transferNotFound(TransferNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(InvalidNumberOfEmbryosException.class)
-    public ResponseEntity<Object> invalidNumberOfEmbryos(InvalidNumberOfEmbryosException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.BAD_REQUEST, exception.getMessage(), request);
     }
 
     @ExceptionHandler(ReceiverCattleDoesNotHaveAnEmbryoException.class)

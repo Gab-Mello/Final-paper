@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.EmbryoProduction.exceptions;
 
-public class FivDoesNotHaveOocyteCollectionException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class FivDoesNotHaveOocyteCollectionException extends BusinessException {
 
     public FivDoesNotHaveOocyteCollectionException(){
-        super("Esta fiv não possui uma coleta de oócitos ainda.");
+        super(HttpStatus.CONFLICT, "Esta fiv não possui uma coleta de oócitos ainda.");
     }
 }

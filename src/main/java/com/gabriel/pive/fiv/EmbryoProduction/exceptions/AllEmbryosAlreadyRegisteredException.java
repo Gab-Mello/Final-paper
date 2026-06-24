@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.EmbryoProduction.exceptions;
 
-public class AllEmbryosAlreadyRegisteredException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class AllEmbryosAlreadyRegisteredException extends BusinessException {
 
     public AllEmbryosAlreadyRegisteredException(){
-        super("Todos os embriões desta produção já estão registrados.");
+        super(HttpStatus.CONFLICT, "Todos os embriões desta produção já estão registrados.");
     }
 }
