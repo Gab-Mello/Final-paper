@@ -6,7 +6,7 @@ import com.gabriel.pive.animals.services.ReceiverCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("receiver")
 @Tag(name = "Receiver", description = "Receiver cattle management")
+@RequiredArgsConstructor
 public class ReceiverCattleController {
 
-    @Autowired
-    private ReceiverCattleService receiverCattleService;
+    private final ReceiverCattleService receiverCattleService;
 
     @Operation(summary = "Save a new receiver cattle", description = "It saves and returns a json with the new receiver cattle")
     @PostMapping

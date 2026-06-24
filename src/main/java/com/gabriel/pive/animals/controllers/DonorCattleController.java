@@ -5,7 +5,7 @@ import com.gabriel.pive.animals.services.DonorCattleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("donor")
 @Tag(name = "Donor", description = "Donors management")
+@RequiredArgsConstructor
 public class DonorCattleController {
 
-    @Autowired
-    private DonorCattleService donorCattleService;
+    private final DonorCattleService donorCattleService;
 
     @Operation(summary = "Save a new donor", description = "It saves and returns a json with the new donor")
     @PostMapping

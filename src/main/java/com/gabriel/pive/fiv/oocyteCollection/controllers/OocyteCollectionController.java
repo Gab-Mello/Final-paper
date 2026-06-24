@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/oocyte-collection")
 @Tag(name = "Oocyte Collection", description = "Oocyte collection management")
+@RequiredArgsConstructor
 public class OocyteCollectionController {
 
-    @Autowired
-    private OocyteCollectionService oocyteCollectionService;
+    private final OocyteCollectionService oocyteCollectionService;
 
     @Operation(summary = "Save a new oocyte collection", description = "It saves and returns a json with the new collection")
     @PostMapping

@@ -6,7 +6,7 @@ import com.gabriel.pive.animals.services.BullService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +17,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/bull")
 @Tag(name = "Bull", description = "Bulls management")
+@RequiredArgsConstructor
 public class BullController {
 
-    @Autowired
-    private BullService bullService;
+    private final BullService bullService;
 
     @Operation(summary = "Save a new bull", description = "It saves and returns a json with the new bull")
     @PostMapping

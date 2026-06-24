@@ -8,7 +8,7 @@ import com.gabriel.pive.fiv.services.FivService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +18,10 @@ import java.util.List;
 @RestController
 @RequestMapping("fiv")
 @Tag(name = "Fiv", description = "Fiv management")
+@RequiredArgsConstructor
 public class FivController {
 
-    @Autowired
-    private FivService fivService;
+    private final FivService fivService;
 
     @Operation(summary = "Create a new fiv", description = "It saves and returns a json with the new fiv")
     @PostMapping

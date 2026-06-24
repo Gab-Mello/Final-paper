@@ -9,7 +9,7 @@ import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,16 +17,12 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DonorBullCombinationService {
 
-    @Autowired
-    private OocyteCollectionRepository oocyteCollectionRepository;
-
-    @Autowired
-    private DonorCattleRepository donorCattleRepository;
-
-    @Autowired
-    private BullRepository bullRepository;
+    private final OocyteCollectionRepository oocyteCollectionRepository;
+    private final DonorCattleRepository donorCattleRepository;
+    private final BullRepository bullRepository;
 
 
     public List<DonorBullCombinationDto> getBestDonorBullCombinations() {

@@ -3,7 +3,7 @@ package com.gabriel.pive.animals.controllers;
 import com.gabriel.pive.animals.dtos.DonorBullCombinationDto;
 import com.gabriel.pive.animals.services.DonorBullCombinationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/donor-bull-combinations")
 @Tag(name = "Donor and bull combinations", description = "Get best donors and bulls combinations")
+@RequiredArgsConstructor
 public class DonorBullCombinationsController {
 
-    @Autowired
-    private DonorBullCombinationService donorBullCombinationService;
+    private final DonorBullCombinationService donorBullCombinationService;
 
     @GetMapping
     public ResponseEntity<List<DonorBullCombinationDto>> getBestDonorBullCombinations(){
