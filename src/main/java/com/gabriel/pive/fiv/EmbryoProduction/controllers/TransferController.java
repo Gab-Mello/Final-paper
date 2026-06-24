@@ -23,7 +23,7 @@ public class TransferController {
 
     @Operation(summary = "Save a new embryo transfer", description = "It saves and returns a json with the new trasnfer")
     @PostMapping
-    public ResponseEntity<TransferInitialDto> newTransfer(@Valid @RequestBody TransferInitialDto dto){
+    public ResponseEntity<TransferResponseDto> newTransfer(@Valid @RequestBody TransferInitialDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(transferService.newTransfer(dto));
     }
 

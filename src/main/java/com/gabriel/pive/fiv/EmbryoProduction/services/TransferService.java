@@ -48,11 +48,11 @@ public class TransferService {
     private final ProductionService productionService;
 
     @Transactional
-    public TransferInitialDto newTransfer(TransferInitialDto dto){
+    public TransferResponseDto newTransfer(TransferInitialDto dto){
         Fiv fiv = fivRepository.findById(dto.fivId()).
                 orElseThrow(FivNotFoundException::new);
 
-        return TransferInitialDto.toTransferDto(transferRepository.save(dto.toTransfer(fiv)));
+        return TransferResponseDto.toTransferResponseDto(transferRepository.save(dto.toTransfer(fiv)));
     }
 
     public List<TransferResponseDto> getTransfersByFivId(Long fivId){
