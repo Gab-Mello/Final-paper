@@ -35,4 +35,60 @@ The system architecture is organized in layers for improved scalability and main
    - **Repositories**: Database interaction using JPA/Hibernate.
    - **MySQL Database**: Structured storage for managing system data.
 
+## Quickstart
+
+### Prerequisites
+- **Java 21+** (the project compiles to bytecode level 21; newer JDKs work as a build tool).
+- **Maven Wrapper** (`./mvnw` — already in the repo; no separate Maven install needed).
+- **MySQL 8+** running locally on `localhost:3306` (the `docker/docker-compose.yml` in this repo brings one up).
+
+### Build
+```bash
+./mvnw clean package
+```
+Produces `target/pive-0.0.1-SNAPSHOT.jar`.
+
+### Run (defaults, all env vars unset)
+```bash
+./mvnw spring-boot:run
+```
+Connects to `localhost:3306/pivedatabase` as `root` / `123`. The dev defaults match the `docker-compose.yml` MySQL container.
+
+### Verify
+- `GET http://localhost:8080/actuator/health` → `{"status":"UP"}`
+- `http://localhost:8080/swagger-ui.html` → interactive API docs.
+
+## Environment variables
+
+All per-environment configuration is overridable via env vars. Defaults are dev-friendly; production deployments are expected to set every value explicitly.
+
+### Database
+| Variable | Default | Description |
+|---|---|---|
+| `DB_URL` | `jdbc:mysql://localhost:3306/pivedatabase` | JDBC URL. |
+| `DB_USERNAME` | `root` | DB username. |
+| `DB_PASSWORD` | `123` | DB password. |
+
+### JPA / Hibernate
+| Variable | Default | Description |
+|---|---|---|
+| `JPA_DDL_AUTO` | `update` | Hibernate schema-management mode (`update`, `validate`, `none`, `create`, `create-drop`). Production should run `validate` (after a schema baseline) or `none`. |
+| `JPA_SHOW_SQL` | `true` | Log every SQL statement Hibernate emits. Set `false` in production. |
+
+### API / CORS
+| Variable | Default | Description |
+|---|---|---|
+| `BOVINA_CORS_ORIGINS` | `http://localhost:5173` | Comma-separated list of allowed CORS origins. Set to your frontend's deployed URL(s) in production. |
+
+### Error responses
+| Property (Java system property or `application.properties`) | Default | Description |
+|---|---|---|
+| `bovina.error.legacy-format` | `true` | When `true`, error responses use the legacy raw-string body. When `false`, error responses are RFC 7807 `ProblemDetail` JSON. The `dev` Spring profile sets it to `false`. |
+
+### Spring profiles
+- **(no profile)** — default. Legacy raw-string error bodies, full SQL logging.
+- **`dev`** — activates `application-dev.properties`, which flips `bovina.error.legacy-format=false` to surface the structured-error JSON.
+
+Activate a profile via `--spring.profiles.active=dev` or `SPRING_PROFILES_ACTIVE=dev`.
+
 
