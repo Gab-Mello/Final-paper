@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("fiv")
+@RequestMapping("/fiv")
 @Tag(name = "Fiv", description = "Fiv management")
 @RequiredArgsConstructor
 public class FivController {

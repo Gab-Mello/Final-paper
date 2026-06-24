@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("receiver")
+@RequestMapping("/receiver")
 @Tag(name = "Receiver", description = "Receiver cattle management")
 @RequiredArgsConstructor
 public class ReceiverCattleController {

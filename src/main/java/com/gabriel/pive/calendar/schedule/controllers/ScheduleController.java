@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("schedule")
+@RequestMapping("/schedule")
 @Tag(name = "Schedule", description = "Calendar management")
 @RequiredArgsConstructor
 public class ScheduleController {
