@@ -91,4 +91,90 @@ All per-environment configuration is overridable via env vars. Defaults are dev-
 
 Activate a profile via `--spring.profiles.active=dev` or `SPRING_PROFILES_ACTIVE=dev`.
 
+## Docker (local development)
+
+> ⚠️ The Docker setup in this repository is for **local development and manual API testing**, not for production deployment. It ships dev-friendly defaults (root MySQL user, plaintext password in `compose.yaml`, no TLS). Production deployments should use a real secret manager and a least-privileged DB user.
+
+### Prerequisites
+- Docker 24+ with the Compose v2 plugin (`docker compose`, not the legacy `docker-compose`).
+- No need to install Java, Maven, or MySQL locally for the Docker workflow.
+
+### Run the full stack
+From the repo root:
+```bash
+docker compose up --build
+```
+This builds the API image, starts MySQL on a healthy state, then starts the API. The first run downloads images and Maven dependencies and takes 5–10 minutes; subsequent runs are seconds.
+
+Once up:
+- API: `http://localhost:8080`
+- Health: `http://localhost:8080/actuator/health` → `{"status":"UP"}`
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+
+### Run only the database
+If you prefer to run the API from your IDE via `./mvnw spring-boot:run`, start just MySQL:
+```bash
+docker compose up mysql
+```
+MySQL listens on `localhost:3306` of your host, so the IDE's default `DB_URL=jdbc:mysql://localhost:3306/pivedatabase` connects to it directly.
+
+### Rebuild the API image
+After a source change, force a rebuild of the API:
+```bash
+docker compose build api
+docker compose up
+```
+Or, in one step:
+```bash
+docker compose up --build
+```
+
+### Stop containers
+```bash
+docker compose down
+```
+Containers are removed; the MySQL volume is preserved (your data survives).
+
+### Reset the local database
+```bash
+docker compose down -v
+```
+The `-v` flag also removes the named volume `bovina-mysql-data`. The next `docker compose up` starts with a fresh, empty schema.
+
+### Ports
+| Service | Container port | Host port |
+|---|---|---|
+| `api` | 8080 | 8080 |
+| `mysql` | 3306 | 3306 |
+
+If you already have a process listening on 8080 or 3306, `docker compose up` will fail with `port is already allocated`. Stop the competing process or edit the `ports:` mapping in `compose.yaml` to use a different host port (e.g. `"8081:8080"`).
+
+### Environment variables honored by the API container
+The API container reads the same env vars as the host-side `./mvnw spring-boot:run` workflow — see the [Environment variables](#environment-variables) section above. The Compose file sets:
+
+| Env var | Compose value | Purpose |
+|---|---|---|
+| `DB_URL` | `jdbc:mysql://mysql:3306/pivedatabase` | DB hostname is the Compose service name `mysql`, **not** `localhost` (a container's `localhost` is itself). |
+| `DB_USERNAME` | `root` | Dev-friendly default; matches the MySQL container's `MYSQL_ROOT_PASSWORD`. |
+| `DB_PASSWORD` | `123` | Local-dev only. |
+| `SPRING_PROFILES_ACTIVE` | `dev` | Activates `application-dev.properties` (structured-error JSON). |
+| `BOVINA_CORS_ORIGINS` | `http://localhost:5173` | CORS for the Vite dev server on the host. |
+
+Override any of them by editing `compose.yaml` or, for one-off runs, with `docker compose run -e VAR=value api`.
+
+### Troubleshooting
+- **`Bind for 0.0.0.0:8080 failed: port is already allocated`** — another container or process is using port 8080. Stop it (`docker stop <other-container>`) or change the host port in `compose.yaml`.
+- **First build is slow** — Maven downloads the dependency tree on first run. Subsequent builds reuse the cached layer as long as `pom.xml` is unchanged.
+- **API can't connect to MySQL** — inside the API container, the database hostname is `mysql` (the Compose service name), never `localhost`. The `compose.yaml` sets `DB_URL` accordingly.
+
+### What this Docker setup does NOT cover
+- No TLS / HTTPS termination.
+- No production-grade secrets management.
+- No replicated or backed-up MySQL.
+- No image vulnerability scanning, SBOM, or signature verification.
+- No log shipping or metrics aggregation.
+- No graceful rolling deployment.
+
+All of those are production-deployment concerns and live elsewhere (out of this repository's scope).
+
 
