@@ -1,6 +1,8 @@
 package com.gabriel.pive.fiv.pregnancy.services;
 
 import com.gabriel.pive.animals.entities.ReceiverCattle;
+import com.gabriel.pive.animals.exceptions.ReceiverCattleNotFoundException;
+import com.gabriel.pive.animals.repositories.ReceiverCattleRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
@@ -29,6 +31,7 @@ public class PregnancyService {
     private final EmbryoRepository embryoRepository;
     private final ProductionRepository productionRepository;
     private final FivRepository fivRepository;
+    private final ReceiverCattleRepository receiverCattleRepository;
 
     @Scheduled(cron = "@daily")
     @Transactional
@@ -86,7 +89,9 @@ public class PregnancyService {
     }
 
     @Transactional
-    public void confirmPregnancy(ReceiverCattle receiverCattle, boolean is_pregnant){
+    public void confirmPregnancy(Long receiverCattleId, boolean is_pregnant){
+        ReceiverCattle receiverCattle = receiverCattleRepository.findById(receiverCattleId)
+                .orElseThrow(ReceiverCattleNotFoundException::new);
 
         if (receiverCattle.getEmbryo() == null){
             throw new ReceiverCattleDoesNotHaveAnEmbryoException();
