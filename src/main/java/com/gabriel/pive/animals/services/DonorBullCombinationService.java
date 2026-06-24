@@ -7,8 +7,8 @@ import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.animals.repositories.DonorCattleRepository;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
-import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.repositories.OocyteCollectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

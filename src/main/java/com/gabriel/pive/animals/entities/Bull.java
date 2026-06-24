@@ -2,7 +2,7 @@ package com.gabriel.pive.animals.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

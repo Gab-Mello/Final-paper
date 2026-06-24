@@ -1,9 +1,9 @@
-package com.gabriel.pive.fiv.oocyteCollection.dtos;
+package com.gabriel.pive.fiv.oocytecollection.dtos;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.fiv.entities.Fiv;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
 import com.gabriel.pive.infra.validation.ViableNotExceedingTotal;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

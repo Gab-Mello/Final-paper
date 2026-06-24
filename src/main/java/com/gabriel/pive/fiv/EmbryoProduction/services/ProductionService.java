@@ -13,9 +13,9 @@ import com.gabriel.pive.fiv.EmbryoProduction.exceptions.ProductionNotFoundExcept
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
 import com.gabriel.pive.fiv.entities.Fiv;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
-import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.exceptions.OocyteCollectionNotFoundException;
+import com.gabriel.pive.fiv.oocytecollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
 import lombok.RequiredArgsConstructor;

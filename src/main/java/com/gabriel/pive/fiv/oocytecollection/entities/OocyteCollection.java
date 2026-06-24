@@ -1,4 +1,4 @@
-package com.gabriel.pive.fiv.oocyteCollection.entities;
+package com.gabriel.pive.fiv.oocytecollection.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.animals.entities.Bull;

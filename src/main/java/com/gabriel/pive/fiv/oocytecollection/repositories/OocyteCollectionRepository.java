@@ -1,8 +1,8 @@
-package com.gabriel.pive.fiv.oocyteCollection.repositories;
+package com.gabriel.pive.fiv.oocytecollection.repositories;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

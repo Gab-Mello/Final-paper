@@ -3,7 +3,7 @@ package com.gabriel.pive.fiv.EmbryoProduction.dtos;
 
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.entities.Fiv;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 

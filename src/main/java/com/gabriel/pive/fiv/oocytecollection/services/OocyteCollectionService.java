@@ -1,4 +1,4 @@
-package com.gabriel.pive.fiv.oocyteCollection.services;
+package com.gabriel.pive.fiv.oocytecollection.services;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
@@ -10,14 +10,14 @@ import com.gabriel.pive.animals.services.DonorCattleService;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
-import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionPostDto;
-import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionRequestDto;
-import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.DonorAlreadyCollectedException;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
-import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionPostDto;
+import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionRequestDto;
+import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionResponseDto;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.exceptions.DonorAlreadyCollectedException;
+import com.gabriel.pive.fiv.oocytecollection.exceptions.FivAlreadyHasOocyteCollectionException;
+import com.gabriel.pive.fiv.oocytecollection.exceptions.OocyteCollectionNotFoundException;
+import com.gabriel.pive.fiv.oocytecollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
 import jakarta.persistence.EntityNotFoundException;

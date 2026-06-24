@@ -10,8 +10,8 @@ import com.gabriel.pive.animals.exceptions.RegistrationNumberAlreadyExistsExcept
 import com.gabriel.pive.animals.repositories.BullRepository;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
-import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
-import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
+import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
+import com.gabriel.pive.fiv.oocytecollection.repositories.OocyteCollectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

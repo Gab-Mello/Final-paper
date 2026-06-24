@@ -3,7 +3,7 @@ package com.gabriel.pive.fiv.dtos;
 import com.gabriel.pive.fiv.EmbryoProduction.dtos.CultivationSummaryResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
-import com.gabriel.pive.fiv.oocyteCollection.dtos.OocyteCollectionResponseDto;
+import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionResponseDto;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;

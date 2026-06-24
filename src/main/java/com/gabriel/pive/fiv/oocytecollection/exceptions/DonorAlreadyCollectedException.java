@@ -1,4 +1,4 @@
-package com.gabriel.pive.fiv.oocyteCollection.exceptions;
+package com.gabriel.pive.fiv.oocytecollection.exceptions;
 
 import com.gabriel.pive.infra.BusinessException;
 import org.springframework.http.HttpStatus;
