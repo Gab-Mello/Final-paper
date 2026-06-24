@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public record BullDto(Long id,
-                      String name,
+                      @NotBlank(message = "Nome em branco.") String name,
                       @NotBlank(message = "Número de identificação em branco.") String registrationNumber,
                       String averageEmbryoPercentage) {
 
