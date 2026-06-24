@@ -18,34 +18,22 @@ import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFound
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductionService {
 
-    @Autowired
-    private ProductionRepository productionRepository;
-
-    @Autowired
-    private OocyteCollectionRepository oocyteCollectionRepository;
-
-    @Autowired
-    private FivService fivService;
-
-    @Autowired
-    private FivRepository fivRepository;
-
-    @Autowired
-    private DonorCattleService donorCattleService;
-
-    @Autowired
-    private BullService bullService;
-
-    @Autowired
-    private EmbryoRepository embryoRepository;
+    private final ProductionRepository productionRepository;
+    private final OocyteCollectionRepository oocyteCollectionRepository;
+    private final FivService fivService;
+    private final FivRepository fivRepository;
+    private final DonorCattleService donorCattleService;
+    private final BullService bullService;
+    private final EmbryoRepository embryoRepository;
 
     public ProductionResponseDto newProduction(ProductionRequestDto dto){
 
