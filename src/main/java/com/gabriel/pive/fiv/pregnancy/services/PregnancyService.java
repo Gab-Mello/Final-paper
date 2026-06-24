@@ -15,6 +15,7 @@ import com.gabriel.pive.fiv.repositories.FivRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -35,6 +36,7 @@ public class PregnancyService {
     private FivRepository fivRepository;
 
     @Scheduled(cron = "@daily")
+    @Transactional
     public void updateGestationalAge(){
         for (Pregnancy pregnancy : pregnancyRepository.findAll()){
             pregnancy.setGestationalAge(calculateGestationalAge(pregnancy.getTransferDay()));
