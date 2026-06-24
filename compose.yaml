@@ -1,0 +1,56 @@
+# BovInA — local development stack.
+#
+# Brings up the API and MySQL together for local development and manual API
+# testing. NOT a production deployment file.
+#
+# Usage:
+#   docker compose up --build        # full stack (DB + API)
+#   docker compose up mysql          # database only (for `./mvnw spring-boot:run`)
+#   docker compose down              # stop and remove containers (keeps the DB volume)
+#   docker compose down -v           # also wipe the DB volume (fresh data)
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: bovina-mysql
+    environment:
+      MYSQL_DATABASE: pivedatabase
+      # Dev-friendly defaults. Local-development only; not for production.
+      # The API container connects as root with the same password below.
+      MYSQL_ROOT_PASSWORD: "123"
+    ports:
+      - "3306:3306"
+    volumes:
+      - bovina-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-p123"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  api:
+    build: .
+    image: pive:dev
+    container_name: bovina-api
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      # Inside the API container, the database hostname is the Compose service
+      # name "mysql" -- NOT "localhost". A container's localhost is itself, so
+      # `localhost:3306` from here would fail to connect to the DB.
+      DB_URL: jdbc:mysql://mysql:3306/pivedatabase
+      DB_USERNAME: root
+      DB_PASSWORD: "123"
+      # Local-dev profile flips bovina.error.legacy-format=false so errors are
+      # emitted as RFC 7807 ProblemDetail JSON. See application-dev.properties.
+      SPRING_PROFILES_ACTIVE: dev
+      # CORS for a Vite dev server on the host. Override if the frontend lives
+      # somewhere else.
+      BOVINA_CORS_ORIGINS: http://localhost:5173
+    ports:
+      - "8080:8080"
+
+volumes:
+  bovina-mysql-data:
