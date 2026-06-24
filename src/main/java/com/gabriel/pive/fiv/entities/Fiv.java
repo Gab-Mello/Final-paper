@@ -4,13 +4,11 @@ import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoTransfer;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
-import com.gabriel.pive.fiv.repositories.FivRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
