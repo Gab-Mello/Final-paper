@@ -81,7 +81,7 @@ public class FivService {
     }
 
     public void checkToSetFivAsCompleted(Fiv fiv){
-        if (fiv.getEmbryosRegistered() == fiv.getTotalEmbryos() - 1){
+        if (fiv.getEmbryosRegistered().equals(fiv.getTotalEmbryos())){
             fiv.setStatus(FivStatusEnum.COMPLETED);
             fivRepository.save(fiv);
         }
