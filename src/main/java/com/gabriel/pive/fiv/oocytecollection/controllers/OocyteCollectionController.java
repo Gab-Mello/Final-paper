@@ -1,6 +1,5 @@
 package com.gabriel.pive.fiv.oocytecollection.controllers;
 
-import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocytecollection.exceptions.FivAlreadyHasOocyteCollectionException;

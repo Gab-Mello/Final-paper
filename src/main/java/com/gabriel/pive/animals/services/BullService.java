@@ -1,6 +1,5 @@
 package com.gabriel.pive.animals.services;
 
-import com.gabriel.pive.animals.dtos.BullAverageEmbryoDto;
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.dtos.DonorCattleDto;
 import com.gabriel.pive.animals.entities.Bull;

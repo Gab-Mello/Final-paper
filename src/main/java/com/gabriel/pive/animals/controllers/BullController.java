@@ -1,6 +1,5 @@
 package com.gabriel.pive.animals.controllers;
 
-import com.gabriel.pive.animals.dtos.BullAverageEmbryoDto;
 import com.gabriel.pive.animals.dtos.BullDto;
 import com.gabriel.pive.animals.services.BullService;
 import io.swagger.v3.oas.annotations.Operation;

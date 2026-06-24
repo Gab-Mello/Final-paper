@@ -10,7 +10,6 @@ import com.gabriel.pive.animals.services.DonorCattleService;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
-import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionPostDto;
 import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionRequestDto;
 import com.gabriel.pive.fiv.oocytecollection.dtos.OocyteCollectionResponseDto;
 import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
