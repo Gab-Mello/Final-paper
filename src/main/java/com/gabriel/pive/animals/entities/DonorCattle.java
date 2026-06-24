@@ -65,13 +65,21 @@ public class DonorCattle {
     }
 
     public void updateEmbryoPercentage() {
-        if (oocyteCollections != null && !oocyteCollections.isEmpty()) {
-            double totalPercentage = oocyteCollections.stream()
-                    .mapToDouble(oc -> oc.getEmbryoProduction().getEmbryosPercentage())
-                    .sum();
-            this.averageEmbryoPercentage = totalPercentage / oocyteCollections.size();
-        } else {
+        if (oocyteCollections == null || oocyteCollections.isEmpty()) {
             this.averageEmbryoPercentage = 0.0;
+            return;
         }
+        long collectionsWithProduction = oocyteCollections.stream()
+                .filter(oc -> oc.getEmbryoProduction() != null)
+                .count();
+        if (collectionsWithProduction == 0) {
+            this.averageEmbryoPercentage = 0.0;
+            return;
+        }
+        double totalPercentage = oocyteCollections.stream()
+                .filter(oc -> oc.getEmbryoProduction() != null)
+                .mapToDouble(oc -> oc.getEmbryoProduction().getEmbryosPercentage())
+                .sum();
+        this.averageEmbryoPercentage = totalPercentage / collectionsWithProduction;
     }
 }
