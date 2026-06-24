@@ -1,7 +1,7 @@
 package com.gabriel.pive.fiv.entities;
 
-import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
-import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoTransfer;
+import com.gabriel.pive.fiv.embryoproduction.entities.EmbryoProduction;
+import com.gabriel.pive.fiv.embryoproduction.entities.EmbryoTransfer;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.oocytecollection.entities.OocyteCollection;
 import jakarta.persistence.*;

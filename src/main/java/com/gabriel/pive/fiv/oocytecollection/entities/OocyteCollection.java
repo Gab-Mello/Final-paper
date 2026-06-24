@@ -3,7 +3,7 @@ package com.gabriel.pive.fiv.oocytecollection.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
-import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
+import com.gabriel.pive.fiv.embryoproduction.entities.EmbryoProduction;
 import com.gabriel.pive.fiv.entities.Fiv;
 import jakarta.persistence.*;
 import lombok.*;

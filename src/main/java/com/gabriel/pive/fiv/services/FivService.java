@@ -2,10 +2,10 @@ package com.gabriel.pive.fiv.services;
 
 import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.exceptions.InvalidDateException;
-import com.gabriel.pive.fiv.EmbryoProduction.entities.EmbryoProduction;
-import com.gabriel.pive.fiv.EmbryoProduction.exceptions.InvalidNumberOfEmbryosException;
-import com.gabriel.pive.fiv.EmbryoProduction.repositories.ProductionRepository;
-import com.gabriel.pive.fiv.EmbryoProduction.services.ProductionService;
+import com.gabriel.pive.fiv.embryoproduction.entities.EmbryoProduction;
+import com.gabriel.pive.fiv.embryoproduction.exceptions.InvalidNumberOfEmbryosException;
+import com.gabriel.pive.fiv.embryoproduction.repositories.ProductionRepository;
+import com.gabriel.pive.fiv.embryoproduction.services.ProductionService;
 import com.gabriel.pive.fiv.dtos.FivRequestDto;
 import com.gabriel.pive.fiv.dtos.FivResponseDto;
 import com.gabriel.pive.fiv.entities.Fiv;

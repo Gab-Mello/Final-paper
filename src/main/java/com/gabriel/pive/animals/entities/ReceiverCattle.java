@@ -1,6 +1,6 @@
 package com.gabriel.pive.animals.entities;
 
-import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
+import com.gabriel.pive.fiv.embryoproduction.entities.Embryo;
 import com.gabriel.pive.fiv.pregnancy.entities.Pregnancy;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
