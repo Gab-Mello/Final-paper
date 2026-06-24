@@ -37,7 +37,7 @@ public class FivController {
 
     @Operation(summary = "Get a fiv by Id", description = "It returns a json with the fiv")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getFivById(@PathVariable Long id){
+    public ResponseEntity<FivResponseDto> getFivById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(fivService.getFivById(id));
     }
 

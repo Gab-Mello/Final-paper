@@ -23,7 +23,7 @@ public class ReceiverCattleController {
 
     @Operation(summary = "Save a new receiver cattle", description = "It saves and returns a json with the new receiver cattle")
     @PostMapping
-    public ResponseEntity<?> saveReceiver(@Valid @RequestBody ReceiverCattleDto dto){
+    public ResponseEntity<ReceiverCattleDto> saveReceiver(@Valid @RequestBody ReceiverCattleDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(receiverCattleService.create(dto));
     }
 
@@ -47,7 +47,7 @@ public class ReceiverCattleController {
 
     @Operation(summary = "Delete a receiver cattle by Id", description = "It deletes the receiver cattle")
     @DeleteMapping("/{id}")
-    public ResponseEntity<ReceiverCattleDto> deleteReceiverCattle(@PathVariable Long id){
+    public ResponseEntity<Void> deleteReceiverCattle(@PathVariable Long id){
         receiverCattleService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -36,7 +36,7 @@ public class EmbryoController {
 
     @Operation(summary = "Save number of discarded embryos", description = "It saves the number of discarded fivs")
     @PostMapping("/discarded")
-    public ResponseEntity<?> saveFrozenEmbryos(@Valid @RequestBody DiscardedEmbryosDto dto){
+    public ResponseEntity<Void> saveFrozenEmbryos(@Valid @RequestBody DiscardedEmbryosDto dto){
         embryosService.discardedEmbryos(dto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -49,7 +49,7 @@ public class EmbryoController {
 
     @Operation(summary = "Get a embryo by Id", description = "It returns a json with the embryo")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEmbryoById(@PathVariable Long id){
+    public ResponseEntity<EmbryoResponseDto> getEmbryoById(@PathVariable Long id){
             return ResponseEntity.status(HttpStatus.OK).body(embryosService.getEmbryoById(id));
     }
 

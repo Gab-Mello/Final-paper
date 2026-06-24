@@ -23,7 +23,7 @@ public class BullController {
 
     @Operation(summary = "Save a new bull", description = "It saves and returns a json with the new bull")
     @PostMapping
-    public ResponseEntity<?> saveBull(@Valid @RequestBody BullDto dto){
+    public ResponseEntity<BullDto> saveBull(@Valid @RequestBody BullDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(bullService.create(dto));
     }
 
@@ -54,7 +54,7 @@ public class BullController {
 
     @Operation(summary = "Delete a bull by Id", description = "It deletes the bull")
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteBull(@PathVariable Long id){
+    public ResponseEntity<Void> deleteBull(@PathVariable Long id){
         bullService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

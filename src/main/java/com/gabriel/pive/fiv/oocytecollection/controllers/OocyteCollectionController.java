@@ -26,7 +26,7 @@ public class OocyteCollectionController {
 
     @Operation(summary = "Save a new oocyte collection", description = "It saves and returns a json with the new collection")
     @PostMapping
-    public ResponseEntity<?> newOocyteCollection(@Valid @RequestBody OocyteCollectionRequestDto dto){
+    public ResponseEntity<OocyteCollectionResponseDto> newOocyteCollection(@Valid @RequestBody OocyteCollectionRequestDto dto){
         OocyteCollectionResponseDto oocyteCollection = oocyteCollectionService.newOocyteCollection(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(oocyteCollection);
     }

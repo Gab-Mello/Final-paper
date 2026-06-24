@@ -23,7 +23,7 @@ public class EmbryoProductionController {
 
     @Operation(summary = "Save a new embryo production", description = "It saves and returns a json with the new production")
     @PostMapping
-    public ResponseEntity<?> newProduction(@Valid @RequestBody ProductionRequestDto dto){
+    public ResponseEntity<ProductionResponseDto> newProduction(@Valid @RequestBody ProductionRequestDto dto){
             ProductionResponseDto production = productionService.newProduction(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(production);
     }
@@ -36,7 +36,7 @@ public class EmbryoProductionController {
 
     @Operation(summary = "Get a embryo production by Id", description = "It returns a json with the production")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductionById(@PathVariable Long id){
+    public ResponseEntity<ProductionResponseDto> getProductionById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(productionService.getProductionById(id));
     }
 
