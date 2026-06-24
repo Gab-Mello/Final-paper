@@ -43,3 +43,6 @@ secrets.yml
 node_modules
 src/main/resources/application.properties
 
+# Local-only refactoring study notes (educational, not source of truth)
+REFACTORING_NOTES.md
+
