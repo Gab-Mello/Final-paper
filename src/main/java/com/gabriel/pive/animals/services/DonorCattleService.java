@@ -14,8 +14,9 @@ import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -24,20 +25,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class DonorCattleService {
 
-    @Autowired
-    private DonorCattleRepository donorCattleRepository;
+    private final DonorCattleRepository donorCattleRepository;
+    private final EmbryoRepository embryoRepository;
+    private final OocyteCollectionRepository oocyteCollectionRepository;
+    private final FivRepository fivRepository;
 
-    @Autowired
-    private EmbryoRepository embryoRepository;
-
-    @Autowired
-    private OocyteCollectionRepository oocyteCollectionRepository;
-
-    @Autowired
-    private FivRepository fivRepository;
-
+    @Transactional
     public DonorCattleDto create(DonorCattleDto dto){
         if (donorCattleRepository.findByRegistrationNumber(dto.registrationNumber()) != null){
             throw new RegistrationNumberAlreadyExistsException("Uma doadora com este número de registro já existe.");
@@ -71,6 +68,7 @@ public class DonorCattleService {
         return DonorCattleDto.toDonorCattleDtoList(donors);
     }
 
+    @Transactional
     public void updateAverageViableOocytes(DonorCattle donorCattle) {
         List<OocyteCollection> oocyteCollections = donorCattle.getOocyteCollections();
 
@@ -82,6 +80,7 @@ public class DonorCattleService {
         donorCattleRepository.save(donorCattle);
     }
 
+    @Transactional
     public void updateAverageViableEmbryos(DonorCattle donorCattle) {
         List<OocyteCollection> oocyteCollections = donorCattle.getOocyteCollections();
 
@@ -122,6 +121,7 @@ public class DonorCattleService {
                 findByRegistrationNumberStartingWith(registrationNumber.toUpperCase()));
     }
 
+    @Transactional
     public void delete(Long id){
         DonorCattle donorCattle = donorCattleRepository.findById(id)
                         .orElseThrow(DonorCattleNotFoundException::new);
@@ -141,6 +141,7 @@ public class DonorCattleService {
         donorCattleRepository.deleteById(id);
     }
 
+    @Transactional
     public DonorCattleDto edit(Long id, DonorCattleDto dto){
         DonorCattle donorCattle = donorCattleRepository.findById(id)
                 .orElseThrow(DonorCattleNotFoundException::new);

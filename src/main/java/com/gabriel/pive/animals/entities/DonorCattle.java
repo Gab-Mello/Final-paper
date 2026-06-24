@@ -38,7 +38,7 @@ public class DonorCattle {
     private Double averageEmbryoPercentage;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "donorCattle", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "donorCattle", fetch = FetchType.LAZY)
     private List<OocyteCollection> oocyteCollections = new ArrayList<>();
 
     @OneToMany(mappedBy = "embryoDonorCattle")
