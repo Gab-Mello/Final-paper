@@ -6,6 +6,7 @@ import com.gabriel.pive.fiv.pregnancy.dtos.PregnancyRequestDto;
 import com.gabriel.pive.fiv.pregnancy.services.PregnancyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class PregnancyController {
 
     @Operation(summary = "Confirm a pregnancy", description = "Confirm or not if the receiver is pregnant.")
     @PostMapping
-    public ResponseEntity<?> confirmPregnancy(@RequestBody PregnancyRequestDto dto){
-        pregnancyService.confirmPregnancy(dto.receiverCattleId(), dto.is_pregnant());
+    public ResponseEntity<?> confirmPregnancy(@Valid @RequestBody PregnancyRequestDto dto){
+        pregnancyService.confirmPregnancy(dto.receiverCattleId(), dto.pregnant());
         return ResponseEntity.status(HttpStatus.OK).body("Pregnancy saved.");
     }
 
