@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.oocyteCollection.exceptions;
 
-public class DonorAlreadyCollectedException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class DonorAlreadyCollectedException extends BusinessException {
 
     public DonorAlreadyCollectedException(){
-        super("Esta doadora já foi coletada.");
+        super(HttpStatus.CONFLICT, "Esta doadora já foi coletada.");
     }
 }

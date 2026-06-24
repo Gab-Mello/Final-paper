@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.oocyteCollection.exceptions;
 
-public class OocyteCollectionNotFoundException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class OocyteCollectionNotFoundException extends BusinessException {
 
     public OocyteCollectionNotFoundException(){
-        super("Coleta de oócitos não encontrada");
+        super(HttpStatus.NOT_FOUND, "Coleta de oócitos não encontrada");
     }
 }

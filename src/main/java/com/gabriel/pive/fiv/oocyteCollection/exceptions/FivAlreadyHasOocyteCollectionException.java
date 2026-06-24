@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.oocyteCollection.exceptions;
 
-public class FivAlreadyHasOocyteCollectionException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class FivAlreadyHasOocyteCollectionException extends BusinessException {
 
     public FivAlreadyHasOocyteCollectionException(){
-        super("Esta fiv já possui uma coleta de oócitos registrada");
+        super(HttpStatus.CONFLICT, "Esta fiv já possui uma coleta de oócitos registrada");
     }
 }

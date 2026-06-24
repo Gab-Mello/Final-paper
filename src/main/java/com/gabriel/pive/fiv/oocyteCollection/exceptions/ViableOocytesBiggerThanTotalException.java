@@ -1,8 +1,11 @@
 package com.gabriel.pive.fiv.oocyteCollection.exceptions;
 
-public class ViableOocytesBiggerThanTotalException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class ViableOocytesBiggerThanTotalException extends BusinessException {
 
     public ViableOocytesBiggerThanTotalException(){
-        super("Número de viáveis maior que total.");
+        super(HttpStatus.CONFLICT, "Número de viáveis maior que total.");
     }
 }

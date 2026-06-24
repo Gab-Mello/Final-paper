@@ -1,11 +1,6 @@
 package com.gabriel.pive.infra;
 
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.*;
-import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.DonorAlreadyCollectedException;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteCollectionException;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
-import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
 import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -71,11 +66,6 @@ public class GlobalExceptionHandler {
         return buildBody(exception.getStatus(), exception.getMessage(), request);
     }
 
-    @ExceptionHandler(FivNotFoundException.class)
-    public ResponseEntity<Object> fivNotFound(FivNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
-    }
-
     @ExceptionHandler(AllEmbryosAlreadyRegisteredException.class)
     public ResponseEntity<Object> allEmbryosAlreadyRegistered(AllEmbryosAlreadyRegisteredException exception, HttpServletRequest request){
         return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
@@ -106,16 +96,6 @@ public class GlobalExceptionHandler {
         return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
-    @ExceptionHandler(FivAlreadyHasOocyteCollectionException.class)
-    public ResponseEntity<Object> fivAlreadyHasOocyteCollection(FivAlreadyHasOocyteCollectionException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(OocyteCollectionNotFoundException.class)
-    public ResponseEntity<Object> oocyteCollectionNotFound(OocyteCollectionNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException exception, HttpServletRequest request) {
         String errorMessage = exception.getBindingResult().getAllErrors().stream()
@@ -124,16 +104,6 @@ public class GlobalExceptionHandler {
                         : error.getDefaultMessage())
                 .collect(java.util.stream.Collectors.joining("; "));
         return buildBody(HttpStatus.BAD_REQUEST, errorMessage, request);
-    }
-
-    @ExceptionHandler(ViableOocytesBiggerThanTotalException.class)
-    public ResponseEntity<Object> viableOocytesBiggerThanTotal(ViableOocytesBiggerThanTotalException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(DonorAlreadyCollectedException.class)
-    public ResponseEntity<Object> donorAlreadyCollected(DonorAlreadyCollectedException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(TransferNotFoundException.class)
