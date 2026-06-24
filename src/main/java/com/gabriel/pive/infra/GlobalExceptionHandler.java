@@ -8,6 +8,8 @@ import com.gabriel.pive.fiv.oocyteCollection.exceptions.FivAlreadyHasOocyteColle
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.OocyteCollectionNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.ViableOocytesBiggerThanTotalException;
 import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,107 +20,132 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Gate for the error response body shape. When {@code true} (the default),
+     * handlers return a raw-string body — the legacy contract that the current
+     * frontend expects. When {@code false}, future Phase 2 work will switch the
+     * body to an RFC 7807 {@link org.springframework.http.ProblemDetail}.
+     *
+     * <p>The flag is read once per request via the {@code @Value} field injection;
+     * no per-request property lookup overhead.
+     */
+    @Value("${bovina.error.legacy-format:true}")
+    private boolean legacyFormat;
+
+    /**
+     * Single seam that every handler funnels through. Today it always returns
+     * a plain-String body (preserving legacy behavior). Phase 2's later commits
+     * (2.4 onward) will branch on {@link #legacyFormat} to return a structured
+     * ProblemDetail when the flag is disabled.
+     */
+    private ResponseEntity<Object> buildBody(HttpStatus status, String message, HttpServletRequest request) {
+        if (legacyFormat) {
+            return ResponseEntity.status(status).body(message);
+        }
+        // ProblemDetail branch arrives in commit 2.4. For now keep legacy behavior so this
+        // commit is purely a structural refactor.
+        return ResponseEntity.status(status).body(message);
+    }
+
     @ExceptionHandler(RegistrationNumberAlreadyExistsException.class)
-    public ResponseEntity<String> registrationNumberAlreadyExists(RegistrationNumberAlreadyExistsException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> registrationNumberAlreadyExists(RegistrationNumberAlreadyExistsException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(ReceiverCattleNotFoundException.class)
-    public ResponseEntity<String> receiverCattleNotFound(ReceiverCattleNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> receiverCattleNotFound(ReceiverCattleNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(BullNotFoundException.class)
-    public ResponseEntity<String> bullNotFound(BullNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> bullNotFound(BullNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(DonorCattleNotFoundException.class)
-    public ResponseEntity<String> donorNotFound(DonorCattleNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> donorNotFound(DonorCattleNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(FivNotFoundException.class)
-    public ResponseEntity<String> fivNotFound(FivNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> fivNotFound(FivNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(AllEmbryosAlreadyRegisteredException.class)
-    public ResponseEntity<String> allEmbryosAlreadyRegistered(AllEmbryosAlreadyRegisteredException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> allEmbryosAlreadyRegistered(AllEmbryosAlreadyRegisteredException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(ProductionNotFoundException.class)
-    public ResponseEntity<String> cultivationNotFound(ProductionNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> cultivationNotFound(ProductionNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(EmbryoNotFoundException.class)
-    public ResponseEntity<String> embryoNotFound(EmbryoNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> embryoNotFound(EmbryoNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(OocyteCollectionAlreadyHasProduction.class)
-    public ResponseEntity<String> fivAlreadyHasCultivation(OocyteCollectionAlreadyHasProduction exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> fivAlreadyHasCultivation(OocyteCollectionAlreadyHasProduction exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(FivDoesNotHaveOocyteCollectionException.class)
-    public ResponseEntity<String> fivDoesNotHaveOocyteCollection(FivDoesNotHaveOocyteCollectionException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> fivDoesNotHaveOocyteCollection(FivDoesNotHaveOocyteCollectionException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(ReceiverCattleAlreadyHasEmbryoException.class)
-    public ResponseEntity<String> receiverCattleAlreadyHasEmbryo(ReceiverCattleAlreadyHasEmbryoException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> receiverCattleAlreadyHasEmbryo(ReceiverCattleAlreadyHasEmbryoException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(FivAlreadyHasOocyteCollectionException.class)
-    public ResponseEntity<String> fivAlreadyHasOocyteCollection(FivAlreadyHasOocyteCollectionException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> fivAlreadyHasOocyteCollection(FivAlreadyHasOocyteCollectionException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(OocyteCollectionNotFoundException.class)
-    public ResponseEntity<String> oocyteCollectionNotFound(OocyteCollectionNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> oocyteCollectionNotFound(OocyteCollectionNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException exception) {
-
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException exception, HttpServletRequest request) {
         FieldError fieldError = (FieldError) exception.getBindingResult().getAllErrors().get(0);
         String errorMessage = fieldError.getDefaultMessage();
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        return buildBody(HttpStatus.CONFLICT, errorMessage, request);
     }
 
     @ExceptionHandler(ViableOocytesBiggerThanTotalException.class)
-    public ResponseEntity<String> viableOocytesBiggerThanTotal(ViableOocytesBiggerThanTotalException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> viableOocytesBiggerThanTotal(ViableOocytesBiggerThanTotalException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(DonorAlreadyCollectedException.class)
-    public ResponseEntity<String> donorAlreadyCollected(DonorAlreadyCollectedException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> donorAlreadyCollected(DonorAlreadyCollectedException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(InvalidDateException.class)
-    public ResponseEntity<String> invalidDate(InvalidDateException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> invalidDate(InvalidDateException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     @ExceptionHandler(TransferNotFoundException.class)
-    public ResponseEntity<String> transferNotFound(TransferNotFoundException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> transferNotFound(TransferNotFoundException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(InvalidNumberOfEmbryosException.class)
-    public ResponseEntity<String> invalidNumberOfEmbryos(InvalidNumberOfEmbryosException exception){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    public ResponseEntity<Object> invalidNumberOfEmbryos(InvalidNumberOfEmbryosException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(ReceiverCattleDoesNotHaveAnEmbryoException.class)
-    public ResponseEntity<String> receiverDoesNotHaveAnEmbryo(ReceiverCattleDoesNotHaveAnEmbryoException exception){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
+    public ResponseEntity<Object> receiverDoesNotHaveAnEmbryo(ReceiverCattleDoesNotHaveAnEmbryoException exception, HttpServletRequest request){
+        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 }
