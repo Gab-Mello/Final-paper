@@ -95,8 +95,6 @@ public class TransferService {
             throw new ReceiverCattleAlreadyHasEmbryoException();
         }
 
-        fivService.checkToSetFivAsCompleted(fiv);
-
         Embryo embryo = new Embryo(production, transfer, receiverCattle,
                                     donorCattle, bull, EmbryoDestiny.TRANSFERRED);
 
@@ -107,8 +105,8 @@ public class TransferService {
 
         productionService.updateTransferredEmbryosNumber(production);
 
-        fivService.checkToSetFivAsCompleted(fiv);
         fivService.updateEmbryosRegistered(fiv, production);
+        fivService.checkToSetFivAsCompleted(fiv);
 
         return TransferResponseDto.toTransferResponseDto(transfer);
     }
