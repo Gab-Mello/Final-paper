@@ -4,11 +4,13 @@ import com.gabriel.pive.animals.entities.Bull;
 import com.gabriel.pive.animals.entities.DonorCattle;
 import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
+import com.gabriel.pive.infra.validation.ViableNotExceedingTotal;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+@ViableNotExceedingTotal
 public record OocyteCollectionRequestDto(
         @NotNull(message = "FivId em branco.")Long fivId,
         @NotNull(message = "Doadora em branco.") Long donorCattleId,
