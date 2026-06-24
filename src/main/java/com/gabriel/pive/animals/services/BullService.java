@@ -12,23 +12,19 @@ import com.gabriel.pive.fiv.EmbryoProduction.entities.Embryo;
 import com.gabriel.pive.fiv.EmbryoProduction.repositories.EmbryoRepository;
 import com.gabriel.pive.fiv.oocyteCollection.entities.OocyteCollection;
 import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BullService {
 
-    @Autowired
-    private BullRepository bullRepository;
-
-    @Autowired
-    private EmbryoRepository embryoRepository;
-
-    @Autowired
-    private OocyteCollectionRepository oocyteCollectionRepository;
+    private final BullRepository bullRepository;
+    private final EmbryoRepository embryoRepository;
+    private final OocyteCollectionRepository oocyteCollectionRepository;
 
     public BullDto create(BullDto dto){
 
