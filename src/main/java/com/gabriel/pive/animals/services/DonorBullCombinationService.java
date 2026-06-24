@@ -34,7 +34,11 @@ public class DonorBullCombinationService {
             List<DonorCattle> donors = donorCattleRepository.findAll();
             List<Bull> bulls = bullRepository.findAll();
 
-            List<DonorBullCombinationDto> combinations = new ArrayList<>();
+            // Carry the raw average alongside the DTO so the sort uses the actual numeric
+            // value, not a re-parsed formatted String (which would be locale-dependent and
+            // would lose precision through the format → parse round-trip).
+            record ScoredCombination(double rawAverage, DonorBullCombinationDto dto) {}
+            List<ScoredCombination> scored = new ArrayList<>();
 
             for (DonorCattle donor : donors) {
                 for (Bull bull : bulls) {
@@ -55,15 +59,17 @@ public class DonorBullCombinationService {
 
                     if (productionCount > 0) {
                         double averageEmbryosPercentage = totalEmbryosPercentage / productionCount;
-                        combinations.add(DonorBullCombinationDto.toDonorBullCombinationDto(DonorCattleDto.toDonorCattleDto(donor),
-                                BullDto.toBullDto(bull), averageEmbryosPercentage));
+                        scored.add(new ScoredCombination(
+                                averageEmbryosPercentage,
+                                DonorBullCombinationDto.toDonorBullCombinationDto(
+                                        DonorCattleDto.toDonorCattleDto(donor),
+                                        BullDto.toBullDto(bull),
+                                        averageEmbryosPercentage)));
                     }
                 }
             }
 
-        combinations.sort(Comparator.comparing((DonorBullCombinationDto dto) ->
-                        Double.parseDouble(dto.averageCombinationEmbryosPercentage().replace("%", "").replace(",", ".")))
-                .reversed());
+            scored.sort(Comparator.comparingDouble(ScoredCombination::rawAverage).reversed());
 
-        return combinations;
+            return scored.stream().map(ScoredCombination::dto).toList();
         }}
