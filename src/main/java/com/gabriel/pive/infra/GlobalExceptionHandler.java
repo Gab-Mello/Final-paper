@@ -1,6 +1,5 @@
 package com.gabriel.pive.infra;
 
-import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbryoException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.URI;
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -67,13 +67,8 @@ public class GlobalExceptionHandler {
                 .map(error -> error instanceof FieldError fieldError
                         ? fieldError.getField() + ": " + fieldError.getDefaultMessage()
                         : error.getDefaultMessage())
-                .collect(java.util.stream.Collectors.joining("; "));
+                .collect(Collectors.joining("; "));
         return buildBody(HttpStatus.BAD_REQUEST, errorMessage, request);
-    }
-
-    @ExceptionHandler(ReceiverCattleDoesNotHaveAnEmbryoException.class)
-    public ResponseEntity<Object> receiverDoesNotHaveAnEmbryo(ReceiverCattleDoesNotHaveAnEmbryoException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 
     /**
