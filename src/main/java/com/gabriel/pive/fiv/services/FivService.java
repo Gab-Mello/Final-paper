@@ -12,37 +12,41 @@ import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.enums.FivStatusEnum;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.repositories.FivRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class FivService {
 
-    @Autowired
-    private FivRepository fivRepository;
+    private final FivRepository fivRepository;
+    private final ProductionRepository productionRepository;
 
-    @Autowired
-    private ProductionRepository productionRepository;
-
+    @Transactional
     public FivResponseDto createFiv(FivRequestDto dto){
         Fiv fiv = dto.toFiv();
         fiv.setStatus(FivStatusEnum.IN_PROCESS);
         return FivResponseDto.toFivResponseDto(fivRepository.save(fiv));
     }
 
+    @Transactional
     public void updateTotalOocytes(Fiv fiv, Integer oocytes){
         fiv.updateTotalOocytesCollected(oocytes);
         fivRepository.save(fiv);
     }
 
+    @Transactional
     public void updateTotalViableOocytes(Fiv fiv, Integer oocytes){
         fiv.updateTotalViableOocytesCollected(oocytes);
         fivRepository.save(fiv);
     }
 
+    @Transactional
     public void updateTotalEmbryos(Fiv fiv, Integer numberEmbryos){
         fiv.setTotalEmbryos(fiv.getTotalEmbryos() + numberEmbryos);
         Integer viableOocytes = fiv.getTotalViableOocytesCollected();
@@ -53,6 +57,7 @@ public class FivService {
         fivRepository.save(fiv);
     }
 
+    @Transactional
     public void updateEmbryosRegistered(Fiv fiv, EmbryoProduction production){
         fiv.setEmbryosRegistered(fiv.getEmbryosRegistered() + 1);
         production.setEmbryosRegistered(production.getEmbryosRegistered() + 1);
@@ -60,6 +65,7 @@ public class FivService {
         fivRepository.save(fiv);
     }
 
+    @Transactional
     public void updateFivWithFrozenOrDiscardedEmbryos(EmbryoProduction production, Integer number){
 
         Integer actualNumberOfEmbryos = production.getEmbryos().size();
@@ -83,6 +89,7 @@ public class FivService {
         fivRepository.save(fiv);
     }
 
+    @Transactional
     public void checkToSetFivAsCompleted(Fiv fiv){
         if (fiv.getEmbryosRegistered().equals(fiv.getTotalEmbryos())){
             fiv.setStatus(FivStatusEnum.COMPLETED);
