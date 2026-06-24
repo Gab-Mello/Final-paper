@@ -6,8 +6,7 @@ import com.gabriel.pive.calendar.schedule.services.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +17,10 @@ import java.util.List;
 @RestController
 @RequestMapping("schedule")
 @Tag(name = "Schedule", description = "Calendar management")
+@RequiredArgsConstructor
 public class ScheduleController {
 
-    @Autowired
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     @Operation(summary = "Save a new schedule", description = "It saves and returns a json with the new schedule")
     @PostMapping
@@ -32,25 +31,13 @@ public class ScheduleController {
     @Operation(summary = "Edit a schedule by id", description = "It edits the schedule's data")
     @PutMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto dto){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(scheduleService.editSchedule(id, dto));
-        }
-        catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.editSchedule(id, dto));
     }
 
     @Operation(summary = "Cancel a schedule by Id", description = "It cancels the schedule ")
     @DeleteMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> cancelSchedule(@PathVariable Long id){
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(scheduleService.cancelSchedule(id));
-        }
-        catch (EntityNotFoundException e){
-            return ResponseEntity.notFound().build();
-
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(scheduleService.cancelSchedule(id));
     }
 
     @Operation(summary = "Filter the schedules by date", description = "It returns a list of all schedules with the specific date")

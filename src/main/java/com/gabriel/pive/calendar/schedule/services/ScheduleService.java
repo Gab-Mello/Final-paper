@@ -8,8 +8,9 @@ import com.gabriel.pive.calendar.schedule.entities.Schedule;
 import com.gabriel.pive.calendar.schedule.enums.ProcedureStatus;
 import com.gabriel.pive.calendar.schedule.repositories.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,12 +18,14 @@ import java.util.Optional;
 import java.util.stream.LongStream;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ScheduleService {
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
 
+    @Transactional
     public ScheduleResponseDto createSchedule(ScheduleRequestDto dto){
         return ScheduleResponseDto.toScheduleResponseDto(scheduleRepository.save(dto.toSchedule()));
     }
@@ -34,6 +37,7 @@ public class ScheduleService {
         return schedule;
     }
 
+    @Transactional
     public ScheduleResponseDto editSchedule(Long id, ScheduleRequestDto dto){
         Schedule schedule = scheduleRepository.findById(id).
                 orElseThrow(()-> new EntityNotFoundException("Schedule not found"));
@@ -44,6 +48,7 @@ public class ScheduleService {
         return ScheduleResponseDto.toScheduleResponseDto(scheduleRepository.save(schedule));
     }
 
+    @Transactional
     public ScheduleResponseDto cancelSchedule(Long id){
 
         Schedule schedule = getScheduleById(id);
