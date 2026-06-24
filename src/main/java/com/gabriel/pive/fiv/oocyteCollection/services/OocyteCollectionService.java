@@ -22,33 +22,26 @@ import com.gabriel.pive.fiv.oocyteCollection.repositories.OocyteCollectionReposi
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OocyteCollectionService {
 
-    @Autowired
-    private OocyteCollectionRepository collectionRepository;
+    private final OocyteCollectionRepository collectionRepository;
+    private final DonorCattleRepository donorCattleRepository;
+    private final BullRepository bullRepository;
+    private final FivRepository fivRepository;
+    private final FivService fivService;
+    private final DonorCattleService donorCattleService;
 
-    @Autowired
-    private DonorCattleRepository donorCattleRepository;
-
-    @Autowired
-    private BullRepository bullRepository;
-
-    @Autowired
-    private FivRepository fivRepository;
-
-    @Autowired
-    private FivService fivService;
-
-    @Autowired
-    private DonorCattleService donorCattleService;
-
+    @Transactional
     public OocyteCollectionResponseDto newOocyteCollection(OocyteCollectionRequestDto dto){
         Fiv fiv = fivRepository.findById(dto.fivId())
                 .orElseThrow(FivNotFoundException::new);
@@ -92,21 +85,6 @@ public class OocyteCollectionService {
         List<OocyteCollection> list = collectionRepository.findAll();
         return OocyteCollectionResponseDto.toOocyteCollectionDtoList(list);
     }
-
-//    public OocyteCollectionResponseDto editCollection(Long id, OocyteCollectionRequestDto dto){
-//        OocyteCollection oocyteCollection = collectionRepository.findById(id)
-//                .orElseThrow(OocyteCollectionNotFoundException::new);
-//
-//        DonorCattle donorCattle = donorCattleRepository.findById(dto.donorCattleId())
-//                .orElseThrow(DonorCattleNotFoundException::new);
-//
-//        Bull bull = bullRepository.findById(dto.bullId())
-//                .orElseThrow(BullNotFoundException::new);
-//
-//        return OocyteCollectionResponseDto.toOocyteCollectionDto(collectionRepository.save(OocyteCollectionResponseDto.
-//                editMapper(oocyteCollection, dto, donorCattle, bull)));
-//
-//    }
 
     public OocyteCollectionResponseDto getCollectionById(Long id){
 
