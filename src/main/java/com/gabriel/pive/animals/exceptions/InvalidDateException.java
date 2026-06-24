@@ -1,8 +1,11 @@
 package com.gabriel.pive.animals.exceptions;
 
-public class InvalidDateException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class InvalidDateException extends BusinessException {
 
     public InvalidDateException(){
-        super("Data inválida.");
+        super(HttpStatus.CONFLICT, "Data inválida.");
     }
 }

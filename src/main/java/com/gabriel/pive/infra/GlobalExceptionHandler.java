@@ -1,6 +1,5 @@
 package com.gabriel.pive.infra;
 
-import com.gabriel.pive.animals.exceptions.*;
 import com.gabriel.pive.fiv.EmbryoProduction.exceptions.*;
 import com.gabriel.pive.fiv.exceptions.FivNotFoundException;
 import com.gabriel.pive.fiv.oocyteCollection.exceptions.DonorAlreadyCollectedException;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.URI;
 import java.time.Instant;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -31,11 +31,8 @@ public class GlobalExceptionHandler {
     /**
      * Gate for the error response body shape. When {@code true} (the default),
      * handlers return a raw-string body — the legacy contract that the current
-     * frontend expects. When {@code false}, future Phase 2 work will switch the
-     * body to an RFC 7807 {@link org.springframework.http.ProblemDetail}.
-     *
-     * <p>The flag is read once per request via the {@code @Value} field injection;
-     * no per-request property lookup overhead.
+     * frontend expects. When {@code false}, returns an RFC 7807 ProblemDetail
+     * JSON body.
      */
     @Value("${bovina.error.legacy-format:true}")
     private boolean legacyFormat;
@@ -59,16 +56,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(problem);
     }
 
-    @ExceptionHandler(RegistrationNumberAlreadyExistsException.class)
-    public ResponseEntity<Object> registrationNumberAlreadyExists(RegistrationNumberAlreadyExistsException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(ReceiverCattleNotFoundException.class)
-    public ResponseEntity<Object> receiverCattleNotFound(ReceiverCattleNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
-    }
-
     /**
      * Catch-all for any exception that declares its own HTTP status by
      * extending {@link BusinessException}. The status comes from the exception
@@ -82,11 +69,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException exception, HttpServletRequest request){
         return buildBody(exception.getStatus(), exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(DonorCattleNotFoundException.class)
-    public ResponseEntity<Object> donorNotFound(DonorCattleNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
     @ExceptionHandler(FivNotFoundException.class)
@@ -151,11 +133,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DonorAlreadyCollectedException.class)
     public ResponseEntity<Object> donorAlreadyCollected(DonorAlreadyCollectedException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
-    }
-
-    @ExceptionHandler(InvalidDateException.class)
-    public ResponseEntity<Object> invalidDate(InvalidDateException exception, HttpServletRequest request){
         return buildBody(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
 

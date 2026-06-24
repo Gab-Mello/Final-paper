@@ -1,9 +1,11 @@
 package com.gabriel.pive.animals.exceptions;
 
-public class ReceiverCattleNotFoundException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class ReceiverCattleNotFoundException extends BusinessException {
 
     public ReceiverCattleNotFoundException(){
-        super("Receptora não encontrada.");
+        super(HttpStatus.NOT_FOUND, "Receptora não encontrada.");
     }
-  
 }

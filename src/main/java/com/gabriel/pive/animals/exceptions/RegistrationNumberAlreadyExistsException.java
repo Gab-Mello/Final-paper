@@ -1,9 +1,11 @@
 package com.gabriel.pive.animals.exceptions;
 
-public class RegistrationNumberAlreadyExistsException extends RuntimeException{
+import com.gabriel.pive.infra.BusinessException;
+import org.springframework.http.HttpStatus;
+
+public class RegistrationNumberAlreadyExistsException extends BusinessException {
 
     public RegistrationNumberAlreadyExistsException(String message){
-        super(message);
+        super(HttpStatus.CONFLICT, message);
     }
-
 }
