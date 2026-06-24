@@ -11,11 +11,15 @@ import com.gabriel.pive.fiv.pregnancy.exceptions.ReceiverCattleDoesNotHaveAnEmbr
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.net.URI;
+import java.time.Instant;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -33,18 +37,22 @@ public class GlobalExceptionHandler {
     private boolean legacyFormat;
 
     /**
-     * Single seam that every handler funnels through. Today it always returns
-     * a plain-String body (preserving legacy behavior). Phase 2's later commits
-     * (2.4 onward) will branch on {@link #legacyFormat} to return a structured
-     * ProblemDetail when the flag is disabled.
+     * Single seam that every handler funnels through. When {@link #legacyFormat}
+     * is {@code true} (the default), returns the legacy raw-string body that the
+     * existing frontend expects. When {@code false}, returns an RFC 7807
+     * {@link ProblemDetail} JSON body with {@code type}, {@code title},
+     * {@code status}, {@code detail}, {@code instance} (the request path) and a
+     * {@code timestamp} extension field.
      */
     private ResponseEntity<Object> buildBody(HttpStatus status, String message, HttpServletRequest request) {
         if (legacyFormat) {
             return ResponseEntity.status(status).body(message);
         }
-        // ProblemDetail branch arrives in commit 2.4. For now keep legacy behavior so this
-        // commit is purely a structural refactor.
-        return ResponseEntity.status(status).body(message);
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, message);
+        problem.setTitle(status.getReasonPhrase());
+        problem.setInstance(URI.create(request.getRequestURI()));
+        problem.setProperty("timestamp", Instant.now().toString());
+        return ResponseEntity.status(status).body(problem);
     }
 
     @ExceptionHandler(RegistrationNumberAlreadyExistsException.class)
