@@ -20,11 +20,13 @@ import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProductionService {
 
     private final ProductionRepository productionRepository;
@@ -35,6 +37,7 @@ public class ProductionService {
     private final BullService bullService;
     private final EmbryoRepository embryoRepository;
 
+    @Transactional
     public ProductionResponseDto newProduction(ProductionRequestDto dto){
 
         OocyteCollection oocyteCollection = oocyteCollectionRepository.findById(dto.oocyteCollectionId())
@@ -79,6 +82,7 @@ public class ProductionService {
         return ProductionResponseDto.toProductionResponseDto(embryoProduction);
     }
 
+    @Transactional
     public void updateTransferredEmbryosNumber(EmbryoProduction production){
         production.setTransferredEmbryosNumber(production.getTransferredEmbryosNumber() + 1);
 
@@ -89,6 +93,7 @@ public class ProductionService {
         productionRepository.save(production);
     }
 
+    @Transactional
     public void updateFrozenOrDiscardedEmbryosNumber(EmbryoProduction production, Integer number, Boolean is_frozen){
         Fiv fiv = production.getOocyteCollection().getFiv();
 
