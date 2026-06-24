@@ -6,6 +6,7 @@ import com.gabriel.pive.calendar.schedule.services.ScheduleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,13 @@ public class ScheduleController {
 
     @Operation(summary = "Save a new schedule", description = "It saves and returns a json with the new schedule")
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto dto){
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@Valid @RequestBody ScheduleRequestDto dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(scheduleService.createSchedule(dto));
     }
 
     @Operation(summary = "Edit a schedule by id", description = "It edits the schedule's data")
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto dto){
+    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id, @Valid @RequestBody ScheduleRequestDto dto){
         return ResponseEntity.status(HttpStatus.OK).body(scheduleService.editSchedule(id, dto));
     }
 
