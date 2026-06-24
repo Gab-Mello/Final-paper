@@ -63,9 +63,6 @@ public class BullController {
     @Operation(summary = "Edit a bull by Id", description = "It edits the bull's data")
     @PutMapping("/{id}")
     public ResponseEntity<BullDto> editBull(@PathVariable Long id, @Valid @RequestBody BullDto dto){
-        if (bullService.findById(id)==null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.status(HttpStatus.OK).body(bullService.edit(id,dto));
     }
 

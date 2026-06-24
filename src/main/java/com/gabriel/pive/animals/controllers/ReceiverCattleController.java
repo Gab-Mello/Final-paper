@@ -55,9 +55,6 @@ public class ReceiverCattleController {
     @Operation(summary = "Edit a receiver cattle by Id", description = "It edits the receiver cattle's data")
     @PutMapping("/{id}")
     public ResponseEntity<ReceiverCattleDto> editReceiverCattle(@PathVariable Long id, @Valid @RequestBody ReceiverCattleDto dto){
-        if (receiverCattleService.findById(id)==null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.status(HttpStatus.OK).body(receiverCattleService.edit(id,dto));
     }
 
