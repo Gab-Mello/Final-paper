@@ -51,8 +51,10 @@ public class ReceiverCattleService {
                 .orElseThrow(ReceiverCattleNotFoundException::new);
 
         Embryo embryo = embryoRepository.findByEmbryoReceiverCattle(receiverCattle);
-        embryo.setEmbryoReceiverCattle(null);
-        embryoRepository.save(embryo);
+        if (embryo != null) {
+            embryo.setEmbryoReceiverCattle(null);
+            embryoRepository.save(embryo);
+        }
 
         receiverCattleRepository.deleteById(id);
     }
