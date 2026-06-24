@@ -16,37 +16,27 @@ import com.gabriel.pive.fiv.entities.Fiv;
 import com.gabriel.pive.fiv.pregnancy.repositories.PregnancyRepository;
 import com.gabriel.pive.fiv.repositories.FivRepository;
 import com.gabriel.pive.fiv.services.FivService;
-import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class EmbryosService {
 
-    @Autowired
-    private EmbryoRepository embryoRepository;
+    private final EmbryoRepository embryoRepository;
+    private final ReceiverCattleRepository receiverCattleRepository;
+    private final ProductionRepository productionRepository;
+    private final FivRepository fivRepository;
+    private final PregnancyRepository pregnancyRepository;
+    private final ProductionService productionService;
+    private final FivService fivService;
 
-    @Autowired
-    private ReceiverCattleRepository receiverCattleRepository;
-
-    @Autowired
-    private ProductionRepository productionRepository;
-
-    @Autowired
-    private FivRepository fivRepository;
-
-    @Autowired
-    private PregnancyRepository pregnancyRepository;
-
-    @Autowired
-    private ProductionService productionService;
-
-    @Autowired
-    private FivService fivService;
-
+    @Transactional
     public ProductionResponseDto frozenEmbryos(FrozenEmbryosDto dto){
 
         EmbryoProduction production = productionRepository.findById(dto.productionId())
@@ -69,6 +59,7 @@ public class EmbryosService {
         return ProductionResponseDto.toProductionResponseDto(production);
     }
 
+    @Transactional
     public void discardedEmbryos(DiscardedEmbryosDto dto){
         EmbryoProduction production = productionRepository.findById(dto.productionId())
                 .orElseThrow(ProductionNotFoundException::new);
