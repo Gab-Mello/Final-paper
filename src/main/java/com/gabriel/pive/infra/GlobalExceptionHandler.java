@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.URI;
 import java.time.Instant;
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -70,9 +69,19 @@ public class GlobalExceptionHandler {
         return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
-    @ExceptionHandler(BullNotFoundException.class)
-    public ResponseEntity<Object> bullNotFound(BullNotFoundException exception, HttpServletRequest request){
-        return buildBody(HttpStatus.NOT_FOUND, exception.getMessage(), request);
+    /**
+     * Catch-all for any exception that declares its own HTTP status by
+     * extending {@link BusinessException}. The status comes from the exception
+     * itself ({@link BusinessException#getStatus()}), so adding a new domain
+     * exception requires no edit to this handler.
+     *
+     * <p>Phase 4 migrates the codebase's custom exceptions to extend
+     * {@code BusinessException} one domain at a time; as each migrates, its
+     * dedicated handler method below is removed.
+     */
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<Object> handleBusinessException(BusinessException exception, HttpServletRequest request){
+        return buildBody(exception.getStatus(), exception.getMessage(), request);
     }
 
     @ExceptionHandler(DonorCattleNotFoundException.class)
