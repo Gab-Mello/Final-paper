@@ -25,9 +25,9 @@ public class PregnancyController {
 
     @Operation(summary = "Confirm a pregnancy", description = "Confirm or not if the receiver is pregnant.")
     @PostMapping
-    public ResponseEntity<?> confirmPregnancy(@Valid @RequestBody PregnancyRequestDto dto){
+    public ResponseEntity<Void> confirmPregnancy(@Valid @RequestBody PregnancyRequestDto dto){
         pregnancyService.confirmPregnancy(dto.receiverCattleId(), dto.pregnant());
-        return ResponseEntity.status(HttpStatus.OK).body("Pregnancy saved.");
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Find in progress pregnant receivers", description = "It returns a json list with all in-progress pregnant receivers from the specified fiv.")
